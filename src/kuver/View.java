@@ -7,10 +7,13 @@ package kuver;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.text.PlainDocument;
 import kuver.definitions.Kunde;
+import kuver.definitions.User;
 import kuver.frame.Register;
 
 /**
@@ -27,20 +30,39 @@ public class View extends javax.swing.JFrame {
     public View(Controller controller) {
         this.controller = controller;
         initComponents();
+
+        // Eigene Einstellungen
         this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
-        this.setExtendedState(this.MAXIMIZED_BOTH);  
+        this.setExtendedState(this.MAXIMIZED_BOTH);
+        // Tag
+        kuver.tweaks.TextLengthDocFilter filter = new kuver.tweaks.TextLengthDocFilter(2, 0);
+        PlainDocument doc = (PlainDocument) neuTagTf.getDocument();
+        doc.setDocumentFilter(filter);
+        PlainDocument doc2 = (PlainDocument) neuTagTf.getDocument();
+        doc2.setDocumentFilter(filter);
+        PlainDocument doc3 = (PlainDocument) neuTagTf.getDocument();
+        doc3.setDocumentFilter(filter);
         // Jahr
         for (int i = 1930; i < 2010; i++) {
             neuJahrCB.addItem(i);
             sucheJahrCB.addItem(i);
             detailsJahrCB.addItem(i);
         }
+        // PLZ
+        kuver.tweaks.TextLengthDocFilter filterPLZ = new kuver.tweaks.TextLengthDocFilter(5, 0);
+        PlainDocument doc4 = (PlainDocument) neuPlzTf.getDocument();
+        doc4.setDocumentFilter(filterPLZ);
+        PlainDocument doc5 = (PlainDocument) suchePlzTf.getDocument();
+        doc5.setDocumentFilter(filterPLZ);
+        PlainDocument doc6 = (PlainDocument) detailsPlzTf.getDocument();
+        doc6.setDocumentFilter(filterPLZ);
+        // TabPanel
         tabPanel.setEnabledAt(1, false);
         tabPanel.setEnabledAt(2, false);
         tabPanel.setEnabledAt(3, false);
-        
+
         tabellePanel.setVisible(false);
-        
+
     }
 
     /**
@@ -87,7 +109,7 @@ public class View extends javax.swing.JFrame {
         neuResetBtn = new javax.swing.JButton();
         neueStrNrTf = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        neuTagTf = new javax.swing.JTextField();
         suchePanel = new javax.swing.JPanel();
         sucheSuchenBtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -101,13 +123,13 @@ public class View extends javax.swing.JFrame {
         suchePlzTf = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         sucheVerlAbTf = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        sucheTagTf = new javax.swing.JTextField();
         sucheStrasseTf = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         sucheStrNrTf = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        sucheIdTf = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
         sucheOrtTf = new javax.swing.JTextField();
         detailsPanel = new javax.swing.JPanel();
@@ -264,9 +286,9 @@ public class View extends javax.swing.JFrame {
                     .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(startPanelLayout.createSequentialGroup()
-                            .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel31)
-                                .addComponent(jLabel30))
+                                .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.LEADING))
                             .addGap(18, 18, 18)
                             .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(loginUserTf, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
@@ -338,7 +360,7 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        neuMonatCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" }));
+        neuMonatCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember" }));
         neuMonatCB.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 setTag(evt);
@@ -363,6 +385,12 @@ public class View extends javax.swing.JFrame {
         });
 
         jLabel22.setText("/");
+
+        neuTagTf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                neuTagTfActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout neuPanelLayout = new javax.swing.GroupLayout(neuPanel);
         neuPanel.setLayout(neuPanelLayout);
@@ -395,7 +423,7 @@ public class View extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(neueStrNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(neuPanelLayout.createSequentialGroup()
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(neuTagTf, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(neuMonatCB, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -433,7 +461,7 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(neuMonatCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(neuJahrCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(neuTagTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -455,6 +483,11 @@ public class View extends javax.swing.JFrame {
         tabPanel.addTab("Neu", neuPanel);
 
         sucheSuchenBtn.setText("Suchen");
+        sucheSuchenBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sucheSuchenBtnActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Name");
 
@@ -492,9 +525,9 @@ public class View extends javax.swing.JFrame {
 
         jLabel17.setText("ID");
 
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        sucheIdTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                sucheIdTfActionPerformed(evt);
             }
         });
 
@@ -522,11 +555,11 @@ public class View extends javax.swing.JFrame {
                                 .addComponent(jLabel12)))
                         .addGap(15, 15, 15)
                         .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sucheIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(suchePanelLayout.createSequentialGroup()
                                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, suchePanelLayout.createSequentialGroup()
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(sucheTagTf, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(sucheMonatCB, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -561,7 +594,7 @@ public class View extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sucheIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -573,7 +606,7 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(sucheMonatCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(sucheJahrCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sucheTagTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sucheStrasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -918,7 +951,6 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_neuAddBtnActionPerformed
 
     private void optNeuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optNeuBtnActionPerformed
-        // TODO add your handling code here:
         tabPanel.setEnabledAt(1, true);
         tabPanel.setSelectedIndex(1);
 //        if(tab.getTabCount()>2)
@@ -955,7 +987,7 @@ public class View extends javax.swing.JFrame {
         kunde.setOrt((String) tabelle.getModel().getValueAt(row, 8));
         // todo: etc..
         controller.setCurKunde(kunde);
-        
+
         // Details
         fillDetails(kunde);
     }//GEN-LAST:event_showKunde
@@ -1002,13 +1034,13 @@ public class View extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_detailsMonatCBActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void sucheIdTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sucheIdTfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_sucheIdTfActionPerformed
 
     private void detailsSaveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsSaveBtnActionPerformed
         // Check input
-        
+
         // Dialog
         final JOptionPane optionPane = new JOptionPane(
                 "Wollen sie Aenderungen uebernehmen?\n",
@@ -1044,20 +1076,20 @@ public class View extends javax.swing.JFrame {
         dialog.pack();
         dialog.setLocationRelativeTo(detailsPanel);
         dialog.setVisible(true);
-        
+
 
         int value = ((Integer) optionPane.getValue()).intValue();
         if (value == JOptionPane.YES_OPTION) { // Save
             controller.updateKunde(getDetailsKunde());
         } else if (value == JOptionPane.NO_OPTION) {
             detailsReset();
-        }else if (value == JOptionPane.CANCEL_OPTION) {
+        } else if (value == JOptionPane.CANCEL_OPTION) {
             return;
         }
-        
+
         // Exit EditMode
         disableEditMode();
-        
+
     }//GEN-LAST:event_detailsSaveBtnActionPerformed
 
     private void detailsEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailsEditBtnActionPerformed
@@ -1081,33 +1113,50 @@ public class View extends javax.swing.JFrame {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // Check login input
-        if(loginUserTf.getText().length()<3){
-            JOptionPane.showMessageDialog(tabPanel,
-                    "Fehler: Nutzer muss aus mehr als 2 Buchstaben bestehen!",
-                    "Ungueltiger Nutzer",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        if(loginPassPf.getPassword().length<7){
-            JOptionPane.showMessageDialog(tabPanel,
-                    "Fehler: Passwort muss aus mehr als 6 Buchstaben bestehen!",
-                    "Ungueltiges Passwort",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
+//        if (loginUserTf.getText().length() < 3) {
+//            JOptionPane.showMessageDialog(tabPanel,
+//                    "Fehler: Nutzer muss aus mehr als 2 Buchstaben bestehen!",
+//                    "Ungueltiger Nutzer",
+//                    JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+//        if (loginPassPf.getPassword().length < 7) {
+//            JOptionPane.showMessageDialog(tabPanel,
+//                    "Fehler: Passwort muss aus mehr als 6 Buchstaben bestehen!",
+//                    "Ungueltiges Passwort",
+//                    JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+        User user = new User(loginUserTf.getText(), String.valueOf(loginPassPf.getPassword()));
+
         // Lookup in db
-        if(controller.login())
+        if (controller.login(user)) {
             userVerified();
+        } else {
+            JOptionPane.showMessageDialog(tabPanel,
+                    "Ihre Anmeldung schlug fehl. Bitte ueberpruefen Sie Ihre Eingabe.\nWenn Sie noch kein KuVer-Konto besitzen, registrieren Sie sich bitte.",
+                    "Login fehlgeschlagen",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
         // TODO add your handling code here:
-        Register register = new Register(controller,this,true);
+        Register register = new Register(controller, this, true);
         register.pack();
         register.setLocationRelativeTo(detailsPanel);
         register.setVisible(true);
     }//GEN-LAST:event_registerBtnActionPerformed
+
+    private void neuTagTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_neuTagTfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_neuTagTfActionPerformed
+
+    private void sucheSuchenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sucheSuchenBtnActionPerformed
+        // suchen
+        controller.sucheKunde(tabelle,getSucheKunde());
+    }//GEN-LAST:event_sucheSuchenBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1197,9 +1246,6 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JButton loginBtn;
     private javax.swing.JPasswordField loginPassPf;
     private javax.swing.JTextField loginUserTf;
@@ -1214,12 +1260,14 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JTextField neuPlzTf;
     private javax.swing.JButton neuResetBtn;
     private javax.swing.JTextField neuStrasseTf;
+    private javax.swing.JTextField neuTagTf;
     private javax.swing.JTextField neuVornameTf;
     private javax.swing.JTextField neueStrNrTf;
     private javax.swing.JButton optNeuBtn;
     private javax.swing.JButton optSuchenBtn;
     private javax.swing.JButton registerBtn;
     private javax.swing.JPanel startPanel;
+    private javax.swing.JTextField sucheIdTf;
     private javax.swing.JComboBox sucheJahrCB;
     private javax.swing.JComboBox sucheMonatCB;
     private javax.swing.JTextField sucheNameTf;
@@ -1229,6 +1277,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JTextField sucheStrNrTf;
     private javax.swing.JTextField sucheStrasseTf;
     private javax.swing.JButton sucheSuchenBtn;
+    private javax.swing.JTextField sucheTagTf;
     private javax.swing.JTextField sucheVerlAbTf;
     private javax.swing.JTextField sucheVerlAbTf1;
     private javax.swing.JTextField sucheVornameTf;
@@ -1244,10 +1293,10 @@ public class View extends javax.swing.JFrame {
         detailsVornameTf.setText(kunde.getVorname());
         detailsStrasseTf.setText(kunde.getStrasse());
         // Bday
-        detailsTagTf.setText(kunde.getGebDat().get(Calendar.DAY_OF_MONTH)+"");
-        detailsMonatCB.setSelectedIndex(kunde.getGebDat().get(Calendar.MONTH));
-        detailsJahrCB.setSelectedIndex(kunde.getGebDat().get(Calendar.YEAR));
-        detailsStrNrTf.setText(""+kunde.getStrNr());
+        detailsTagTf.setText(kunde.getGebDat().get(Calendar.DAY_OF_MONTH) + "");
+        detailsMonatCB.setSelectedIndex(kunde.getGebDat().get(Calendar.MONTH) - 1);
+        detailsJahrCB.setSelectedItem(kunde.getGebDat().get(Calendar.YEAR));
+        detailsStrNrTf.setText("" + kunde.getStrNr());
         detailsPlzTf.setText(kunde.getPlz());
         detailsOrtTf.setText(kunde.getOrt());
 
@@ -1307,6 +1356,7 @@ public class View extends javax.swing.JFrame {
      */
     private Kunde getNeuKunde() {
         Kunde kunde = new kuver.definitions.Kunde();
+        kunde.setAnrede(neuAnredeCB.getSelectedItem().toString());
         kunde.setName(neuNameTf.getText());
         kunde.setVorname(neuVornameTf.getText());
         kunde.setStrasse(neuStrasseTf.getText());
@@ -1326,8 +1376,41 @@ public class View extends javax.swing.JFrame {
 
         return kunde;
     }
-    
-    private void detailsReset(){
+
+    private Kunde getSucheKunde() {
+        Kunde kunde = new kuver.definitions.Kunde();
+        if(!sucheIdTf.getText().isEmpty())
+            kunde.setId(Integer.parseInt(sucheIdTf.getText()));
+        kunde.setName(sucheNameTf.getText());
+        kunde.setVorname(sucheVornameTf.getText());
+        kunde.setStrasse(sucheStrasseTf.getText());
+        // Bday
+        int tag = 0;
+        int monat = 0;
+        int jahr = 0;
+        if (!sucheTagTf.getText().isEmpty()) {
+            tag = Integer.parseInt(sucheTagTf.getText());
+        }
+        if (sucheMonatCB.getSelectedIndex() != 0) {
+            monat = sucheMonatCB.getSelectedIndex() - 1;
+        }
+        if (sucheJahrCB.getSelectedIndex() != 0) {
+            jahr = Integer.parseInt(sucheJahrCB.getSelectedItem().toString());
+        }
+        if (tag == 0 || jahr == 0 || monat == 0) {// skip bday
+        } 
+        else {
+            Calendar dat = Calendar.getInstance();
+            dat.set(jahr, monat, tag);
+            kunde.setGebDat(dat);
+        }
+        kunde.setPlz(suchePlzTf.getText());
+        kunde.setOrt(sucheOrtTf.getText());
+
+        return kunde;
+    }
+
+    private void detailsReset() {
         fillDetails(controller.getCurKunde());
     }
 
@@ -1337,7 +1420,7 @@ public class View extends javax.swing.JFrame {
         detailsEditBtn.setEnabled(true);
         detailsSaveBtn.setEnabled(false);
         detailsResetBtn.setEnabled(false);
-        
+
         // Disable edit
         detailsAnredeCB.setEnabled(false);
         detailsNameTf.setEditable(false);
@@ -1372,13 +1455,13 @@ public class View extends javax.swing.JFrame {
 
     private Calendar stringToCalendar(String str) {
         String[] split = str.split("\\.");
-        System.out.println("str: "+str+" size: "+split.length);
-        if(split.length!=3){
-            throw new IllegalArgumentException("String '"+str+"' not in correct format");
+        System.out.println("str: " + str + " size: " + split.length);
+        if (split.length != 3) {
+            throw new IllegalArgumentException("String '" + str + "' not in correct format");
         }
         Calendar cal = Calendar.getInstance();
         cal.set(Integer.parseInt(split[2]), Integer.parseInt(split[1]), Integer.parseInt(split[0]));
-        
+
         return cal;
     }
 
@@ -1390,6 +1473,11 @@ public class View extends javax.swing.JFrame {
         optNeuBtn.setEnabled(true);
         optSuchenBtn.setEnabled(true);
         tabellePanel.setVisible(true);
-        
+
+        // msg
+        JOptionPane.showMessageDialog(tabPanel,
+                "Sie haben sich erfolgreich angemeldet!",
+                "Login erfolgreich",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }

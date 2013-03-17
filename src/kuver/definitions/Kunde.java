@@ -22,8 +22,8 @@ public class Kunde {
     private String plz;
     private String vertragsNr;
     private String handy;
-    private Calendar gebDat;
-    private Calendar verlAb;
+    private Calendar gebDat = null;
+    private Calendar verlAb = null;
 
     /**
      * @return the name
@@ -177,5 +177,17 @@ public class Kunde {
      */
     public void setStrNr(int strNr) {
         this.strNr = strNr;
+    }
+
+    public void reset() {
+        this.id=0;
+        this.anrede=null;
+        this.name=null;
+        this.vorname=null;
+        this.strasse=null;
+        this.strNr=0;
+        this.ort=null;
+        this.plz=null;
+        // todo: rest
     }
 }

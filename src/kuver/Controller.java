@@ -41,7 +41,7 @@ public class Controller {
             } else {
                 str = "Frau";
             }
-            model.addRow(new Object[]{i, str, "Name 3," + i, "Vorname " + i, "11.09.1988", "Strasse" + i, i, "0068" + i, "Column 3," + i});
+            model.addRow(new Object[]{i, str, "Name 3," + i, "Vorname " + i, "11.09.1988", "Strasse" + i, i, "0068" + i, "Ort," + i});
         }
     }
 
@@ -130,9 +130,30 @@ public class Controller {
         this.curKunde = curKunde;
     }
 
-    public boolean login() {
-        boolean verified = true;
-        return verified;
+    public boolean login(User user) {
+        boolean ok = false;
+        Connection con = null;
+        try {
+            con = getConnection();
+            String sql = "select * from user where name = '" + user.getName() + "' and password= '" + user.getPass() + "'";
+            java.sql.Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                ok = true;
+            } else {
+                ok = false;
+            }
+            System.out.println("Login ok? ==> " + ok);
+        } catch (SQLException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return ok;
+        }
     }
 
     // todo: test whole register process
@@ -160,19 +181,20 @@ public class Controller {
     }
 
     public boolean checkUsername(String name) {
-        System.out.println("Check Username: "+name);
+        System.out.println("Check Username: " + name);
         boolean ok = false;
         Connection con = null;
         try {
             con = getConnection();
-            String sql = "select * from user where name = '"+name+"'";
+            String sql = "select * from user where name = '" + name + "'";
             java.sql.Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            if(rs.next())
+            if (rs.next()) {
                 ok = false;
-            else 
+            } else {
                 ok = true;
-            System.out.println("Username ok? ==> "+ok);
+            }
+            System.out.println("Username ok? ==> " + ok);
         } catch (SQLException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -194,8 +216,9 @@ public class Controller {
             String sql = "select * from code";
             java.sql.Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            if(rs.next())
+            if (rs.next()) {
                 code = rs.getString("code");
+            }
             System.out.println("Code retrieved.");
         } catch (SQLException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -206,6 +229,103 @@ public class Controller {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
             return code;
+        }
+    }
+
+    public void sucheKunde(JTable tabelle, Kunde kunde) {
+        // Reset table
+        DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
+        model.getDataVector().removeAllElements();
+        
+        // Create SQL query
+        boolean andSetzen = false;
+        String sql = "select * from new_table where ";
+        if (kunde.getId() != 0) {
+            sql += "ID = " + kunde.getId() + " ";
+            andSetzen = true;
+        }
+        if (!kunde.getName().isEmpty()) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "name like '" + kunde.getName() + "%' ";
+            andSetzen = true;
+        }
+        if (!kunde.getVorname().isEmpty()) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "vorname like '" + kunde.getVorname() + "%' ";
+            andSetzen = true;
+        }
+        if (!kunde.getStrasse().isEmpty()) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "strasse like '" + kunde.getStrasse() + "%' ";
+            andSetzen = true;
+        }
+//        if(kunde.getStrNr()!=0){
+//            if(andSetzen)
+//                sql+="AND ";
+//            sql+="strNr = "+kunde.getStrNr()+" ";
+//            andSetzen=true;
+//        }
+        if (!kunde.getPlz().isEmpty()) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "PLZ like '" + kunde.getPlz() + "%' ";
+            andSetzen = true;
+        }
+        if (!kunde.getOrt().isEmpty()) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "Ort like '" + kunde.getOrt() + "%' ";
+            andSetzen = true;
+        }
+        if(!andSetzen) // keine eingerenzung
+            sql+=" 1";
+        
+        System.out.println("SQL: " + sql);
+
+        // execute query
+        Connection con = null;
+        Kunde tmp = new Kunde();
+        try {
+            con = getConnection();
+            java.sql.Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                tmp.reset();
+                tmp.setId(rs.getInt("ID"));
+                tmp.setAnrede(rs.getString("Anrede"));
+                tmp.setName(rs.getString("Name"));
+                tmp.setVorname(rs.getString("Vorname"));
+                tmp.setStrasse(rs.getString("Strasse"));
+//                tmp.setStrNr(rs.getInt("StrNr"));
+                tmp.setPlz(Integer.toString(rs.getInt("PLZ"))); // todo: plz ist string
+                tmp.setOrt(rs.getString("Ort"));
+                // add to jtable
+                model.addRow(
+                        new Object[]{
+                            tmp.getId(),
+                            tmp.getName(),
+                            tmp.getVorname(),
+                            tmp.getStrasse(),
+                            tmp.getPlz(),
+                            tmp.getOrt(),});
+            }
+            System.out.println("Code retrieved.");
+        } catch (SQLException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

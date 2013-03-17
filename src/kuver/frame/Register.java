@@ -20,6 +20,7 @@ public class Register extends javax.swing.JDialog {
      */
     public Register(Controller controller, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.controller=controller;
         initComponents();
     }
 
@@ -34,22 +35,20 @@ public class Register extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         userTf = new javax.swing.JTextField();
         passTf = new javax.swing.JTextField();
         registrierenBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         codeTf = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registrierung");
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
-        jLabel1.setText("Registrierung");
+        jLabel1.setText("KuVer-Konto Registrierung");
 
         jLabel2.setText("Nutzer");
-
-        jLabel3.setText("Passwort");
 
         registrierenBtn.setText("Registrieren");
         registrierenBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -60,32 +59,35 @@ public class Register extends javax.swing.JDialog {
 
         jLabel4.setText("Verifikationscode");
 
+        jLabel5.setText("Passwort");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel1)
                                 .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(codeTf)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
-                                    .addGap(29, 29, 29)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(passTf)
-                                .addComponent(userTf)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(codeTf, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                                    .addComponent(jLabel5))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(userTf)
+                                    .addComponent(passTf)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(registrierenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,15 +100,15 @@ public class Register extends javax.swing.JDialog {
                     .addComponent(userTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(passTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(codeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(registrierenBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -114,6 +116,7 @@ public class Register extends javax.swing.JDialog {
 
     private void registrierenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrierenBtnActionPerformed
         // Check input
+        System.out.println("Register");
         if(userTf.getText().length()<3){
             JOptionPane.showMessageDialog(this,
                     "Fehler: Nutzer muss aus mehr als 2 Buchstaben bestehen!",
@@ -130,7 +133,10 @@ public class Register extends javax.swing.JDialog {
         }
         
         // Get Verificationcode
+        System.out.println("Get Code");
+        
         String code = controller.getVerificationCode();
+        System.out.println("Code: "+code);
         if(!codeTf.getText().equals(code)){
             JOptionPane.showMessageDialog(this,
                     "Fehler: Verifikationscode ist inkorrekt!",
@@ -151,7 +157,13 @@ public class Register extends javax.swing.JDialog {
         }
             
         // Register
-        controller.register(user);
+        if(controller.register(user)){
+            JOptionPane.showMessageDialog(this,
+                    "Die Registrierung war erfolgreich!\nJetzt koennen sie sich mit Ihren Daten anmelden.",
+                    "Erfolgreich registriert",
+                    JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }
     }//GEN-LAST:event_registrierenBtnActionPerformed
 
     /**
@@ -199,8 +211,8 @@ public class Register extends javax.swing.JDialog {
     private javax.swing.JTextField codeTf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField passTf;
     private javax.swing.JButton registrierenBtn;
     private javax.swing.JTextField userTf;
