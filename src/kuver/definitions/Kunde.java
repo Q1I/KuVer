@@ -16,14 +16,21 @@ public class Kunde {
     private String anrede;
     private String name;
     private String vorname;
+    private Calendar gebDat = null;
+    
     private String strasse;
     private int strNr;
     private String ort;
     private String plz;
-    private String vertragsNr;
+    private String netz;
+    
+    private String vertrag;
     private String handy;
-    private Calendar gebDat = null;
-    private Calendar verlAb = null;
+    private String imei;
+    private String aktivierung;
+    
+    private String msisdn;
+    private Calendar verlaengerung = null;
 
     /**
      * @return the name
@@ -96,20 +103,6 @@ public class Kunde {
     }
 
     /**
-     * @return the vertragsNr
-     */
-    public String getVertragsNr() {
-        return vertragsNr;
-    }
-
-    /**
-     * @param vertragsNr the vertragsNr to set
-     */
-    public void setVertragsNr(String vertragsNr) {
-        this.vertragsNr = vertragsNr;
-    }
-
-    /**
      * @return the gebDat
      */
     public Calendar getGebDat() {
@@ -123,19 +116,6 @@ public class Kunde {
         this.gebDat = gebDat;
     }
 
-    /**
-     * @return the verlAb
-     */
-    public Calendar getVerlAb() {
-        return verlAb;
-    }
-
-    /**
-     * @param verlAb the verlAb to set
-     */
-    public void setVerlAb(Calendar verlAb) {
-        this.verlAb = verlAb;
-    }
 
     /**
      * @return the id
@@ -180,14 +160,112 @@ public class Kunde {
     }
 
     public void reset() {
-        this.id=0;
-        this.anrede=null;
-        this.name=null;
-        this.vorname=null;
-        this.strasse=null;
-        this.strNr=0;
-        this.ort=null;
-        this.plz=null;
+        this.setId(0);
+        this.setAnrede(null);
+        this.setName(null);
+        this.setVorname(null);
+        this.setStrasse(null);
+        this.setStrNr(0);
+        this.setOrt(null);
+        this.setPlz(null);
         // todo: rest
+    }
+
+    /**
+     * @return the netz
+     */
+    public String getNetz() {
+        return netz;
+    }
+
+    /**
+     * @param netz the netz to set
+     */
+    public void setNetz(String netz) {
+        this.netz = netz;
+    }
+
+    /**
+     * @return the vertrag
+     */
+    public String getVertrag() {
+        return vertrag;
+    }
+
+    /**
+     * @param vertrag the vertrag to set
+     */
+    public void setVertrag(String vertrag) {
+        this.vertrag = vertrag;
+    }
+
+    /**
+     * @return the handy
+     */
+    public String getHandy() {
+        return handy;
+    }
+
+    /**
+     * @param handy the handy to set
+     */
+    public void setHandy(String handy) {
+        this.handy = handy;
+    }
+
+    /**
+     * @return the imei
+     */
+    public String getImei() {
+        return imei;
+    }
+
+    /**
+     * @param imei the imei to set
+     */
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
+
+    /**
+     * @return the aktivierung
+     */
+    public String getAktivierung() {
+        return aktivierung;
+    }
+
+    /**
+     * @param aktivierung the aktivierung to set
+     */
+    public void setAktivierung(String aktivierung) {
+        this.aktivierung = aktivierung;
+    }
+
+    /**
+     * @return the msisdn
+     */
+    public String getMsisdn() {
+        return msisdn;
+    }
+
+    /**
+     * @param msisdn the msisdn to set
+     */
+    public void setMsisdn(String msisdn) {
+        this.msisdn = msisdn;
+    }
+
+    /**
+     * @return the verlaengerung
+     */
+    public Calendar getVerlaengerung() {
+        return verlaengerung;
+    }
+
+    /**
+     * @param verlaengerung the verlaengerung to set
+     */
+    public void setVerlaengerung(Calendar verlaengerung) {
+        this.verlaengerung = verlaengerung;
     }
 }

@@ -24,8 +24,18 @@ import kuver.definitions.User;
  */
 public class Controller {
 
+    // todo: 
+//        daten anpassen
+//        kommentare -> datum/alles anzeigen
+//    user loeschen
+//    menu weg
     private boolean editMode;
     private Kunde curKunde;
+    // Root
+    private String url = "jdbc:mysql://localhost:3306/KuVer";
+    private String username = "root";
+    private String password = "root";
+    // Loggedin User
     private User user;
 
     public Controller() {
@@ -47,15 +57,37 @@ public class Controller {
 
     public void addKunde(JTable tabelle, Kunde kunde) {
         // Add into db
-        String sql = "INSERT into new_table(Name, Vorname, Strasse, PLZ, Ort ) VALUES (?,?,?,?,?)";
-        Connection con = getConnection();
+        String sql = "INSERT into new_table("
+                + "Anrede, Name, Vorname, Geburtsdatum, "
+                + "Strasse, PLZ, Ort, Netz, "
+                + "Vertrag, Handy, IMEI, Aktivierungsdatum, "
+                + "MSISDN, Verlaengerbar "
+                + ") VALUES ("
+                + "?,?,?,?,"
+                + "?,?,?,?,"
+                + "?,?,?,?,"
+                + "?,?)";
+        Connection con = getConnection(user.getName(), user.getPass());
         try {
             PreparedStatement pStmt = (PreparedStatement) con.prepareStatement(sql);
-            pStmt.setString(1, kunde.getName());
-            pStmt.setString(2, kunde.getVorname());
-            pStmt.setString(3, kunde.getStrasse());
-            pStmt.setString(4, kunde.getPlz());
-            pStmt.setString(5, kunde.getOrt());
+            pStmt.setString(1, kunde.getAnrede());
+            pStmt.setString(2, kunde.getName());
+            pStmt.setString(3, kunde.getVorname());
+            pStmt.setString(4, kunde.getGebDat().toString());
+            
+            pStmt.setString(5, kunde.getStrasse()+"."+kunde.getStrNr());
+            pStmt.setString(6, kunde.getPlz());
+            pStmt.setString(7, kunde.getOrt());
+            pStmt.setString(8, kunde.getNetz());
+            
+            pStmt.setString(9, kunde.getVertrag());
+            pStmt.setString(10, kunde.getHandy());
+            pStmt.setString(11, kunde.getImei());
+            pStmt.setString(12, kunde.getAktivierung());
+            
+            pStmt.setString(13, kunde.getMsisdn());
+            pStmt.setString(14, kunde.getVerlaengerung().toString());
+            
             int msg = pStmt.executeUpdate();
             System.out.println("SQL: " + sql + "\nRows affected: " + msg);
         } catch (SQLException ex) {
@@ -85,11 +117,25 @@ public class Controller {
         return this.editMode;
     }
 
-    public Connection getConnection() {
-        String url = "jdbc:mysql://localhost:3306/KuVer";
-        String user = "root";
-        String pass = "root";
-
+//    public Connection getConnection() {
+//        Connection con = null;
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver"); //JDBC Driver
+//        } catch (java.lang.ClassNotFoundException e) {
+//            System.err.print("ClassNotFoundException: ");
+//            System.err.println(e.getMessage());
+//        }
+//        try {
+//            con = (Connection) DriverManager.getConnection(this.url, this.username, this.password);
+//            //con = DriverManager.getConnection(this.url);
+//            System.out.println("Connected to database");
+//        } catch (SQLException ex) {
+//            System.err.println("SQLException: " + ex.getMessage());
+//        }
+//
+//        return con;
+//    }
+    public Connection getConnection(String user, String pass) {
         Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver"); //JDBC Driver
@@ -98,7 +144,7 @@ public class Controller {
             System.err.println(e.getMessage());
         }
         try {
-            con = (Connection) DriverManager.getConnection(url, user, pass);
+            con = (Connection) DriverManager.getConnection(this.url, user, pass);
             //con = DriverManager.getConnection(this.url);
             System.out.println("Connected to database");
         } catch (SQLException ex) {
@@ -130,16 +176,19 @@ public class Controller {
         this.curKunde = curKunde;
     }
 
-    public boolean login(User user) {
+    public boolean login(User loginUser) {
+        System.out.println("Login");
+        this.user = loginUser;
         boolean ok = false;
         Connection con = null;
         try {
-            con = getConnection();
-            String sql = "select * from user where name = '" + user.getName() + "' and password= '" + user.getPass() + "'";
+            con = getConnection(user.getName(), user.getPass());
+            String sql = "/* ping */ SELECT 1";
             java.sql.Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
                 ok = true;
+                this.user = loginUser;
             } else {
                 ok = false;
             }
@@ -149,7 +198,7 @@ public class Controller {
         } finally {
             try {
                 con.close();
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
             return ok;
@@ -162,12 +211,18 @@ public class Controller {
         boolean status = false;
         Connection con = null;
         try {
-            con = getConnection();
-            String sql = "Insert into user (name,password) values ('" + user.getName() + "','" + user.getPass() + "')";
+            con = getConnection(this.username, this.password);
+            String sql = "CREATE USER '" + user.getName() + "'@'localhost' IDENTIFIED BY '" + user.getPass() + "'; ";
+            System.out.println("SQL: " + sql);
             java.sql.Statement stmt = con.createStatement();
             int msg = stmt.executeUpdate(sql);
+            System.out.println("Create User => " + msg + " Rows affected.");
+
+            sql = "GRANT SELECT,INSERT,DELETE,UPDATE ON KuVer.* TO '" + user.getName() + "'@'localhost';";
+            msg = stmt.executeUpdate(sql);
+            System.out.println("Grant Privileges => " + msg + " Rows affected.");
+
             status = true;
-            System.out.println(msg + " Rows affected.");
         } catch (SQLException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -185,8 +240,8 @@ public class Controller {
         boolean ok = false;
         Connection con = null;
         try {
-            con = getConnection();
-            String sql = "select * from user where name = '" + name + "'";
+            con = getConnection(this.username, this.password);
+            String sql = "select user from mysql.user where user='" + name + "'";
             java.sql.Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
@@ -209,34 +264,35 @@ public class Controller {
 
     public String getVerificationCode() {
         System.out.println("Get Verificationcode");
-        String code = null;
-        Connection con = null;
-        try {
-            con = getConnection();
-            String sql = "select * from code";
-            java.sql.Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                code = rs.getString("code");
-            }
-            System.out.println("Code retrieved.");
-        } catch (SQLException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                con.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return code;
-        }
+//        String code = null;
+//        Connection con = null;
+//        try {
+//            con = getConnection("kuver","!@#$prtscr");
+//            String sql = "select * from KuVer.code";
+//            java.sql.Statement stmt = con.createStatement();
+//            ResultSet rs = stmt.executeQuery(sql);
+//            if (rs.next()) {
+//                code = rs.getString("code");
+//            }
+//            System.out.println("Code retrieved.");
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                con.close();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            return code;
+//        }
+        return "1234";
     }
 
     public void sucheKunde(JTable tabelle, Kunde kunde) {
         // Reset table
         DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
         model.getDataVector().removeAllElements();
-        
+
         // Create SQL query
         boolean andSetzen = false;
         String sql = "select * from new_table where ";
@@ -285,16 +341,18 @@ public class Controller {
             sql += "Ort like '" + kunde.getOrt() + "%' ";
             andSetzen = true;
         }
-        if(!andSetzen) // keine eingerenzung
-            sql+=" 1";
-        
+        if (!andSetzen) // keine eingerenzung
+        {
+            sql += " 1";
+        }
+
         System.out.println("SQL: " + sql);
 
         // execute query
         Connection con = null;
         Kunde tmp = new Kunde();
         try {
-            con = getConnection();
+            con = getConnection(user.getName(), user.getPass());
             java.sql.Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
