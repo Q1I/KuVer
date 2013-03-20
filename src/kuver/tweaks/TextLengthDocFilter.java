@@ -31,13 +31,12 @@ public class TextLengthDocFilter extends DocumentFilter {
     }
 
     private boolean verifyText(String text) {
-        return text.length() <= maxTextLength;
+        return text.length()-1 <= maxTextLength;
     }
 
     @Override
     public void insertString(DocumentFilter.FilterBypass fb, int offset, String string,
             AttributeSet attr) throws BadLocationException {
-
         Document doc = fb.getDocument();
         String oldText = doc.getText(0, doc.getLength());
         StringBuilder sb = new StringBuilder(oldText);
@@ -52,10 +51,12 @@ public class TextLengthDocFilter extends DocumentFilter {
     @Override
     public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
             throws BadLocationException {
+//        System.out.println("replace:\n--->"+text);
+//        System.out.println("length: "+length);
+//        System.out.println("offSet: "+offset);
         if (!checkType(text)) {
             return;
         }
-
         Document doc = fb.getDocument();
         String oldText = doc.getText(0, doc.getLength());
         StringBuilder sb = new StringBuilder(oldText);
@@ -81,7 +82,7 @@ public class TextLengthDocFilter extends DocumentFilter {
 
     private boolean checkType(String text) {
         if (type == TYPE_NUMERIC) {
-            if (!text.matches("[0-9]")) {
+            if (!text.matches("[0-9]*")) {
                 return false;
             }
         }

@@ -5,16 +5,22 @@
 package kuver;
 
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
-import java.awt.event.MouseEvent;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import kuver.definitions.Comment;
 import kuver.definitions.Kunde;
 import kuver.definitions.User;
 
@@ -25,12 +31,19 @@ import kuver.definitions.User;
 public class Controller {
 
     // todo: 
-//        daten anpassen
-//        kommentare -> datum/alles anzeigen
-//    user loeschen
-//    menu weg
+//        daten anpassen +++
+//        kommentare -> datum/alles anzeigen +--
+//    kunde loeschen  +++
+//    menu weg +++
+    //bearbeiten kunden --> tabelle aktualisieren +++
+    // details felder anpassen +++
     private boolean editMode;
     private Kunde curKunde;
+    private List<Comment> curComments;
+    private Comment curComment;
+    private int curCommentIndex;
+    private boolean commentNewMode;
+    private boolean commentEditMode;
     // Root
     private String url = "jdbc:mysql://localhost:3306/KuVer";
     private String username = "root";
@@ -55,43 +68,48 @@ public class Controller {
         }
     }
 
-    public void addKunde(JTable tabelle, Kunde kunde) {
+    public boolean addKunde(JTable tabelle, Kunde kunde) {
+        // Datum Formatieren
+        SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
         // Add into db
-        String sql = "INSERT into new_table("
+        String sql = "INSERT into Kunden("
                 + "Anrede, Name, Vorname, Geburtsdatum, "
                 + "Strasse, PLZ, Ort, Netz, "
-                + "Vertrag, Handy, IMEI, Aktivierungsdatum, "
-                + "MSISDN, Verlaengerbar "
+                + "Vertragsart, Handy, IMEI, MSISDN, "
+                + "Aktivierungsdatum, Verlaengerbar, Vertragsnummer, Klasse "
                 + ") VALUES ("
                 + "?,?,?,?,"
                 + "?,?,?,?,"
                 + "?,?,?,?,"
-                + "?,?)";
+                + "?,?,?,?)";
         Connection con = getConnection(user.getName(), user.getPass());
         try {
             PreparedStatement pStmt = (PreparedStatement) con.prepareStatement(sql);
             pStmt.setString(1, kunde.getAnrede());
             pStmt.setString(2, kunde.getName());
             pStmt.setString(3, kunde.getVorname());
-            pStmt.setString(4, kunde.getGebDat().toString());
-            
-            pStmt.setString(5, kunde.getStrasse()+"."+kunde.getStrNr());
+            pStmt.setString(4, f.format(kunde.getGebDat().getTime()));
+
+            pStmt.setString(5, kunde.getStrasse() + "." + kunde.getStrNr());
             pStmt.setString(6, kunde.getPlz());
             pStmt.setString(7, kunde.getOrt());
             pStmt.setString(8, kunde.getNetz());
-            
-            pStmt.setString(9, kunde.getVertrag());
+
+            pStmt.setString(9, kunde.getVertragsArt());
             pStmt.setString(10, kunde.getHandy());
             pStmt.setString(11, kunde.getImei());
-            pStmt.setString(12, kunde.getAktivierung());
-            
-            pStmt.setString(13, kunde.getMsisdn());
-            pStmt.setString(14, kunde.getVerlaengerung().toString());
-            
+            pStmt.setString(12, kunde.getMsisdn());
+
+            pStmt.setString(13, f.format(kunde.getAktivierung().getTime()));
+            pStmt.setString(14, f.format(kunde.getVerlaengerung().getTime()));
+            pStmt.setString(15, kunde.getVertragsNr());
+            pStmt.setString(16, "" + kunde.getKlasse());
+
             int msg = pStmt.executeUpdate();
             System.out.println("SQL: " + sql + "\nRows affected: " + msg);
         } catch (SQLException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         } finally {
             // Close connection
             try {
@@ -100,17 +118,33 @@ public class Controller {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        // Add into table
+        // Reset table
         DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
+        model.getDataVector().removeAllElements();
+        // Add into table
         model.addRow(
                 new Object[]{
-                    kunde.getId(),
+                    "xxx",
+                    kunde.getAnrede(),//
                     kunde.getName(),
                     kunde.getVorname(),
-                    kunde.getStrasse(),
+                    f.format(kunde.getGebDat().getTime()),
+                    kunde.getStrasse(),//
+                    kunde.getStrNr(),
                     kunde.getPlz(),
-                    kunde.getOrt(),});
-
+                    kunde.getOrt(),
+                    kunde.getHandy(),
+                    kunde.getNetz(),//
+                    kunde.getVertragsArt(),
+                    kunde.getVertragsNr(),
+                    kunde.getImei(),
+                    kunde.getMsisdn(),
+                    f.format(kunde.getAktivierung().getTime()),//
+                    f.format(kunde.getVerlaengerung().getTime()),
+                    0,
+                    kunde.getKlasse()
+                });
+        return true;
     }
 
     public boolean isEditMode() {
@@ -158,8 +192,86 @@ public class Controller {
         this.editMode = b;
     }
 
-    void updateKunde(Kunde kunde) {
+    public boolean updateKunde(JTable tabelle, Kunde kunde) {
         // Update
+        boolean ok = false;
+        // Datum Formatieren
+        SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+        String sql = "Update Kunden set "
+                + "Anrede = ?, Name =?, Vorname=?, Geburtsdatum=?, "
+                + "Strasse = ?, PLZ=?, Ort=?, Netz=?, "
+                + "Vertragsart= ?, Handy= ?, IMEI = ?, MSISDN = ?, "
+                + "Aktivierungsdatum = ?, Verlaengerbar = ?, Vertragsnummer = ?, Klasse = ?"
+                + " where ID =" + kunde.getId();
+        Connection con = null;
+        try {
+            con = getConnection(user.getName(), user.getPass());
+
+            PreparedStatement pStmt = (PreparedStatement) con.prepareStatement(sql);
+            pStmt.setString(1, kunde.getAnrede());
+            pStmt.setString(2, kunde.getName());
+            pStmt.setString(3, kunde.getVorname());
+            pStmt.setString(4, f.format(kunde.getGebDat().getTime()));
+
+            pStmt.setString(5, kunde.getStrasse() + "." + kunde.getStrNr());
+            pStmt.setString(6, kunde.getPlz());
+            pStmt.setString(7, kunde.getOrt());
+            pStmt.setString(8, kunde.getNetz());
+
+            pStmt.setString(9, kunde.getVertragsArt());
+            pStmt.setString(10, kunde.getHandy());
+            pStmt.setString(11, kunde.getImei());
+            pStmt.setString(12, kunde.getMsisdn());
+
+            pStmt.setString(13, f.format(kunde.getAktivierung().getTime()));
+            pStmt.setString(14, f.format(kunde.getVerlaengerung().getTime()));
+            pStmt.setString(15, kunde.getVertragsNr());
+            pStmt.setString(16, "" + kunde.getKlasse());
+
+            System.out.println("SQL: " + sql);
+
+            int rows = pStmt.executeUpdate();
+            System.out.println("Update: " + rows + " affected");
+            if (rows > 0) {
+                ok = true;
+            }
+
+            // reset table
+            DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
+            model.getDataVector().removeAllElements();
+            model.addRow(
+                    new Object[]{
+                        kunde.getId(),
+                        kunde.getAnrede(),//
+                        kunde.getName(),
+                        kunde.getVorname(),
+                        f.format(kunde.getGebDat().getTime()),
+                        kunde.getStrasse(),//
+                        kunde.getStrNr(),
+                        kunde.getPlz(),
+                        kunde.getOrt(),
+                        kunde.getHandy(),
+                        kunde.getNetz(),//
+                        kunde.getVertragsArt(),
+                        kunde.getVertragsNr(),
+                        kunde.getImei(),
+                        kunde.getMsisdn(),
+                        f.format(kunde.getAktivierung().getTime()),//
+                        f.format(kunde.getVerlaengerung().getTime()),
+                        0, // todo: number comments
+                        kunde.getKlasse()
+                    });
+        } catch (SQLException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (Exception ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return ok;
+        }
     }
 
     /**
@@ -285,7 +397,7 @@ public class Controller {
 //            }
 //            return code;
 //        }
-        return "1234";
+        return "ltt>(,H";
     }
 
     public void sucheKunde(JTable tabelle, Kunde kunde) {
@@ -293,9 +405,12 @@ public class Controller {
         DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
         model.getDataVector().removeAllElements();
 
+        // Datum Formatieren
+        SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+
         // Create SQL query
         boolean andSetzen = false;
-        String sql = "select * from new_table where ";
+        String sql = "select * from Kunden where ";
         if (kunde.getId() != 0) {
             sql += "ID = " + kunde.getId() + " ";
             andSetzen = true;
@@ -312,6 +427,13 @@ public class Controller {
                 sql += "AND ";
             }
             sql += "vorname like '" + kunde.getVorname() + "%' ";
+            andSetzen = true;
+        }
+        if (kunde.getGebDat() != null) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "Geburtsdatum like '" + f.format(kunde.getGebDat().getTime()) + "%' ";
             andSetzen = true;
         }
         if (!kunde.getStrasse().isEmpty()) {
@@ -341,6 +463,21 @@ public class Controller {
             sql += "Ort like '" + kunde.getOrt() + "%' ";
             andSetzen = true;
         }
+        // Verl
+        if (kunde.getVerlaengerung() != null) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "Verlaengerbar like '" + f.format(kunde.getVerlaengerung().getTime()) + "%' ";
+            andSetzen = true;
+        }
+        if (!kunde.getVertragsNr().isEmpty()) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "Vertragsnummer like '" + kunde.getVertragsNr() + "%' ";
+            andSetzen = true;
+        }
         if (!andSetzen) // keine eingerenzung
         {
             sql += " 1";
@@ -351,29 +488,85 @@ public class Controller {
         // execute query
         Connection con = null;
         Kunde tmp = new Kunde();
+
         try {
             con = getConnection(user.getName(), user.getPass());
             java.sql.Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
+                // Kunde
                 tmp.reset();
                 tmp.setId(rs.getInt("ID"));
+                tmp.setKlasse(rs.getInt("Klasse"));
                 tmp.setAnrede(rs.getString("Anrede"));
                 tmp.setName(rs.getString("Name"));
                 tmp.setVorname(rs.getString("Vorname"));
+                // Bday
+                Calendar cal = Calendar.getInstance();
+                try {
+                    cal.setTime(f.parse(rs.getString("Geburtsdatum")));
+                } catch (ParseException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tmp.setGebDat(cal);
                 tmp.setStrasse(rs.getString("Strasse"));
 //                tmp.setStrNr(rs.getInt("StrNr"));
-                tmp.setPlz(Integer.toString(rs.getInt("PLZ"))); // todo: plz ist string
+                tmp.setPlz(rs.getString("PLZ")); // todo: plz ist string
                 tmp.setOrt(rs.getString("Ort"));
+                tmp.setHandy(rs.getString("Handy"));
+                tmp.setNetz(rs.getString("Netz"));
+                tmp.setVertragsArt(rs.getString("Vertragsart"));
+                tmp.setVertragsNr(rs.getString("Vertragsnummer"));
+                tmp.setImei(rs.getString("IMEI"));
+                tmp.setMsisdn(rs.getString("MSISDN"));
+                // Aktivierung
+                Calendar calAkt = Calendar.getInstance();
+                try {
+                    calAkt.setTime(f.parse(rs.getString("Aktivierungsdatum")));
+                } catch (ParseException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tmp.setAktivierung(calAkt);
+                // Verlaengerbar
+                Calendar calVerl = Calendar.getInstance();
+                try {
+                    calVerl.setTime(f.parse(rs.getString("Verlaengerbar")));
+                } catch (ParseException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tmp.setVerlaengerung(calVerl);
+
+                // Query Kommentare
+                String sqlCmnt = "SELECT count(*) as anzahl FROM Kunden_comment WHERE id = " + tmp.getId();
+                java.sql.Statement stmtCmnt = con.createStatement();
+                ResultSet rsCmnt = stmtCmnt.executeQuery(sqlCmnt);
+                if (rsCmnt.next()) {
+                    tmp.setKommentare(rsCmnt.getInt("anzahl"));
+                }
+
                 // add to jtable
                 model.addRow(
                         new Object[]{
                             tmp.getId(),
+                            tmp.getAnrede(),//
                             tmp.getName(),
                             tmp.getVorname(),
-                            tmp.getStrasse(),
+                            f.format(tmp.getGebDat().getTime()),
+                            tmp.getStrasse(),//
+                            tmp.getStrNr(),
                             tmp.getPlz(),
-                            tmp.getOrt(),});
+                            tmp.getOrt(),
+                            tmp.getHandy(),
+                            tmp.getNetz(),//
+                            tmp.getVertragsArt(),
+                            tmp.getVertragsNr(),
+                            tmp.getImei(),
+                            tmp.getMsisdn(),
+                            f.format(tmp.getAktivierung().getTime()),//
+                            f.format(tmp.getVerlaengerung().getTime()),
+                            tmp.getKommentare(),
+                            tmp.getKlasse()
+                        });
             }
             System.out.println("Code retrieved.");
         } catch (SQLException ex) {
@@ -384,6 +577,273 @@ public class Controller {
             } catch (SQLException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    public boolean deleteKunde(JTable tabelle, int id) {
+        System.out.println("Delete Kunde");
+        boolean ok = false;
+        Connection con = null;
+        try {
+            con = getConnection(user.getName(), user.getPass());
+            String sql = "Delete from Kunden where ID='" + id + "'";
+            System.out.println("SQL: " + sql);
+            java.sql.Statement stmt = con.createStatement();
+            int msg = stmt.executeUpdate(sql);
+            System.out.println("Delete: " + msg + " rows affected.");
+            if (msg > 0) {
+                ok = true;
+            }
+
+            // reset table
+            DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
+            model.getDataVector().removeAllElements();
+            model.addRow(new Object[]{});
+
+        } catch (Exception ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        } finally {
+            try {
+                con.close();
+            } catch (Exception ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+            return ok;
+        }
+
+    }
+
+    List<Comment> getComments(int id) {
+        // Get all comments of specified id
+        List<Comment> list = null;
+        Connection con = null;
+        String cmt = null;
+        // Datum Formatieren
+        SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            con = getConnection(user.getName(), user.getPass());
+            String sql = "SELECT Datum,Comment from Kunden_comment where ID = '" + id + "'";
+            java.sql.Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            list = new ArrayList<Comment>();
+            while (rs.next()) {
+                Calendar date = Calendar.getInstance();
+                try {
+                    date.setTime(f.parse(rs.getString("Datum")));
+                } catch (ParseException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    date = null;
+                }
+                cmt = rs.getString("Comment");
+                Comment tmp = new Comment(id, date, cmt);
+                list.add(tmp);
+                System.out.println("id: " + id + "\tdate: " + f.format(date.getTime()) + "\tcmt:" + cmt);
+            }
+            System.out.println("Comments retrievd");
+        } catch (SQLException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                con.close();
+            } catch (Exception ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+        if (list.isEmpty()) {
+            list = null;
+        }
+
+        this.curComments = list;
+
+        return list;
+    }
+
+    /**
+     * @return the curComments
+     */
+    public List<Comment> getCurComments() {
+        return curComments;
+    }
+
+    /**
+     * @param curComments the curComments to set
+     */
+    public void setCurComments(List<Comment> curComments) {
+        this.curComments = curComments;
+    }
+
+    /**
+     * @return the curComment
+     */
+    public Comment getCurComment() {
+        return curComment;
+    }
+
+    /**
+     * @param curComment the curComment to set
+     */
+    public void setCurComment(Comment curComment, int index) {
+        this.curComment = curComment;
+        this.setCurCommentIndex(index);
+    }
+
+    public boolean deleteComment(JComboBox box, int index, Comment cmt) {
+        System.out.println("Delete Comment");
+        boolean ok = false;
+        Connection con = null;
+        SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+        try {
+            con = getConnection(user.getName(), user.getPass());
+            String sql = "Delete from Kunden_comment where ID='" + cmt.getId()
+                    + "' AND Datum = '" + f.format(cmt.getDate().getTime())
+                    + "' AND Comment = '" + cmt.getComment() + "'";
+            System.out.println("SQL: " + sql);
+            java.sql.Statement stmt = con.createStatement();
+            int msg = stmt.executeUpdate(sql);
+            System.out.println("Delete: " + msg + " rows affected.");
+            if (msg > 0) {
+                ok = true;
+            }
+            // reset cb
+            DefaultComboBoxModel model = (DefaultComboBoxModel) box.getModel();
+            model.removeElementAt(index);
+
+        } catch (Exception ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            ok = false;
+        } finally {
+            try {
+                con.close();
+            } catch (Exception ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+            return ok;
+        }
+
+    }
+
+    /**
+     * @return the curCommentIndex
+     */
+    public int getCurCommentIndex() {
+        return curCommentIndex;
+    }
+
+    /**
+     * @param curCommentIndex the curCommentIndex to set
+     */
+    public void setCurCommentIndex(int curCommentIndex) {
+        this.curCommentIndex = curCommentIndex;
+    }
+
+    /**
+     * @return the commentNewMode
+     */
+    public boolean isCommentNewMode() {
+        return commentNewMode;
+    }
+
+    /**
+     * @param commentNewMode the commentNewMode to set
+     */
+    public void setCommentNewMode(boolean commentNewMode) {
+        this.commentNewMode = commentNewMode;
+    }
+
+    /**
+     * @return the commentEditMode
+     */
+    public boolean isCommentEditMode() {
+        return commentEditMode;
+    }
+
+    /**
+     * @param commentEditMode the commentEditMode to set
+     */
+    public void setCommentEditMode(boolean commentEditMode) {
+        this.commentEditMode = commentEditMode;
+    }
+
+    public boolean addComment(Comment cmt) {
+        System.out.println("Add Comment");
+        // Datum Formatieren
+        SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+        boolean ok = false;
+        // Add into db
+        String sql = "INSERT into Kunden_comment("
+                + "ID, Datum, Comment"
+                + ") VALUES ("
+                + "?,?,?)";
+        Connection con = getConnection(user.getName(), user.getPass());
+        System.out.println("try addComment");
+        try {
+            PreparedStatement pStmt = (PreparedStatement) con.prepareStatement(sql);
+            pStmt.setInt(1, cmt.getId());
+            pStmt.setString(2, f.format(cmt.getDate().getTime()));
+            pStmt.setString(3, cmt.getComment());
+
+            int msg = pStmt.executeUpdate();
+            System.out.println("SQL: " + sql + "\nRows affected: " + msg);
+            if (msg > 0) {
+                ok = true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            // Close connection
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+            return ok;
+        }
+    }
+
+    boolean updateComment(Comment oldCmt, Comment cmt) {
+        System.out.println("updateComment");
+        // Update
+        boolean ok = false;
+        // Datum Formatieren
+        SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+        String sql = "Update Kunden_comment set "
+                + "Datum =?, Comment=?"
+                + " where ID = ? and Datum = ? and Comment=?";
+        Connection con = null;
+        System.out.println("try updateComment");
+        try {
+            con = getConnection(user.getName(), user.getPass());
+
+            PreparedStatement pStmt = (PreparedStatement) con.prepareStatement(sql);
+            pStmt.setString(1, f.format(cmt.getDate().getTime()));
+            pStmt.setString(2, cmt.getComment());
+
+            pStmt.setInt(3, cmt.getId());
+            pStmt.setString(4, f.format(oldCmt.getDate().getTime()));
+            pStmt.setString(5, oldCmt.getComment());
+            System.out.println("SQL: " + sql);
+
+            int rows = pStmt.executeUpdate();
+            System.out.println("Update: " + rows + " affected");
+            if (rows > 0) {
+                ok = true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (Exception ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return ok;
         }
     }
 }

@@ -70,17 +70,17 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="passTf" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="passTf" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="codeTf" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="registrierenBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -101,8 +101,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="userTf">
     </Component>
-    <Component class="javax.swing.JTextField" name="passTf">
-    </Component>
     <Component class="javax.swing.JButton" name="registrierenBtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Registrieren"/>
@@ -122,6 +120,8 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Passwort"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JPasswordField" name="passTf">
     </Component>
   </SubComponents>
 </Form>

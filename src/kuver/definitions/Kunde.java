@@ -13,6 +13,7 @@ import java.util.Date;
  */
 public class Kunde {
     private int id;
+    private int klasse;
     private String anrede;
     private String name;
     private String vorname;
@@ -24,13 +25,16 @@ public class Kunde {
     private String plz;
     private String netz;
     
-    private String vertrag;
+    private String vertragsNr;
+    private String vertragsArt;
     private String handy;
     private String imei;
-    private String aktivierung;
+    private Calendar aktivierung;
     
     private String msisdn;
     private Calendar verlaengerung = null;
+    
+    private int kommentare=0;
 
     /**
      * @return the name
@@ -168,7 +172,14 @@ public class Kunde {
         this.setStrNr(0);
         this.setOrt(null);
         this.setPlz(null);
-        // todo: rest
+        this.vertragsArt=null;
+        this.vertragsNr=null;
+        this.handy=null;
+        this.imei=null;
+        this.aktivierung=null;
+        this.msisdn=null;
+        this.verlaengerung=null;
+        this.kommentare=0;
     }
 
     /**
@@ -184,21 +195,7 @@ public class Kunde {
     public void setNetz(String netz) {
         this.netz = netz;
     }
-
-    /**
-     * @return the vertrag
-     */
-    public String getVertrag() {
-        return vertrag;
-    }
-
-    /**
-     * @param vertrag the vertrag to set
-     */
-    public void setVertrag(String vertrag) {
-        this.vertrag = vertrag;
-    }
-
+    
     /**
      * @return the handy
      */
@@ -230,14 +227,14 @@ public class Kunde {
     /**
      * @return the aktivierung
      */
-    public String getAktivierung() {
+    public Calendar getAktivierung() {
         return aktivierung;
     }
 
     /**
      * @param aktivierung the aktivierung to set
      */
-    public void setAktivierung(String aktivierung) {
+    public void setAktivierung(Calendar aktivierung) {
         this.aktivierung = aktivierung;
     }
 
@@ -267,5 +264,61 @@ public class Kunde {
      */
     public void setVerlaengerung(Calendar verlaengerung) {
         this.verlaengerung = verlaengerung;
+    }
+
+    /**
+     * @return the klasse
+     */
+    public int getKlasse() {
+        return klasse;
+    }
+
+    /**
+     * @param klasse the klasse to set
+     */
+    public void setKlasse(int klasse) {
+        this.klasse = klasse;
+    }
+
+    /**
+     * @return the vertragsNr
+     */
+    public String getVertragsNr() {
+        return vertragsNr;
+    }
+
+    /**
+     * @param vertragsNr the vertragsNr to set
+     */
+    public void setVertragsNr(String vertragsNr) {
+        this.vertragsNr = vertragsNr;
+    }
+
+    /**
+     * @return the vertragsArt
+     */
+    public String getVertragsArt() {
+        return vertragsArt;
+    }
+
+    /**
+     * @param vertragsArt the vertragsArt to set
+     */
+    public void setVertragsArt(String vertragsArt) {
+        this.vertragsArt = vertragsArt;
+    }
+
+    /**
+     * @return the kommentare
+     */
+    public int getKommentare() {
+        return kommentare;
+    }
+
+    /**
+     * @param kommentare the kommentare to set
+     */
+    public void setKommentare(int kommentare) {
+        this.kommentare = kommentare;
     }
 }
