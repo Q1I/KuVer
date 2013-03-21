@@ -12,29 +12,27 @@ import java.util.Date;
  * @author q1
  */
 public class Kunde {
+
     private int id;
-    private int klasse;
+    private String klasse;
     private String anrede;
     private String name;
     private String vorname;
     private Calendar gebDat = null;
-    
     private String strasse;
-    private int strNr;
     private String ort;
     private String plz;
-    private String netz;
-    
     private String vertragsNr;
     private String vertragsArt;
-    private String handy;
+    private String rufNr;
+    private String handyMarke;
+    private String handyModell;
     private String imei;
-    private Calendar aktivierung;
-    
     private String msisdn;
+    private String netz;
+    private Calendar aktivierung = null;
     private Calendar verlaengerung = null;
-    
-    private int kommentare=0;
+    private int kommentare = 0;
 
     /**
      * @return the name
@@ -68,7 +66,7 @@ public class Kunde {
      * @return the strasse
      */
     public String getStrasse() {
-        return strasse;
+        return this.strasse;
     }
 
     /**
@@ -120,7 +118,6 @@ public class Kunde {
         this.gebDat = gebDat;
     }
 
-
     /**
      * @return the id
      */
@@ -152,15 +149,12 @@ public class Kunde {
     /**
      * @return the strNr
      */
-    public int getStrNr() {
-        return strNr;
-    }
-
-    /**
-     * @param strNr the strNr to set
-     */
-    public void setStrNr(int strNr) {
-        this.strNr = strNr;
+    public String getStrNr() {
+        if (strasse == null) {
+            return null;
+        }else{
+            return strasse.substring(strasse.indexOf('.')+1,strasse.length());
+        }
     }
 
     public void reset() {
@@ -169,17 +163,17 @@ public class Kunde {
         this.setName(null);
         this.setVorname(null);
         this.setStrasse(null);
-        this.setStrNr(0);
         this.setOrt(null);
         this.setPlz(null);
-        this.vertragsArt=null;
-        this.vertragsNr=null;
-        this.handy=null;
-        this.imei=null;
-        this.aktivierung=null;
-        this.msisdn=null;
-        this.verlaengerung=null;
-        this.kommentare=0;
+        this.vertragsArt = null;
+        this.vertragsNr = null;
+        this.rufNr = null;
+        this.imei = null;
+        this.aktivierung = null;
+        this.msisdn = null;
+        this.verlaengerung = null;
+        this.kommentare = 0;
+        this.klasse = null;
     }
 
     /**
@@ -195,19 +189,19 @@ public class Kunde {
     public void setNetz(String netz) {
         this.netz = netz;
     }
-    
+
     /**
-     * @return the handy
+     * @return the rufNr
      */
-    public String getHandy() {
-        return handy;
+    public String getRufNr() {
+        return rufNr;
     }
 
     /**
-     * @param handy the handy to set
+     * @param rufNr the rufNr to set
      */
-    public void setHandy(String handy) {
-        this.handy = handy;
+    public void setRufNr(String rufNr) {
+        this.rufNr = rufNr;
     }
 
     /**
@@ -269,14 +263,14 @@ public class Kunde {
     /**
      * @return the klasse
      */
-    public int getKlasse() {
+    public String getKlasse() {
         return klasse;
     }
 
     /**
      * @param klasse the klasse to set
      */
-    public void setKlasse(int klasse) {
+    public void setKlasse(String klasse) {
         this.klasse = klasse;
     }
 
@@ -320,5 +314,64 @@ public class Kunde {
      */
     public void setKommentare(int kommentare) {
         this.kommentare = kommentare;
+    }
+
+    /**
+     * @return the handyMarke
+     */
+    public String getHandyMarke() {
+        return handyMarke;
+    }
+
+    /**
+     * @param handyMarke the handyMarke to set
+     */
+    public void setHandyMarke(String handyMarke) {
+        this.handyMarke = handyMarke;
+    }
+
+    /**
+     * @return the handyModell
+     */
+    public String getHandyModell() {
+        return handyModell;
+    }
+
+    /**
+     * @param handyModell the handyModell to set
+     */
+    public void setHandyModell(String handyModell) {
+        this.handyModell = handyModell;
+    }
+
+    public String getVertragsArtCB() {
+        if(vertragsArt==null)
+            return null;
+        if (vertragsArt.contains(":")) {
+            return vertragsArt.substring(0, vertragsArt.indexOf(':')-1); // -1 because of space => 'DSL : Notiz'
+        } else {
+            return vertragsArt;
+        }
+    }
+    
+    public String getVertragsArtTf() {
+        if(vertragsArt==null)
+            return null;
+        if (vertragsArt.contains(":")) {
+            return vertragsArt.substring(vertragsArt.indexOf(':')+2,vertragsArt.length());
+        } else {
+            return null;
+        }
+    }
+
+    public String getStrasseOhneNr() {
+        if (strasse == null) {
+            return null;
+        }
+        if (strasse.contains(".")) {
+            return strasse.substring(0, strasse.indexOf('.'));
+        } else {
+            return strasse;
+        }
     }
 }

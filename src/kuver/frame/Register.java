@@ -40,7 +40,7 @@ public class Register extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         codeTf = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        passTf = new javax.swing.JPasswordField();
+        passTf = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registrierung");
@@ -124,7 +124,7 @@ public class Register extends javax.swing.JDialog {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(passTf.getPassword().length<7){
+        if(passTf.getText().length()<7){
             JOptionPane.showMessageDialog(this,
                     "Fehler: Passwort muss aus mehr als 6 Buchstaben bestehen!",
                     "Ungültiges Passwort",
@@ -145,7 +145,7 @@ public class Register extends javax.swing.JDialog {
             return;
         }
         
-        User user = new User(userTf.getText(),passTf.getPassword().toString());
+        User user = new User(userTf.getText(),passTf.getText());
         
         // Check if redundant username
         if(!controller.checkUsername(user.getName())){
@@ -213,7 +213,7 @@ public class Register extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField passTf;
+    private javax.swing.JTextField passTf;
     private javax.swing.JButton registrierenBtn;
     private javax.swing.JTextField userTf;
     // End of variables declaration//GEN-END:variables

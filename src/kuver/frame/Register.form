@@ -121,7 +121,7 @@
         <Property name="text" type="java.lang.String" value="Passwort"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JPasswordField" name="passTf">
+    <Component class="javax.swing.JTextField" name="passTf">
     </Component>
   </SubComponents>
 </Form>

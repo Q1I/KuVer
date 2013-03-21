@@ -14,6 +14,15 @@
             <Property name="text" type="java.lang.String" value="Optionen"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuBackup">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Datensicherung"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuBackupActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuBeenden">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Beenden"/>
@@ -109,29 +118,29 @@
         <Component class="javax.swing.JTable" name="tabelle">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="19" rowCount="0">
+              <Table columnCount="20" rowCount="0">
                 <Column editable="false" title="ID" type="java.lang.Integer"/>
                 <Column editable="false" title="Anrede" type="java.lang.String"/>
                 <Column editable="false" title="Name" type="java.lang.String"/>
                 <Column editable="false" title="Vorname" type="java.lang.String"/>
                 <Column editable="false" title="Geburtsdatum" type="java.lang.Object"/>
                 <Column editable="false" title="Strasse" type="java.lang.String"/>
-                <Column editable="false" title="Nr" type="java.lang.Integer"/>
                 <Column editable="false" title="PLZ" type="java.lang.String"/>
                 <Column editable="false" title="Ort" type="java.lang.String"/>
-                <Column editable="false" title="Handy" type="java.lang.String"/>
-                <Column editable="false" title="Netz" type="java.lang.String"/>
-                <Column editable="false" title="Vertragsart" type="java.lang.String"/>
-                <Column editable="false" title="VertragsNr" type="java.lang.String"/>
+                <Column editable="false" title="RufNr" type="java.lang.String"/>
+                <Column editable="false" title="H-Marke" type="java.lang.String"/>
+                <Column editable="false" title="H-Modell" type="java.lang.String"/>
+                <Column editable="false" title="V-Art" type="java.lang.String"/>
+                <Column editable="false" title="V-Nr" type="java.lang.String"/>
                 <Column editable="false" title="IMEI" type="java.lang.String"/>
                 <Column editable="false" title="MSISDN" type="java.lang.String"/>
-                <Column editable="false" title="Registrierung" type="java.lang.Object"/>
+                <Column editable="false" title="Netz" type="java.lang.String"/>
+                <Column editable="false" title="Aktivierung" type="java.lang.Object"/>
                 <Column editable="false" title="Verl&#xe4;ngerbar" type="java.lang.Object"/>
                 <Column editable="false" title="Kommentare" type="java.lang.Integer"/>
                 <Column editable="false" title="Klasse" type="java.lang.Integer"/>
               </Table>
             </Property>
-            <Property name="cellSelectionEnabled" type="boolean" value="false"/>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="1">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="45" resizable="true">
@@ -164,7 +173,32 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="40" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -199,26 +233,6 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="40" resizable="true">
                   <Title/>
                   <Editor/>
@@ -231,7 +245,7 @@
                 </Column>
               </TableColumnModel>
             </Property>
-            <Property name="rowSelectionAllowed" type="boolean" value="true"/>
+            <Property name="columnSelectionAllowed" type="boolean" value="true"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
@@ -285,11 +299,15 @@
     <Container class="javax.swing.JTabbedPane" name="tabPanel">
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="tabPanelStateChanged"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tabPanelKeyPressed"/>
       </Events>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
         <Container class="javax.swing.JPanel" name="startPanel">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="startPanelKeyReleased"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Start">
@@ -407,6 +425,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loginBtnActionPerformed"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="loginBtnKeyPressed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="registerBtn">
@@ -466,8 +485,7 @@
                                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                               <Component id="neuMsisdnTf" alignment="0" max="32767" attributes="0"/>
                                               <Component id="neuImeiTf" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="neuVerArtTf" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="neuHandyTf" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="neuRufNrTf" alignment="0" max="32767" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="neuStrasseTf" min="-2" pref="253" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
@@ -476,6 +494,7 @@
                                                   <Component id="neuStrNrTf" min="-2" pref="39" max="-2" attributes="0"/>
                                               </Group>
                                               <Component id="neuNameTf" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="neuVerNrTf" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="neuAnredeCB" min="-2" pref="90" max="-2" attributes="0"/>
                                       </Group>
@@ -486,24 +505,45 @@
                                           <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel48" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel61" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="neuVornameTf" max="32767" attributes="0"/>
-                                          <Group type="102" attributes="0">
-                                              <Component id="neuPlzTf" min="-2" pref="94" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="neuOrtTf" pref="204" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="neuNetzTf" min="-2" pref="330" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <Component id="neuPlzTf" min="-2" pref="94" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="neuOrtTf" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Component id="neuKlasseTf" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                                              <Component id="neuVornameTf" alignment="0" max="32767" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="neuVerArtCB" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                                                      <Component id="neuHandyMarkeTf" alignment="0" min="-2" pref="136" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Group type="102" attributes="0">
+                                                          <Component id="jLabel62" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                          <Component id="neuHandyModellTf" max="32767" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="102" attributes="0">
+                                                          <Component id="jLabel52" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                          <Component id="neuVerArtTf" min="-2" pref="182" max="-2" attributes="0"/>
+                                                      </Group>
+                                                  </Group>
+                                              </Group>
                                           </Group>
-                                          <Component id="neuVerNrTf" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="neuNetzTf" max="32767" attributes="0"/>
-                                          <Component id="neuKlasseTf" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="212" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="177" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -550,21 +590,27 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="neuHandyTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="neuRufNrTf" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="neuNetzTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="neuHandyMarkeTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel62" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="neuHandyModellTf" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="neuVerArtTf" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="neuVerNrTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="neuVerArtCB" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="neuVerArtTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel52" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="neuImeiTf" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel35" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel61" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="neuNetzTf" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -677,21 +723,21 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel32">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Handy"/>
+                <Property name="text" type="java.lang.String" value="Rufnummer"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="neuHandyTf">
+            <Component class="javax.swing.JTextField" name="neuRufNrTf">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel33">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Vertragsart"/>
+                <Property name="text" type="java.lang.String" value="Vertragsnummer"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="neuVerArtTf">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel34">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Vertragsnummer"/>
+                <Property name="text" type="java.lang.String" value="Vertragsart : Notiz"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="neuImeiTf">
@@ -730,7 +776,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel13">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Netz"/>
+                <Property name="text" type="java.lang.String" value="Handymarke : Modell"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="neuNetzTf">
@@ -754,6 +800,40 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="neuKlasseTf">
+            </Component>
+            <Component class="javax.swing.JComboBox" name="neuVerArtCB">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="7">
+                    <StringItem index="0" value=""/>
+                    <StringItem index="1" value="DSL"/>
+                    <StringItem index="2" value="EWP"/>
+                    <StringItem index="3" value="Haussteuerung"/>
+                    <StringItem index="4" value="Mobilfunk"/>
+                    <StringItem index="5" value="Prepaid"/>
+                    <StringItem index="6" value="Strom"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel52">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=":"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel61">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Netz"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="neuHandyMarkeTf">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel62">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=":"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="neuHandyModellTf">
             </Component>
           </SubComponents>
         </Container>
@@ -1027,8 +1107,7 @@
                                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                                           <Component id="detailsMsisdnTf" alignment="0" max="32767" attributes="0"/>
                                                           <Component id="detailsImeiTf" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="detailsVerArtTf" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="detailsHandyTf" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="detailsRufNrTf" alignment="0" max="32767" attributes="0"/>
                                                           <Group type="102" alignment="0" attributes="0">
                                                               <Component id="detailsStrasseTf" min="-2" pref="253" max="-2" attributes="0"/>
                                                               <EmptySpace max="-2" attributes="0"/>
@@ -1037,6 +1116,7 @@
                                                               <Component id="detailsStrNrTf" max="32767" attributes="0"/>
                                                           </Group>
                                                           <Component id="detailsNameTf" alignment="0" min="-2" pref="322" max="-2" attributes="0"/>
+                                                          <Component id="detailsVerNrTf" alignment="0" max="32767" attributes="0"/>
                                                       </Group>
                                                       <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                                                   </Group>
@@ -1052,34 +1132,51 @@
                                                   <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel38" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jLabel49" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Component id="detailsGebDP" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <Component id="detailsCommentNrTf" min="-2" pref="94" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="detailsCommentBtn" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Component id="detailsVornameTf" alignment="0" max="32767" attributes="0"/>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="detailsPlzTf" min="-2" pref="94" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="detailsOrtTf" max="32767" attributes="0"/>
-                                              </Group>
-                                              <Component id="detailsNetzTf" alignment="0" pref="322" max="32767" attributes="0"/>
-                                              <Component id="detailsVerNrTf" alignment="0" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="detailsVornameTf" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="detailsPlzTf" min="-2" pref="94" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                                              <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="detailsOrtTf" pref="206" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="detailsKlasseTf" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="detailsVerArtCB" max="32767" attributes="0"/>
+                                                  <Component id="detailsHandyMarkeTf" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="jLabel51" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                      <Component id="detailsVerArtTf" max="32767" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" attributes="0">
+                                                      <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                      <Component id="detailsHandyModellTf" max="32767" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="detailsCommentNrTf" min="-2" pref="94" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="detailsCommentBtn" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="detailsNetzTf" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="74" max="32767" attributes="0"/>
+                              <EmptySpace pref="47" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="detailsCancelBtn" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
                                   <Component id="detailsDeleteBtn" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
@@ -1137,16 +1234,20 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel58" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="detailsHandyTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="detailsRufNrTf" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="detailsNetzTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel59" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="detailsHandyModellTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="detailsHandyMarkeTf" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="detailsVerArtTf" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel57" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel56" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="detailsVerArtCB" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="detailsVerNrTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="detailsVerArtTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel51" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -1157,13 +1258,15 @@
                                           <Component id="detailsImeiTf" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel54" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel49" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="detailsCommentNrTf" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="detailsCommentBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="detailsNetzTf" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="detailsMsisdnTf" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel55" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel60" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="detailsCommentNrTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="detailsCommentBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel53" min="-2" pref="28" max="-2" attributes="0"/>
@@ -1237,6 +1340,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="detailsStrNrTfActionPerformed"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel25">
@@ -1255,6 +1359,7 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="detailsNameTfActionPerformed"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">
@@ -1286,46 +1391,61 @@
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="detailsImeiTf">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel56">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Vertragsnummer"/>
+                <Property name="text" type="java.lang.String" value="Vertragsart : Notiz"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="detailsVerArtTf">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel18">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Netz"/>
+                <Property name="text" type="java.lang.String" value="Handymarke : Modell"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel57">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Vertragsart"/>
+                <Property name="text" type="java.lang.String" value="Vertragsnummer"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="detailsHandyTf">
+            <Component class="javax.swing.JTextField" name="detailsRufNrTf">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel58">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Handy"/>
+                <Property name="text" type="java.lang.String" value="Rufnummer"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="detailsVornameTf">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel19">
               <Properties>
@@ -1346,6 +1466,9 @@
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel27">
               <Properties>
@@ -1356,6 +1479,9 @@
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="detailsPlzTf">
               <Properties>
@@ -1363,12 +1489,16 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="detailsPlzTfActionPerformed"/>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="detailsOrtTf">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="detailsAnredeCB">
               <Properties>
@@ -1425,23 +1555,76 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel49">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Kommentaranzahl"/>
+                <Property name="text" type="java.lang.String" value="Netz"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="detailsVerNrTf">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="detailsKlasseTf">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel45">
               <Properties>
                 <Property name="text" type="java.lang.String" value="ID"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="detailsVerArtCB">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="7">
+                    <StringItem index="0" value=""/>
+                    <StringItem index="1" value="DSL"/>
+                    <StringItem index="2" value="EWP"/>
+                    <StringItem index="3" value="Haussteuerung"/>
+                    <StringItem index="4" value="Mobilfunk"/>
+                    <StringItem index="5" value="Prepaid"/>
+                    <StringItem index="6" value="Strom"/>
+                  </StringArray>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel51">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=":"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel59">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=":"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="detailsHandyModellTf">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel60">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Kommenatranzahl"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="detailsHandyMarkeTf">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1483,36 +1666,34 @@
                                       <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
                                       <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel46" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="commentDatumDP" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="commentCommentCB" min="-2" pref="337" max="-2" attributes="0"/>
-                                              <EmptySpace pref="111" max="32767" attributes="0"/>
-                                              <Component id="commentEditBtn" min="-2" pref="130" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="commentCommentCB" min="-2" pref="337" max="-2" attributes="0"/>
+                                      <EmptySpace pref="111" max="32767" attributes="0"/>
+                                      <Component id="commentEditBtn" min="-2" pref="130" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jScrollPane1" alignment="0" min="-2" pref="580" max="-2" attributes="0"/>
                                   <Component id="jLabel47" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
                                   <Component id="jLabel44" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="580" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="commentCancelBtn" max="32767" attributes="0"/>
-                                  <Component id="commentSaveBtn" pref="130" max="32767" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="commentCancelBtn" max="32767" attributes="0"/>
+                                          <Component id="commentSaveBtn" pref="130" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel46" min="-2" max="-2" attributes="0"/>
+                                          <Component id="commentDatumDP" min="-2" pref="209" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
@@ -1544,13 +1725,12 @@
                           <Component id="commentDeleteBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel46" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel44" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel44" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel46" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" pref="208" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="commentDatumDP" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
@@ -1558,6 +1738,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="commentSaveBtn" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="jScrollPane1" pref="208" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -1618,6 +1799,9 @@
                     <Property name="columns" type="int" value="20"/>
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

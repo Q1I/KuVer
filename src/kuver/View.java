@@ -5,6 +5,7 @@
 package kuver;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
@@ -17,11 +18,13 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.text.PlainDocument;
 import kuver.definitions.Comment;
 import kuver.definitions.Kunde;
 import kuver.definitions.User;
 import kuver.frame.About;
+import kuver.frame.Backup;
 import kuver.frame.Register;
 
 /**
@@ -91,11 +94,11 @@ public class View extends javax.swing.JFrame {
         doc12.setDocumentFilter(filterMsisdn);
         // Handy
         kuver.tweaks.TextLengthDocFilter filterHandy = new kuver.tweaks.TextLengthDocFilter(15, 0);
-        PlainDocument doc13 = (PlainDocument) neuHandyTf.getDocument();
+        PlainDocument doc13 = (PlainDocument) neuRufNrTf.getDocument();
         doc13.setDocumentFilter(filterHandy);
 //        PlainDocument doc14 = (PlainDocument) sucheHandyTf.getDocument();
 //        doc5.setDocumentFilter(filterHandy);
-        PlainDocument doc15 = (PlainDocument) detailsHandyTf.getDocument();
+        PlainDocument doc15 = (PlainDocument) detailsRufNrTf.getDocument();
         doc15.setDocumentFilter(filterHandy);
         // Klasse
         kuver.tweaks.TextLengthDocFilter filterKlasse = new kuver.tweaks.TextLengthDocFilter(3, 0);
@@ -105,7 +108,7 @@ public class View extends javax.swing.JFrame {
 //        doc17.setDocumentFilter(filterKlasse);
         PlainDocument doc18 = (PlainDocument) detailsKlasseTf.getDocument();
         doc18.setDocumentFilter(filterKlasse);
-        
+
         // TabPanel
         tabPanel.setEnabledAt(1, false);
         tabPanel.setEnabledAt(2, false);
@@ -113,6 +116,8 @@ public class View extends javax.swing.JFrame {
         tabPanel.setEnabledAt(4, false);
 
         tabellePanel.setVisible(false);
+
+        loginUserTf.requestFocus();
     }
 
     /**
@@ -157,7 +162,7 @@ public class View extends javax.swing.JFrame {
         neuStrNrTf = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        neuHandyTf = new javax.swing.JTextField();
+        neuRufNrTf = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         neuVerArtTf = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
@@ -175,6 +180,12 @@ public class View extends javax.swing.JFrame {
         neuAktiviertDP = new com.toedter.calendar.JDateChooser();
         jLabel48 = new javax.swing.JLabel();
         neuKlasseTf = new javax.swing.JTextField();
+        neuVerArtCB = new javax.swing.JComboBox();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel61 = new javax.swing.JLabel();
+        neuHandyMarkeTf = new javax.swing.JTextField();
+        jLabel62 = new javax.swing.JLabel();
+        neuHandyModellTf = new javax.swing.JTextField();
         suchePanel = new javax.swing.JPanel();
         sucheSuchenBtn = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -220,7 +231,7 @@ public class View extends javax.swing.JFrame {
         detailsVerArtTf = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel57 = new javax.swing.JLabel();
-        detailsHandyTf = new javax.swing.JTextField();
+        detailsRufNrTf = new javax.swing.JTextField();
         jLabel58 = new javax.swing.JLabel();
         detailsVornameTf = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
@@ -242,6 +253,12 @@ public class View extends javax.swing.JFrame {
         detailsVerNrTf = new javax.swing.JTextField();
         detailsKlasseTf = new javax.swing.JTextField();
         jLabel45 = new javax.swing.JLabel();
+        detailsVerArtCB = new javax.swing.JComboBox();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
+        detailsHandyModellTf = new javax.swing.JTextField();
+        jLabel60 = new javax.swing.JLabel();
+        detailsHandyMarkeTf = new javax.swing.JTextField();
         commentPanel = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
         commentIdTf = new javax.swing.JTextField();
@@ -265,6 +282,7 @@ public class View extends javax.swing.JFrame {
         optSuchenBtn = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
+        menuBackup = new javax.swing.JMenuItem();
         menuBeenden = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         menuAboutItem = new javax.swing.JMenuItem();
@@ -283,14 +301,14 @@ public class View extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Anrede", "Name", "Vorname", "Geburtsdatum", "Strasse", "Nr", "PLZ", "Ort", "Handy", "Netz", "Vertragsart", "VertragsNr", "IMEI", "MSISDN", "Registrierung", "Verlängerbar", "Kommentare", "Klasse"
+                "ID", "Anrede", "Name", "Vorname", "Geburtsdatum", "Strasse", "PLZ", "Ort", "RufNr", "H-Marke", "H-Modell", "V-Art", "V-Nr", "IMEI", "MSISDN", "Netz", "Aktivierung", "Verlängerbar", "Kommentare", "Klasse"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -301,8 +319,7 @@ public class View extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelle.setCellSelectionEnabled(false);
-        tabelle.setRowSelectionAllowed(true);
+        tabelle.setColumnSelectionAllowed(true);
         tabelle.getTableHeader().setReorderingAllowed(false);
         tabelle.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -313,10 +330,9 @@ public class View extends javax.swing.JFrame {
         tabelle.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelle.getColumnModel().getColumn(0).setPreferredWidth(45);
         tabelle.getColumnModel().getColumn(1).setPreferredWidth(50);
-        tabelle.getColumnModel().getColumn(6).setPreferredWidth(40);
-        tabelle.getColumnModel().getColumn(10).setPreferredWidth(55);
-        tabelle.getColumnModel().getColumn(17).setPreferredWidth(40);
+        tabelle.getColumnModel().getColumn(15).setPreferredWidth(55);
         tabelle.getColumnModel().getColumn(18).setPreferredWidth(40);
+        tabelle.getColumnModel().getColumn(19).setPreferredWidth(40);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Neuen Kunden anlegen", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
 
@@ -349,6 +365,17 @@ public class View extends javax.swing.JFrame {
                 tabPanelStateChanged(evt);
             }
         });
+        tabPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tabPanelKeyPressed(evt);
+            }
+        });
+
+        startPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                startPanelKeyReleased(evt);
+            }
+        });
 
         jLabel21.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         jLabel21.setText("Willkommen!");
@@ -375,6 +402,11 @@ public class View extends javax.swing.JFrame {
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBtnActionPerformed(evt);
+            }
+        });
+        loginBtn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginBtnKeyPressed(evt);
             }
         });
 
@@ -491,11 +523,11 @@ public class View extends javax.swing.JFrame {
 
         jLabel22.setText("/");
 
-        jLabel32.setText("Handy");
+        jLabel32.setText("Rufnummer");
 
-        jLabel33.setText("Vertragsart");
+        jLabel33.setText("Vertragsnummer");
 
-        jLabel34.setText("Vertragsnummer");
+        jLabel34.setText("Vertragsart : Notiz");
 
         jLabel35.setText("IMEI");
 
@@ -512,7 +544,7 @@ public class View extends javax.swing.JFrame {
 
         neuGebDP.setDateFormatString("dd.MM.yyyy");
 
-        jLabel13.setText("Netz");
+        jLabel13.setText("Handymarke : Modell");
 
         jLabel43.setText("Verlängerbar ab");
 
@@ -526,6 +558,14 @@ public class View extends javax.swing.JFrame {
         });
 
         jLabel48.setText("Klasse");
+
+        neuVerArtCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "DSL", "EWP", "Haussteuerung", "Mobilfunk", "Prepaid", "Strom" }));
+
+        jLabel52.setText(":");
+
+        jLabel61.setText("Netz");
+
+        jLabel62.setText(":");
 
         javax.swing.GroupLayout neuPanelLayout = new javax.swing.GroupLayout(neuPanel);
         neuPanel.setLayout(neuPanelLayout);
@@ -559,15 +599,15 @@ public class View extends javax.swing.JFrame {
                                     .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(neuMsisdnTf, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(neuImeiTf, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(neuVerArtTf, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(neuHandyTf, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(neuRufNrTf, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, neuPanelLayout.createSequentialGroup()
                                             .addComponent(neuStrasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(neuStrNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(neuNameTf, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addComponent(neuNameTf, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(neuVerNrTf, javax.swing.GroupLayout.Alignment.LEADING))
                                     .addComponent(neuAnredeCB, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(60, 60, 60)
                                 .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -575,20 +615,35 @@ public class View extends javax.swing.JFrame {
                                     .addComponent(jLabel34)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel13)
-                                    .addComponent(jLabel48))
+                                    .addComponent(jLabel48)
+                                    .addComponent(jLabel61))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(neuVornameTf)
-                                    .addGroup(neuPanelLayout.createSequentialGroup()
-                                        .addComponent(neuPlzTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(neuOrtTf, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE))
-                                    .addComponent(neuVerNrTf)
-                                    .addComponent(neuNetzTf)
-                                    .addComponent(neuKlasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 212, Short.MAX_VALUE)))
+                                .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(neuNetzTf, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(neuPanelLayout.createSequentialGroup()
+                                            .addComponent(neuPlzTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(6, 6, 6)
+                                            .addComponent(jLabel7)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(neuOrtTf))
+                                        .addComponent(neuKlasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(neuVornameTf)
+                                        .addGroup(neuPanelLayout.createSequentialGroup()
+                                            .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(neuVerArtCB, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(neuHandyMarkeTf, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(4, 4, 4)
+                                            .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(neuPanelLayout.createSequentialGroup()
+                                                    .addComponent(jLabel62)
+                                                    .addGap(4, 4, 4)
+                                                    .addComponent(neuHandyModellTf))
+                                                .addGroup(neuPanelLayout.createSequentialGroup()
+                                                    .addComponent(jLabel52)
+                                                    .addGap(4, 4, 4)
+                                                    .addComponent(neuVerArtTf, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                        .addGap(0, 177, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         neuPanelLayout.setVerticalGroup(
@@ -625,19 +680,25 @@ public class View extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel32)
-                    .addComponent(neuHandyTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(neuRufNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(neuNetzTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(neuHandyMarkeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel62)
+                    .addComponent(neuHandyModellTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(neuVerArtTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel33)
                     .addComponent(jLabel34)
-                    .addComponent(neuVerNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(neuVerNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(neuVerArtCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(neuVerArtTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel52))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(neuImeiTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel35))
+                    .addComponent(jLabel35)
+                    .addComponent(jLabel61)
+                    .addComponent(neuNetzTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(neuMsisdnTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -839,6 +900,11 @@ public class View extends javax.swing.JFrame {
                 detailsStrNrTfActionPerformed(evt);
             }
         });
+        detailsStrNrTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         jLabel25.setText("/");
 
@@ -848,6 +914,11 @@ public class View extends javax.swing.JFrame {
         detailsNameTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 detailsNameTfActionPerformed(evt);
+            }
+        });
+        detailsNameTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
             }
         });
 
@@ -862,22 +933,47 @@ public class View extends javax.swing.JFrame {
         jLabel55.setText("MSISDN");
 
         detailsMsisdnTf.setEditable(false);
+        detailsMsisdnTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         detailsImeiTf.setEditable(false);
+        detailsImeiTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
-        jLabel56.setText("Vertragsnummer");
+        jLabel56.setText("Vertragsart : Notiz");
 
         detailsVerArtTf.setEditable(false);
+        detailsVerArtTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
-        jLabel18.setText("Netz");
+        jLabel18.setText("Handymarke : Modell");
 
-        jLabel57.setText("Vertragsart");
+        jLabel57.setText("Vertragsnummer");
 
-        detailsHandyTf.setEditable(false);
+        detailsRufNrTf.setEditable(false);
+        detailsRufNrTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
-        jLabel58.setText("Handy");
+        jLabel58.setText("Rufnummer");
 
         detailsVornameTf.setEditable(false);
+        detailsVornameTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         jLabel19.setText("Geburtsdatum");
 
@@ -886,10 +982,20 @@ public class View extends javax.swing.JFrame {
         jLabel26.setText("PLZ/Ort");
 
         detailsNetzTf.setEditable(false);
+        detailsNetzTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         jLabel27.setText("/");
 
         detailsStrasseTf.setEditable(false);
+        detailsStrasseTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         detailsPlzTf.setEditable(false);
         detailsPlzTf.addActionListener(new java.awt.event.ActionListener() {
@@ -897,8 +1003,18 @@ public class View extends javax.swing.JFrame {
                 detailsPlzTfActionPerformed(evt);
             }
         });
+        detailsPlzTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         detailsOrtTf.setEditable(false);
+        detailsOrtTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         detailsAnredeCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "Herr", "Frau" }));
         detailsAnredeCB.setEnabled(false);
@@ -932,13 +1048,46 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        jLabel49.setText("Kommentaranzahl");
+        jLabel49.setText("Netz");
 
         detailsVerNrTf.setEditable(false);
+        detailsVerNrTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         detailsKlasseTf.setEditable(false);
+        detailsKlasseTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         jLabel45.setText("ID");
+
+        detailsVerArtCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "DSL", "EWP", "Haussteuerung", "Mobilfunk", "Prepaid", "Strom" }));
+        detailsVerArtCB.setEnabled(false);
+
+        jLabel51.setText(":");
+
+        jLabel59.setText(":");
+
+        detailsHandyModellTf.setEditable(false);
+        detailsHandyModellTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
+
+        jLabel60.setText("Kommenatranzahl");
+
+        detailsHandyMarkeTf.setEditable(false);
+        detailsHandyMarkeTf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         javax.swing.GroupLayout detailsPanelLayout = new javax.swing.GroupLayout(detailsPanel);
         detailsPanel.setLayout(detailsPanelLayout);
@@ -979,15 +1128,15 @@ public class View extends javax.swing.JFrame {
                                                 .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                     .addComponent(detailsMsisdnTf, javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(detailsImeiTf, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(detailsVerArtTf, javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(detailsHandyTf, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(detailsRufNrTf, javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, detailsPanelLayout.createSequentialGroup()
                                                         .addComponent(detailsStrasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                         .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                         .addComponent(detailsStrNrTf))
-                                                    .addComponent(detailsNameTf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(detailsNameTf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(detailsVerNrTf, javax.swing.GroupLayout.Alignment.LEADING))
                                                 .addGap(60, 60, 60))
                                             .addGroup(detailsPanelLayout.createSequentialGroup()
                                                 .addComponent(detailsAnredeCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -998,26 +1147,39 @@ public class View extends javax.swing.JFrame {
                                             .addComponent(jLabel14)
                                             .addComponent(jLabel18)
                                             .addComponent(jLabel38)
-                                            .addComponent(jLabel49)))
+                                            .addComponent(jLabel49)
+                                            .addComponent(jLabel60)))
                                     .addComponent(detailsGebDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(detailsPanelLayout.createSequentialGroup()
-                                            .addComponent(detailsCommentNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(detailsCommentBtn))
-                                        .addComponent(detailsVornameTf)
-                                        .addGroup(detailsPanelLayout.createSequentialGroup()
-                                            .addComponent(detailsPlzTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel27)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(detailsOrtTf))
-                                        .addComponent(detailsNetzTf, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
-                                        .addComponent(detailsVerNrTf))
-                                    .addComponent(detailsKlasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                                .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(detailsVornameTf)
+                                    .addGroup(detailsPanelLayout.createSequentialGroup()
+                                        .addComponent(detailsPlzTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel27)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(detailsOrtTf, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+                                    .addComponent(detailsKlasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(detailsPanelLayout.createSequentialGroup()
+                                        .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(detailsVerArtCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(detailsHandyMarkeTf))
+                                        .addGap(4, 4, 4)
+                                        .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(detailsPanelLayout.createSequentialGroup()
+                                                .addComponent(jLabel51)
+                                                .addGap(4, 4, 4)
+                                                .addComponent(detailsVerArtTf))
+                                            .addGroup(detailsPanelLayout.createSequentialGroup()
+                                                .addComponent(jLabel59)
+                                                .addGap(4, 4, 4)
+                                                .addComponent(detailsHandyModellTf))))
+                                    .addGroup(detailsPanelLayout.createSequentialGroup()
+                                        .addComponent(detailsCommentNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(detailsCommentBtn))
+                                    .addComponent(detailsNetzTf))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                         .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(detailsCancelBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(detailsDeleteBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -1063,15 +1225,19 @@ public class View extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel58)
-                    .addComponent(detailsHandyTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(detailsRufNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel18)
-                    .addComponent(detailsNetzTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel59)
+                    .addComponent(detailsHandyModellTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(detailsHandyMarkeTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(detailsVerArtTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel57)
                     .addComponent(jLabel56)
-                    .addComponent(detailsVerNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(detailsVerArtCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(detailsVerNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(detailsVerArtTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel51))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(detailsPanelLayout.createSequentialGroup()
@@ -1081,12 +1247,14 @@ public class View extends javax.swing.JFrame {
                                     .addComponent(detailsImeiTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel54)
                                     .addComponent(jLabel49)
-                                    .addComponent(detailsCommentNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(detailsCommentBtn))
+                                    .addComponent(detailsNetzTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(detailsMsisdnTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel55))
+                                    .addComponent(jLabel55)
+                                    .addComponent(jLabel60)
+                                    .addComponent(detailsCommentNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(detailsCommentBtn))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(detailsAktiviertDP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1125,6 +1293,11 @@ public class View extends javax.swing.JFrame {
         commentCommentTA.setEditable(false);
         commentCommentTA.setColumns(20);
         commentCommentTA.setRows(5);
+        commentCommentTA.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
         jScrollPane1.setViewportView(commentCommentTA);
 
         jLabel46.setText("Datum");
@@ -1200,27 +1373,26 @@ public class View extends javax.swing.JFrame {
                                 .addGap(245, 245, 245)
                                 .addComponent(jLabel42)
                                 .addGap(18, 18, 18)
-                                .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(commentPanelLayout.createSequentialGroup()
-                                        .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel46)
-                                            .addComponent(commentDatumDP, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(commentPanelLayout.createSequentialGroup()
-                                        .addComponent(commentCommentCB, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
-                                        .addComponent(commentEditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(commentCommentCB, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                                .addComponent(commentEditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(commentPanelLayout.createSequentialGroup()
                         .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel44))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(commentPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(commentCancelBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(commentSaveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(commentPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(commentCancelBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(commentSaveBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)))
+                            .addGroup(commentPanelLayout.createSequentialGroup()
+                                .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel46)
+                                    .addComponent(commentDatumDP, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         commentPanelLayout.setVerticalGroup(
@@ -1244,18 +1416,18 @@ public class View extends javax.swing.JFrame {
                     .addComponent(commentVornameTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(commentDeleteBtn))
                 .addGap(40, 40, 40)
-                .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel46, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel44))
+                .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel44)
+                    .addComponent(jLabel46))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                     .addGroup(commentPanelLayout.createSequentialGroup()
                         .addComponent(commentDatumDP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(commentCancelBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(commentSaveBtn)))
+                        .addComponent(commentSaveBtn))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1290,6 +1462,15 @@ public class View extends javax.swing.JFrame {
         jMenuBar2.setBackground(new java.awt.Color(149, 147, 137));
 
         jMenu3.setText("Optionen");
+
+        menuBackup.setText("Datensicherung");
+        menuBackup.setEnabled(false);
+        menuBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBackupActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuBackup);
 
         menuBeenden.setText("Beenden");
         menuBeenden.addActionListener(new java.awt.event.ActionListener() {
@@ -1376,12 +1557,12 @@ public class View extends javax.swing.JFrame {
 
         // Msg
         final JOptionPane optionPane = new JOptionPane(
-                "Wollen Sie den Kunden wirklich hinzufuegen?\n",
+                "Wollen Sie den Kunden wirklich hinzufügen?\n",
                 JOptionPane.QUESTION_MESSAGE,
                 JOptionPane.YES_NO_OPTION);
 
         final JDialog dialog = new JDialog(this,
-                "Kunden hinzufuegen",
+                "Kunden hinzufügen",
                 true);
         dialog.setContentPane(optionPane);
         //        dialog.setDefaultCloseOperation(
@@ -1415,7 +1596,7 @@ public class View extends javax.swing.JFrame {
             // Add
             if (controller.addKunde(tabelle, getNeuKunde())) {
                 JOptionPane.showMessageDialog(tabPanel,
-                        "Der Kunde wurde erflgreich hinzugefügt!",
+                        "Der Kunde wurde erfolgreich hinzugefügt!",
                         "Kunde hinzugefügt",
                         JOptionPane.INFORMATION_MESSAGE);
             } else {
@@ -1452,7 +1633,7 @@ public class View extends javax.swing.JFrame {
         if (controller.isEditMode()) {
             return;
         }
-        
+
         if (tabelle.getModel().getValueAt(tabelle.rowAtPoint(evt.getPoint()), 0) == null) {
             return;
         }
@@ -1469,8 +1650,9 @@ public class View extends javax.swing.JFrame {
 
         // Datum Formatieren
         SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
-        Calendar cal = Calendar.getInstance();
-
+        String akti = null;
+        String verl = null;
+        String bday = null;
         // Get clicked Kunde
         int row = tabelle.rowAtPoint(evt.getPoint());
         int col = tabelle.columnAtPoint(evt.getPoint());
@@ -1480,41 +1662,57 @@ public class View extends javax.swing.JFrame {
         kunde.setName((String) tabelle.getModel().getValueAt(row, 2));
         kunde.setVorname((String) tabelle.getModel().getValueAt(row, 3));
         // Bday
-        try {
-            cal.setTime(f.parse((String) tabelle.getModel().getValueAt(row, 4)));
-        } catch (ParseException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        Calendar cal = null;
+        bday = (String) tabelle.getModel().getValueAt(row, 4);
+        if (!bday.isEmpty()) {
+            try {
+                cal = Calendar.getInstance();
+                cal.setTime(f.parse((String) tabelle.getModel().getValueAt(row, 4)));
+            } catch (ParseException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         kunde.setGebDat(cal);
         kunde.setStrasse((String) tabelle.getModel().getValueAt(row, 5));
-        kunde.setStrNr((Integer) tabelle.getModel().getValueAt(row, 6));
-        kunde.setPlz((String) tabelle.getModel().getValueAt(row, 7));
-        kunde.setOrt((String) tabelle.getModel().getValueAt(row, 8));
-        kunde.setHandy((String) tabelle.getModel().getValueAt(row, 9));
-        kunde.setNetz((String) tabelle.getModel().getValueAt(row, 10));
+//        kunde.setStrNr((String) tabelle.getModel().getValueAt(row, 6));
+        kunde.setPlz((String) tabelle.getModel().getValueAt(row, 6));
+        kunde.setOrt((String) tabelle.getModel().getValueAt(row, 7));
+        kunde.setRufNr((String) tabelle.getModel().getValueAt(row, 8));
+        kunde.setHandyMarke((String) tabelle.getModel().getValueAt(row, 9));
+        kunde.setHandyModell((String) tabelle.getModel().getValueAt(row, 10));
+
         kunde.setVertragsArt((String) tabelle.getModel().getValueAt(row, 11));
         kunde.setVertragsNr((String) tabelle.getModel().getValueAt(row, 12));
         kunde.setImei((String) tabelle.getModel().getValueAt(row, 13));
         kunde.setMsisdn((String) tabelle.getModel().getValueAt(row, 14));
+        kunde.setNetz((String) tabelle.getModel().getValueAt(row, 15));
         // Aktivierung
-        Calendar calAkt = Calendar.getInstance();
-        try {
-            calAkt.setTime(f.parse((String) tabelle.getModel().getValueAt(row, 15)));
-        } catch (ParseException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        Calendar calAkt = null;
+        akti = (String) tabelle.getModel().getValueAt(row, 16);
+        if (!akti.isEmpty()) {
+            try {
+                calAkt = Calendar.getInstance();
+                calAkt.setTime(f.parse((String) tabelle.getModel().getValueAt(row, 16)));
+            } catch (ParseException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         kunde.setAktivierung(calAkt);
         // Verlaengerung
-        Calendar calVerl = Calendar.getInstance();
-        try {
-            calVerl.setTime(f.parse((String) tabelle.getModel().getValueAt(row, 16)));
-        } catch (ParseException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        Calendar calVerl = null;
+        verl = (String) tabelle.getModel().getValueAt(row, 17);
+        if (!verl.isEmpty()) {
+            try {
+                calVerl = Calendar.getInstance();
+                calVerl.setTime(f.parse((String) tabelle.getModel().getValueAt(row, 17)));
+            } catch (ParseException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         kunde.setVerlaengerung(calVerl);
-        // todo: kommentar anzahl
-
-        kunde.setKlasse((Integer) tabelle.getModel().getValueAt(row, 18));
+        // Kommentaranzahl
+        kunde.setKommentare((Integer) tabelle.getModel().getValueAt(row, 18));
+        kunde.setKlasse((String) tabelle.getModel().getValueAt(row, 19));
 
         controller.setCurKunde(kunde);
 
@@ -1570,6 +1768,7 @@ public class View extends javax.swing.JFrame {
 //        }
         User user = new User(loginUserTf.getText(), String.valueOf(loginPassPf.getPassword()));
 
+        System.out.println("user: " + user.getName() + " " + user.getPass());
         // Lookup in db
         if (controller.login(user)) {
             userVerified();
@@ -1615,7 +1814,7 @@ public class View extends javax.swing.JFrame {
         tabPanel.setEnabledAt(4, false);
         optNeuBtn.setEnabled(false);
         optSuchenBtn.setEnabled(false);
-        
+
 
     }//GEN-LAST:event_detailsEditBtnActionPerformed
 
@@ -1727,7 +1926,8 @@ public class View extends javax.swing.JFrame {
         // if comments selected, fillComents with selected user
         if (tabPanel.getSelectedIndex() == 4) {
             if (controller.getCurKunde() == null) {
-                fillComments(null,null);
+                System.out.println("null user--------------------------");
+                fillComments(null, null);
                 return;
             }
             // refill
@@ -1748,6 +1948,38 @@ public class View extends javax.swing.JFrame {
         about.setLocationRelativeTo(detailsPanel);
         about.setVisible(true);
     }//GEN-LAST:event_menuAboutItemActionPerformed
+
+    private void focusGainedSelectAll(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_focusGainedSelectAll
+        // TODO add your handling code here:
+        JTextField comp = (JTextField) evt.getComponent();
+        comp.selectAll();
+    }//GEN-LAST:event_focusGainedSelectAll
+
+    private void tabPanelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabPanelKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tabPanelKeyPressed
+
+    private void loginBtnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginBtnKeyPressed
+//        // Enter
+//        if(evt.getKeyCode()==KeyEvent.VK_RIGHT){
+//            loginBtnActionPerformed(null);
+//        }
+    }//GEN-LAST:event_loginBtnKeyPressed
+
+    private void startPanelKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_startPanelKeyReleased
+        // Enter
+        if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+            loginBtnActionPerformed(null);
+        }
+    }//GEN-LAST:event_startPanelKeyReleased
+
+    private void menuBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBackupActionPerformed
+        // TODO add your handling code here:
+        Backup backup = new Backup(this, true);
+        backup.pack();
+        backup.setLocationRelativeTo(detailsPanel);
+        backup.setVisible(true);
+    }//GEN-LAST:event_menuBackupActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1804,7 +2036,8 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JButton detailsDeleteBtn;
     private javax.swing.JButton detailsEditBtn;
     private com.toedter.calendar.JDateChooser detailsGebDP;
-    private javax.swing.JTextField detailsHandyTf;
+    private javax.swing.JTextField detailsHandyMarkeTf;
+    private javax.swing.JTextField detailsHandyModellTf;
     private javax.swing.JTextField detailsIdTf;
     private javax.swing.JTextField detailsImeiTf;
     private javax.swing.JTextField detailsKlasseTf;
@@ -1814,9 +2047,11 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JTextField detailsOrtTf;
     private javax.swing.JPanel detailsPanel;
     private javax.swing.JTextField detailsPlzTf;
+    private javax.swing.JTextField detailsRufNrTf;
     private javax.swing.JButton detailsSaveBtn;
     private javax.swing.JTextField detailsStrNrTf;
     private javax.swing.JTextField detailsStrasseTf;
+    private javax.swing.JComboBox detailsVerArtCB;
     private javax.swing.JTextField detailsVerArtTf;
     private javax.swing.JTextField detailsVerNrTf;
     private com.toedter.calendar.JDateChooser detailsVerlaengerbarDP;
@@ -1867,13 +2102,19 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1888,12 +2129,14 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JPasswordField loginPassPf;
     private javax.swing.JTextField loginUserTf;
     private javax.swing.JMenuItem menuAboutItem;
+    private javax.swing.JMenuItem menuBackup;
     private javax.swing.JMenuItem menuBeenden;
     private javax.swing.JButton neuAddBtn;
     private com.toedter.calendar.JDateChooser neuAktiviertDP;
     private javax.swing.JComboBox neuAnredeCB;
     private com.toedter.calendar.JDateChooser neuGebDP;
-    private javax.swing.JTextField neuHandyTf;
+    private javax.swing.JTextField neuHandyMarkeTf;
+    private javax.swing.JTextField neuHandyModellTf;
     private javax.swing.JTextField neuImeiTf;
     private javax.swing.JTextField neuKlasseTf;
     private javax.swing.JTextField neuMsisdnTf;
@@ -1902,8 +2145,10 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JTextField neuOrtTf;
     private javax.swing.JPanel neuPanel;
     private javax.swing.JTextField neuPlzTf;
+    private javax.swing.JTextField neuRufNrTf;
     private javax.swing.JTextField neuStrNrTf;
     private javax.swing.JTextField neuStrasseTf;
+    private javax.swing.JComboBox neuVerArtCB;
     private javax.swing.JTextField neuVerArtTf;
     private javax.swing.JTextField neuVerNrTf;
     private com.toedter.calendar.JDateChooser neuVerlaengerbarDP;
@@ -1937,19 +2182,23 @@ public class View extends javax.swing.JFrame {
             detailsAnredeCB.setSelectedItem("");
             detailsNameTf.setText("");
             detailsVornameTf.setText("");
-            detailsStrasseTf.setText("");
             detailsGebDP.setCalendar(null);
+            detailsStrasseTf.setText("");
             detailsStrNrTf.setText("");
             detailsPlzTf.setText("");
             detailsOrtTf.setText("");
-            detailsHandyTf.setText("");
+            detailsRufNrTf.setText("");
+            detailsHandyMarkeTf.setText("");
+            detailsHandyModellTf.setText("");
             detailsNetzTf.setText("");
             detailsVerArtTf.setText("");
+            detailsVerArtCB.setSelectedItem("");
             detailsVerNrTf.setText("");
             detailsImeiTf.setText("");
             detailsMsisdnTf.setText("");
             detailsAktiviertDP.setCalendar(null);
             detailsVerlaengerbarDP.setCalendar(null);
+            detailsCommentNrTf.setText("");
             // set all null
             controller.setCurKunde(null);
             controller.setCurComment(null, 0);
@@ -1958,24 +2207,29 @@ public class View extends javax.swing.JFrame {
         }
         detailsIdTf.setText("" + kunde.getId()); // todo
         detailsKlasseTf.setText("" + kunde.getKlasse()); //here--
-        System.out.println("Klasse: " + kunde.getKlasse());
         detailsAnredeCB.setSelectedItem(kunde.getAnrede());
         detailsNameTf.setText(kunde.getName());
         detailsVornameTf.setText(kunde.getVorname());
-        detailsStrasseTf.setText(kunde.getStrasse());
         // Bday
         detailsGebDP.setCalendar(kunde.getGebDat());
-        detailsStrNrTf.setText("" + kunde.getStrNr());
+        // Strasse
+        detailsStrasseTf.setText(kunde.getStrasseOhneNr());
+        detailsStrNrTf.setText(kunde.getStrNr());
         detailsPlzTf.setText(kunde.getPlz());
         detailsOrtTf.setText(kunde.getOrt());
-        detailsHandyTf.setText(kunde.getHandy());
+        detailsRufNrTf.setText(kunde.getRufNr());
+        detailsHandyMarkeTf.setText(kunde.getHandyMarke());
+        detailsHandyModellTf.setText(kunde.getHandyModell());
         detailsNetzTf.setText(kunde.getNetz());
-        detailsVerArtTf.setText(kunde.getVertragsArt());
+        // parse vArt
+        detailsVerArtCB.setSelectedItem(kunde.getVertragsArtCB());
+        detailsVerArtTf.setText(kunde.getVertragsArtTf());
         detailsVerNrTf.setText(kunde.getVertragsNr());
         detailsImeiTf.setText(kunde.getImei());
         detailsMsisdnTf.setText(kunde.getMsisdn());
         detailsAktiviertDP.setCalendar(kunde.getAktivierung());
         detailsVerlaengerbarDP.setCalendar(kunde.getVerlaengerung());
+        detailsCommentNrTf.setText("" + kunde.getKommentare());
     }
 
     /**
@@ -1991,11 +2245,11 @@ public class View extends javax.swing.JFrame {
             return error;
         }
         System.out.println("anrede: " + neuAnredeCB.getSelectedItem().toString());
-        // Klasse
-        if (neuKlasseTf.getText().isEmpty()) {
-            error = "'Klasse' ist leer! ";
-            return error;
-        }
+//        // Klasse
+//        if (neuKlasseTf.getText().isEmpty()) {
+//            error = "'Klasse' ist leer! ";
+//            return error;
+//        }
         // Name
         if (neuNameTf.getText().isEmpty()) {
             error = "'Name' ist leer! ";
@@ -2016,71 +2270,71 @@ public class View extends javax.swing.JFrame {
             error = "'Vorname' darf keine Sonderzeichen oder Zahlen enthalten! ";
             return error;
         }
-        // GebDat
-        if (neuGebDP.getCalendar()==null) {
-            error = "'Geburtstagsdatum' ist leer! ";
-            return error;
-        }
-        // Strasse
-        if (neuStrasseTf.getText().isEmpty()) {
-            error = "'Strasse' ist leer! ";
-            return error;
-        }
-         // Strasse
-        if (neuStrNrTf.getText().isEmpty()) {
-            error = "'Strassen Nummer' ist leer! ";
-            return error;
-        }
-         // PLZ
-        if (neuPlzTf.getText().isEmpty()) {
-            error = "'PLZ' ist leer! ";
-            return error;
-        }
-         // Ort
-        if (neuOrtTf.getText().isEmpty()) {
-            error = "'Ort' ist leer! ";
-            return error;
-        }
-         // Handy
-        if (neuHandyTf.getText().isEmpty()) {
-            error = "'Handy' ist leer! ";
-            return error;
-        }
-         // Netz
-        if (neuNetzTf.getText().isEmpty()) {
-            error = "'Netz' ist leer! ";
-            return error;
-        }
-         // Vertragsart
-        if (neuVerArtTf.getText().isEmpty()) {
-            error = "'Vertragsart' ist leer! ";
-            return error;
-        }
-         // VertragsNr
-        if (neuVerNrTf.getText().isEmpty()) {
-            error = "'Vertragsnummer' ist leer! ";
-            return error;
-        }
-         // Imei
-        if (neuImeiTf.getText().isEmpty()) {
-            error = "'IMEI' ist leer! ";
-            return error;
-        }
-         // MSISDN
-        if (neuMsisdnTf.getText().isEmpty()) {
-            error = "'MSISDN' ist leer! ";
-            return error;
-        }
-        // Aktiv
-        if (neuAktiviertDP.getCalendar()==null) {
-            error = "'Aktivierungsdatum' ist leer! ";
-            return error;
-        }
-        // Verl
-        if (neuVerlaengerbarDP.getCalendar()==null) {
-            error = "'Verlängerungsdatum' ist leer! ";
-            return error;
-        }
+//        // GebDat
+//        if (neuGebDP.getCalendar() == null) {
+//            error = "'Geburtstagsdatum' ist leer! ";
+//            return error;
+//        }
+//        // Strasse
+//        if (neuStrasseTf.getText().isEmpty()) {
+//            error = "'Strasse' ist leer! ";
+//            return error;
+//        }
+//        // StrasseNr
+//        if (neuStrNrTf.getText().isEmpty()) {
+//            error = "'Strassen Nummer' ist leer! ";
+//            return error;
+//        }
+//        // PLZ
+//        if (neuPlzTf.getText().isEmpty()) {
+//            error = "'PLZ' ist leer! ";
+//            return error;
+//        }
+//        // Ort
+//        if (neuOrtTf.getText().isEmpty()) {
+//            error = "'Ort' ist leer! ";
+//            return error;
+//        }
+        // Handy
+//        if (neuHandyTf.getText().isEmpty()) {
+//            error = "'Handy' ist leer! ";
+//            return error;
+//        }
+//        // Netz
+//        if (neuNetzTf.getText().isEmpty()) {
+//            error = "'Netz' ist leer! ";
+//            return error;
+//        }
+//        // Vertragsart
+//        if (neuVerArtTf.getText().isEmpty()) {
+//            error = "'Vertragsart' ist leer! ";
+//            return error;
+//        }
+//        // VertragsNr
+//        if (neuVerNrTf.getText().isEmpty()) {
+//            error = "'Vertragsnummer' ist leer! ";
+//            return error;
+//        }
+//        // Imei
+//        if (neuImeiTf.getText().isEmpty()) {
+//            error = "'IMEI' ist leer! ";
+//            return error;
+//        }
+//        // MSISDN
+//        if (neuMsisdnTf.getText().isEmpty()) {
+//            error = "'MSISDN' ist leer! ";
+//            return error;
+//        }
+//        // Aktiv
+//        if (neuAktiviertDP.getCalendar() == null) {
+//            error = "'Aktivierungsdatum' ist leer! ";
+//            return error;
+//        }
+//        // Verl
+//        if (neuVerlaengerbarDP.getCalendar() == null) {
+//            error = "'Verlängerungsdatum' ist leer! ";
+//            return error;
+//        }
 //        System.out.println("Strasse: " + neuStrasseTf.getText());
 //        if (!(neuStrasseTf.getText()).matches("^[A-Za-z-]*[a-z]+$")) {
 //            error = "'Strasse' darf keine Zahlen oder Sonderzeichen enthalten! Bindestriche koennen nur innerhalb eines Wortes auftauchen.";
@@ -2097,21 +2351,38 @@ public class View extends javax.swing.JFrame {
      */
     private Kunde getNeuKunde() {
         Kunde kunde = new kuver.definitions.Kunde();
-        kunde.setKlasse(Integer.parseInt(neuKlasseTf.getText()));//here--
+        kunde.setKlasse(neuKlasseTf.getText());//here--
         kunde.setAnrede(neuAnredeCB.getSelectedItem().toString());
         kunde.setName(neuNameTf.getText());
         kunde.setVorname(neuVornameTf.getText());
         kunde.setGebDat(neuGebDP.getCalendar());
-        kunde.setStrasse(neuStrasseTf.getText());
-        kunde.setStrNr(Integer.parseInt(neuStrNrTf.getText()));
+        // Strasse
+        String str = neuStrasseTf.getText();
+        if (!str.isEmpty()) {
+            str = neuStrasseTf.getText() + "." + neuStrNrTf.getText();
+        }
+        kunde.setStrasse(str);
         kunde.setPlz(neuPlzTf.getText());
         kunde.setOrt(neuOrtTf.getText());
-        kunde.setHandy(neuHandyTf.getText());
-        kunde.setNetz(neuNetzTf.getText());
-        kunde.setVertragsArt(neuVerArtTf.getText());
+        // Handy
+//        kunde.setHandy(extractHandy());
+        kunde.setHandyMarke(neuHandyMarkeTf.getText());
+        kunde.setHandyModell(neuHandyModellTf.getText());
+        kunde.setRufNr(neuRufNrTf.getText());
+        // Vertragsart
+        String ver = null;
+        int verIndex = neuVerArtCB.getSelectedIndex();
+        if (verIndex != 0) {
+            ver = neuVerArtCB.getSelectedItem().toString();
+            if (!neuVerArtTf.getText().isEmpty()) {
+                ver += " : " + neuVerArtTf.getText();
+            }
+        }
+        kunde.setVertragsArt(ver);
         kunde.setVertragsNr(neuVerNrTf.getText());
         kunde.setImei(neuImeiTf.getText());
         kunde.setMsisdn(neuMsisdnTf.getText());
+        kunde.setNetz(neuNetzTf.getText());
         kunde.setAktivierung(neuAktiviertDP.getCalendar());
         kunde.setVerlaengerung(neuVerlaengerbarDP.getCalendar());
 //        System.out.println("CAL: "+kunde.getVerlaengerung());
@@ -2122,22 +2393,32 @@ public class View extends javax.swing.JFrame {
         Kunde kunde = new kuver.definitions.Kunde();
         kunde.setAnrede(detailsAnredeCB.getSelectedItem().toString());
         kunde.setId(Integer.parseInt(detailsIdTf.getText()));
-        kunde.setKlasse(Integer.parseInt(detailsKlasseTf.getText()));
+        kunde.setKlasse(detailsKlasseTf.getText());
         kunde.setName(detailsNameTf.getText());
         kunde.setVorname(detailsVornameTf.getText());
         kunde.setGebDat(detailsGebDP.getCalendar());
-        kunde.setStrasse(detailsStrasseTf.getText());
-        kunde.setStrNr(Integer.parseInt(detailsStrNrTf.getText()));
+        String str = detailsStrasseTf.getText();
+        if (!str.isEmpty()) {
+            str = detailsStrasseTf.getText() + "." + detailsStrNrTf.getText();
+        }
+        kunde.setStrasse(str);
         kunde.setPlz(detailsPlzTf.getText());
         kunde.setOrt(detailsOrtTf.getText());
-        kunde.setHandy(detailsHandyTf.getText());
+        kunde.setRufNr(detailsRufNrTf.getText());
+        kunde.setHandyMarke(detailsHandyMarkeTf.getText());
+        kunde.setHandyModell(detailsHandyModellTf.getText());
         kunde.setNetz(detailsNetzTf.getText());
-        kunde.setVertragsArt(detailsVerArtTf.getText());
+        String verArt =detailsVerArtCB.getSelectedItem().toString();
+        if(!detailsVerArtTf.getText().isEmpty()){
+            verArt+=" : "+detailsVerArtTf.getText();
+        }
+        kunde.setVertragsArt(verArt);
         kunde.setVertragsNr(detailsVerNrTf.getText());
         kunde.setImei(detailsImeiTf.getText());
         kunde.setMsisdn(detailsMsisdnTf.getText());
         kunde.setAktivierung(detailsAktiviertDP.getCalendar());
         kunde.setVerlaengerung(detailsVerlaengerbarDP.getCalendar());
+        kunde.setKommentare(Integer.parseInt(detailsCommentNrTf.getText()));
 
         return kunde;
     }
@@ -2180,19 +2461,19 @@ public class View extends javax.swing.JFrame {
         detailsNameTf.setEditable(false);
         detailsVornameTf.setEditable(false);
         detailsGebDP.setEnabled(false);
-//        detailsTagTf.setEditable(false);
-//        detailsMonatCB.setEnabled(false);
-//        detailsJahrCB.setEnabled(false);
         detailsStrasseTf.setEditable(false);
         detailsStrNrTf.setEditable(false);
         detailsPlzTf.setEditable(false);
         detailsOrtTf.setEditable(false);
-        detailsHandyTf.setEditable(false);
-        detailsNetzTf.setEditable(false);
+        detailsRufNrTf.setEditable(false);
+        detailsHandyMarkeTf.setEditable(false);
+        detailsHandyModellTf.setEditable(false);
         detailsVerArtTf.setEditable(false);
+        detailsVerArtCB.setEnabled(false);
         detailsVerNrTf.setEditable(false);
         detailsImeiTf.setEditable(false);
         detailsMsisdnTf.setEditable(false);
+        detailsNetzTf.setEditable(false);
         detailsVerlaengerbarDP.setEnabled(false);
         detailsAktiviertDP.setEnabled(false);
 
@@ -2221,19 +2502,19 @@ public class View extends javax.swing.JFrame {
         detailsNameTf.setEditable(true);
         detailsVornameTf.setEditable(true);
         detailsGebDP.setEnabled(true);
-//        detailsTagTf.setEditable(true);
-//        detailsMonatCB.setEnabled(true);
-//        detailsJahrCB.setEnabled(true);
         detailsStrasseTf.setEditable(true);
         detailsStrNrTf.setEditable(true);
         detailsPlzTf.setEditable(true);
         detailsOrtTf.setEditable(true);
-        detailsHandyTf.setEditable(true);
-        detailsNetzTf.setEditable(true);
+        detailsRufNrTf.setEditable(true);
+        detailsHandyMarkeTf.setEditable(true);
+        detailsHandyModellTf.setEditable(true);
         detailsVerArtTf.setEditable(true);
+        detailsVerArtCB.setEnabled(true);
         detailsVerNrTf.setEditable(true);
         detailsImeiTf.setEditable(true);
         detailsMsisdnTf.setEditable(true);
+        detailsNetzTf.setEditable(true);
         detailsVerlaengerbarDP.setEnabled(true);
         detailsAktiviertDP.setEnabled(true);
     }
@@ -2264,6 +2545,9 @@ public class View extends javax.swing.JFrame {
         optNeuBtn.setEnabled(true);
         optSuchenBtn.setEnabled(true);
         tabellePanel.setVisible(true);
+
+        // enable backup
+        menuBackup.setEnabled(true);
 
         // msg
         JOptionPane.showMessageDialog(tabPanel,
@@ -2404,6 +2688,14 @@ public class View extends javax.swing.JFrame {
             commentIdTf.setText("");
             commentNameTf.setText("");
             commentVornameTf.setText("");
+            // remove
+            DefaultComboBoxModel model = (DefaultComboBoxModel) commentCommentCB.getModel();
+            model.removeAllElements();
+            commentDatumDP.setCalendar(null);
+            commentCommentTA.setText("");
+
+            commentEditBtn.setEnabled(false);
+            commentAddBtn.setEnabled(false);
             return;
         }
         System.out.println("fillComments");
@@ -2548,7 +2840,7 @@ public class View extends javax.swing.JFrame {
 
         // clear
         commentCommentTA.setText("");
-        commentDatumDP.setCalendar(null);
+        commentDatumDP.setCalendar(Calendar.getInstance());
     }
 
     private void deleteComment() {
@@ -2615,14 +2907,14 @@ public class View extends javax.swing.JFrame {
 
     private void saveComment() {
         // Check felder
-        if(commentCommentTA.getText().isEmpty() || commentDatumDP.getCalendar()==null){
+        if (commentCommentTA.getText().isEmpty() || commentDatumDP.getCalendar() == null) {
             JOptionPane.showMessageDialog(tabPanel,
-                            "Fehler: Die Felder 'Kommentar' und 'Datum' müssen ausgefüllt werden!",
-                            "Fehlenmde Informationen",
-                            JOptionPane.WARNING_MESSAGE);
+                    "Fehler: Die Felder 'Kommentar' und 'Datum' müssen ausgefüllt werden!",
+                    "Fehlenmde Informationen",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         // Msg
         final JOptionPane optionPane = new JOptionPane(
                 "Wollen Sie den geänderten Kommentar speichern?\n",
@@ -2706,17 +2998,31 @@ public class View extends javax.swing.JFrame {
 
     private void resetSuche() {
         sucheIdTf.setText(""); // todo
-            sucheNameTf.setText("");
-            sucheVornameTf.setText("");
-            sucheStrasseTf.setText("");
-            sucheGebDP.setCalendar(null);
-            sucheStrNrTf.setText("");
-            suchePlzTf.setText("");
-            sucheOrtTf.setText("");
-            sucheVerNrTf.setText("");
+        sucheNameTf.setText("");
+        sucheVornameTf.setText("");
+        sucheStrasseTf.setText("");
+        sucheGebDP.setCalendar(null);
+        sucheStrNrTf.setText("");
+        suchePlzTf.setText("");
+        sucheOrtTf.setText("");
+        sucheVerNrTf.setText("");
 //            sucheImeiTf.setText("");
 //            sucheMsisdnTf.setText("");
 //            sucheAktiviertDP.setCalendar(null);
-            sucheVerlaengerbarDP.setCalendar(null);
+        sucheVerlaengerbarDP.setCalendar(null);
+    }
+//    private String extractHandy() {
+//        String handy = neuHandyMarkeTf.getText();
+//        if (!neuHandyModellTf.getText().isEmpty()) {
+//            if (!neuHandyMarkeTf.getText().isEmpty()) {
+//                handy += " : ";
+//            }
+//            handy += neuHandyModellTf.getText();
+//        }
+//        return handy;
+//    }
+
+    private String extractVerArt(String vertragsArt) {
+        throw new UnsupportedOperationException("Not yet implemented");//
     }
 }

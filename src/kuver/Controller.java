@@ -71,42 +71,60 @@ public class Controller {
     public boolean addKunde(JTable tabelle, Kunde kunde) {
         // Datum Formatieren
         SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+        String akti = "";
+        String verl = "";
+        String geb = ""; 
+        String str="";
         // Add into db
         String sql = "INSERT into Kunden("
                 + "Anrede, Name, Vorname, Geburtsdatum, "
                 + "Strasse, PLZ, Ort, Netz, "
-                + "Vertragsart, Handy, IMEI, MSISDN, "
-                + "Aktivierungsdatum, Verlaengerbar, Vertragsnummer, Klasse "
+                + "Vertragsart, Vertragsnummer, IMEI, MSISDN, "
+                + "Aktivierungsdatum, Verlaengerbar, Klasse, "
+                + "Handy, Handymarke,Handymodell"
                 + ") VALUES ("
                 + "?,?,?,?,"
                 + "?,?,?,?,"
                 + "?,?,?,?,"
-                + "?,?,?,?)";
+                + "?,?,?,"
+                + "?,?,?)";
         Connection con = getConnection(user.getName(), user.getPass());
         try {
             PreparedStatement pStmt = (PreparedStatement) con.prepareStatement(sql);
-            pStmt.setString(1, kunde.getAnrede());
+            pStmt.setString(1, kunde.getAnrede());//
             pStmt.setString(2, kunde.getName());
             pStmt.setString(3, kunde.getVorname());
-            pStmt.setString(4, f.format(kunde.getGebDat().getTime()));
-
-            pStmt.setString(5, kunde.getStrasse() + "." + kunde.getStrNr());
+            if (kunde.getGebDat() != null) {
+                geb = f.format(kunde.getGebDat().getTime());
+            }
+            pStmt.setString(4, geb);
+            
+            pStmt.setString(5,kunde.getStrasse());
             pStmt.setString(6, kunde.getPlz());
             pStmt.setString(7, kunde.getOrt());
             pStmt.setString(8, kunde.getNetz());
 
-            pStmt.setString(9, kunde.getVertragsArt());
-            pStmt.setString(10, kunde.getHandy());
+            pStmt.setString(9, kunde.getVertragsArt());//
+            pStmt.setString(10, kunde.getVertragsNr());
             pStmt.setString(11, kunde.getImei());
             pStmt.setString(12, kunde.getMsisdn());
+            
+            if (kunde.getAktivierung() != null) {//
+                akti = f.format(kunde.getAktivierung().getTime());
+            }
+            pStmt.setString(13, akti);
+            if (kunde.getVerlaengerung() != null) {
+                verl = f.format(kunde.getVerlaengerung().getTime());
+            }
+            pStmt.setString(14, verl);
+            pStmt.setString(15, kunde.getKlasse());
 
-            pStmt.setString(13, f.format(kunde.getAktivierung().getTime()));
-            pStmt.setString(14, f.format(kunde.getVerlaengerung().getTime()));
-            pStmt.setString(15, kunde.getVertragsNr());
-            pStmt.setString(16, "" + kunde.getKlasse());
-
+            pStmt.setString(16, kunde.getRufNr());//
+            pStmt.setString(17, kunde.getHandyMarke());
+            pStmt.setString(18, kunde.getHandyModell());
+            System.out.println("SQL: " + sql);
             int msg = pStmt.executeUpdate();
-            System.out.println("SQL: " + sql + "\nRows affected: " + msg);
+            System.out.println("Rows affected: " + msg);
         } catch (SQLException ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -119,8 +137,11 @@ public class Controller {
             }
         }
         // Reset table
+        clearTable(tabelle);
         DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
-        model.getDataVector().removeAllElements();
+//        model.getDataVector().removeAllElements();
+
+
         // Add into table
         model.addRow(
                 new Object[]{
@@ -128,19 +149,21 @@ public class Controller {
                     kunde.getAnrede(),//
                     kunde.getName(),
                     kunde.getVorname(),
-                    f.format(kunde.getGebDat().getTime()),
+                    geb,
                     kunde.getStrasse(),//
-                    kunde.getStrNr(),
+//                    kunde.getStrNr(), // here
                     kunde.getPlz(),
                     kunde.getOrt(),
-                    kunde.getHandy(),
-                    kunde.getNetz(),//
-                    kunde.getVertragsArt(),
+                    kunde.getRufNr(),//
+                    kunde.getHandyMarke(),
+                    kunde.getHandyModell(),
+                    kunde.getVertragsArt(),//
                     kunde.getVertragsNr(),
                     kunde.getImei(),
                     kunde.getMsisdn(),
-                    f.format(kunde.getAktivierung().getTime()),//
-                    f.format(kunde.getVerlaengerung().getTime()),
+                    kunde.getNetz(),
+                    akti,//
+                    verl,
                     0,
                     kunde.getKlasse()
                 });
@@ -193,6 +216,7 @@ public class Controller {
     }
 
     public boolean updateKunde(JTable tabelle, Kunde kunde) {
+        System.out.println("Update Kunde");
         // Update
         boolean ok = false;
         // Datum Formatieren
@@ -201,7 +225,8 @@ public class Controller {
                 + "Anrede = ?, Name =?, Vorname=?, Geburtsdatum=?, "
                 + "Strasse = ?, PLZ=?, Ort=?, Netz=?, "
                 + "Vertragsart= ?, Handy= ?, IMEI = ?, MSISDN = ?, "
-                + "Aktivierungsdatum = ?, Verlaengerbar = ?, Vertragsnummer = ?, Klasse = ?"
+                + "Aktivierungsdatum = ?, Verlaengerbar = ?, Vertragsnummer = ?, Klasse = ?,"
+                + "Handymarke = ?,Handymodell =?"
                 + " where ID =" + kunde.getId();
         Connection con = null;
         try {
@@ -212,14 +237,14 @@ public class Controller {
             pStmt.setString(2, kunde.getName());
             pStmt.setString(3, kunde.getVorname());
             pStmt.setString(4, f.format(kunde.getGebDat().getTime()));
-
-            pStmt.setString(5, kunde.getStrasse() + "." + kunde.getStrNr());
+            
+            pStmt.setString(5, kunde.getStrasse());
             pStmt.setString(6, kunde.getPlz());
             pStmt.setString(7, kunde.getOrt());
             pStmt.setString(8, kunde.getNetz());
 
             pStmt.setString(9, kunde.getVertragsArt());
-            pStmt.setString(10, kunde.getHandy());
+            pStmt.setString(10, kunde.getRufNr());
             pStmt.setString(11, kunde.getImei());
             pStmt.setString(12, kunde.getMsisdn());
 
@@ -228,6 +253,8 @@ public class Controller {
             pStmt.setString(15, kunde.getVertragsNr());
             pStmt.setString(16, "" + kunde.getKlasse());
 
+            pStmt.setString(17, "" + kunde.getHandyMarke());
+            pStmt.setString(18, "" + kunde.getHandyModell());
             System.out.println("SQL: " + sql);
 
             int rows = pStmt.executeUpdate();
@@ -247,18 +274,20 @@ public class Controller {
                         kunde.getVorname(),
                         f.format(kunde.getGebDat().getTime()),
                         kunde.getStrasse(),//
-                        kunde.getStrNr(),
+//                        kunde.getStrNr(),
                         kunde.getPlz(),
                         kunde.getOrt(),
-                        kunde.getHandy(),
-                        kunde.getNetz(),//
+                        kunde.getRufNr(),
+                        kunde.getHandyMarke(),
+                        kunde.getHandyModell(),
                         kunde.getVertragsArt(),
                         kunde.getVertragsNr(),
                         kunde.getImei(),
                         kunde.getMsisdn(),
+                        kunde.getNetz(),//
                         f.format(kunde.getAktivierung().getTime()),//
                         f.format(kunde.getVerlaengerung().getTime()),
-                        0, // todo: number comments
+                        kunde.getKommentare(),
                         kunde.getKlasse()
                     });
         } catch (SQLException ex) {
@@ -402,11 +431,16 @@ public class Controller {
 
     public void sucheKunde(JTable tabelle, Kunde kunde) {
         // Reset table
+        clearTable(tabelle);
         DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
-        model.getDataVector().removeAllElements();
+//        model.getDataVector().removeAllElements();
+
 
         // Datum Formatieren
         SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
+        String akti = "";
+        String verl = "";
+        String geb = "";
 
         // Create SQL query
         boolean andSetzen = false;
@@ -497,42 +531,67 @@ public class Controller {
                 // Kunde
                 tmp.reset();
                 tmp.setId(rs.getInt("ID"));
-                tmp.setKlasse(rs.getInt("Klasse"));
+                tmp.setKlasse(rs.getString("Klasse"));
                 tmp.setAnrede(rs.getString("Anrede"));
                 tmp.setName(rs.getString("Name"));
                 tmp.setVorname(rs.getString("Vorname"));
                 // Bday
-                Calendar cal = Calendar.getInstance();
-                try {
-                    cal.setTime(f.parse(rs.getString("Geburtsdatum")));
-                } catch (ParseException ex) {
-                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                Calendar cal = null;
+                if (!rs.getString("Geburtsdatum").isEmpty()) {
+                    try {
+                        cal=Calendar.getInstance();
+                        cal.setTime(f.parse(rs.getString("Geburtsdatum")));
+                        geb = rs.getString("Geburtsdatum");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    geb = "";
                 }
                 tmp.setGebDat(cal);
                 tmp.setStrasse(rs.getString("Strasse"));
 //                tmp.setStrNr(rs.getInt("StrNr"));
                 tmp.setPlz(rs.getString("PLZ")); // todo: plz ist string
                 tmp.setOrt(rs.getString("Ort"));
-                tmp.setHandy(rs.getString("Handy"));
+                tmp.setRufNr(rs.getString("Handy"));
+                tmp.setHandyMarke(rs.getString("Handymarke"));
+                tmp.setHandyModell(rs.getString("Handymodell"));
+                                System.out.println("#marke: "+rs.getString("Handymarke"));
+                             System.out.println("#modell: "+rs.getString("Handymodell"));
+                                   
+
                 tmp.setNetz(rs.getString("Netz"));
                 tmp.setVertragsArt(rs.getString("Vertragsart"));
                 tmp.setVertragsNr(rs.getString("Vertragsnummer"));
                 tmp.setImei(rs.getString("IMEI"));
                 tmp.setMsisdn(rs.getString("MSISDN"));
                 // Aktivierung
-                Calendar calAkt = Calendar.getInstance();
-                try {
-                    calAkt.setTime(f.parse(rs.getString("Aktivierungsdatum")));
-                } catch (ParseException ex) {
-                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                Calendar calAkt = null;
+                if (!rs.getString("Aktivierungsdatum").isEmpty()) {
+                    try {
+                        calAkt = Calendar.getInstance();
+                        calAkt.setTime(f.parse(rs.getString("Aktivierungsdatum")));
+                        akti = rs.getString("Aktivierungsdatum");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    akti = "";
                 }
                 tmp.setAktivierung(calAkt);
+
                 // Verlaengerbar
-                Calendar calVerl = Calendar.getInstance();
-                try {
-                    calVerl.setTime(f.parse(rs.getString("Verlaengerbar")));
-                } catch (ParseException ex) {
-                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                Calendar calVerl = null;
+                if (!rs.getString("Verlaengerbar").isEmpty()) {
+                    try {
+                        calVerl = Calendar.getInstance();
+                        calVerl.setTime(f.parse(rs.getString("Verlaengerbar")));
+                        verl = rs.getString("Verlaengerbar");
+                    } catch (ParseException ex) {
+                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    verl = "";
                 }
                 tmp.setVerlaengerung(calVerl);
 
@@ -551,19 +610,20 @@ public class Controller {
                             tmp.getAnrede(),//
                             tmp.getName(),
                             tmp.getVorname(),
-                            f.format(tmp.getGebDat().getTime()),
+                            geb,
                             tmp.getStrasse(),//
-                            tmp.getStrNr(),
                             tmp.getPlz(),
                             tmp.getOrt(),
-                            tmp.getHandy(),
-                            tmp.getNetz(),//
+                            tmp.getRufNr(),
+                            tmp.getHandyMarke(),
+                            tmp.getHandyModell(),
                             tmp.getVertragsArt(),
                             tmp.getVertragsNr(),
                             tmp.getImei(),
                             tmp.getMsisdn(),
-                            f.format(tmp.getAktivierung().getTime()),//
-                            f.format(tmp.getVerlaengerung().getTime()),
+                            tmp.getNetz(),//
+                            akti,//
+                            verl,
                             tmp.getKommentare(),
                             tmp.getKlasse()
                         });
@@ -596,9 +656,14 @@ public class Controller {
             }
 
             // reset table
-            DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
-            model.getDataVector().removeAllElements();
-            model.addRow(new Object[]{});
+//            DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
+//            model.getDataVector().removeAllElements();
+//            model.addRow(new Object[]{});
+            clearTable(tabelle);
+            // reset
+            this.curKunde = null;
+            this.curComment = null;
+            this.curComments = null;
 
         } catch (Exception ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -844,6 +909,13 @@ public class Controller {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             }
             return ok;
+        }
+    }
+
+    public void clearTable(JTable tabelle) {
+        DefaultTableModel model = (DefaultTableModel) tabelle.getModel();
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+            model.removeRow(i);
         }
     }
 }
