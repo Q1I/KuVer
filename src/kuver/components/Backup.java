@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package kuver.frame;
+package kuver.components;
+
+import kuver.tweaks.ContextMenuMouse;
 
 /**
  *
@@ -16,6 +18,7 @@ public class Backup extends javax.swing.JDialog {
     public Backup(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jLabel1.addMouseListener(new ContextMenuMouse());
     }
 
     /**

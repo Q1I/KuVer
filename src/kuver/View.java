@@ -4,28 +4,39 @@
  */
 package kuver;
 
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.text.PlainDocument;
 import kuver.definitions.Comment;
 import kuver.definitions.Kunde;
 import kuver.definitions.User;
-import kuver.frame.About;
-import kuver.frame.Backup;
-import kuver.frame.Register;
+import kuver.components.About;
+import kuver.components.Backup;
+import kuver.components.Register;
+import kuver.tweaks.ContextMenuMouse;
 
 /**
  *
@@ -46,20 +57,6 @@ public class View extends javax.swing.JFrame {
         this.setDefaultCloseOperation(this.DO_NOTHING_ON_CLOSE);
         this.setExtendedState(this.MAXIMIZED_BOTH);
 
-        // Tag
-//        kuver.tweaks.TextLengthDocFilter filter = new kuver.tweaks.TextLengthDocFilter(2, 0);
-//        PlainDocument doc = (PlainDocument) neuTagTf.getDocument();
-//        doc.setDocumentFilter(filter);
-//        PlainDocument doc2 = (PlainDocument) neuTagTf.getDocument();
-//        doc2.setDocumentFilter(filter);
-//        PlainDocument doc3 = (PlainDocument) neuTagTf.getDocument();
-//        doc3.setDocumentFilter(filter);
-//        // Jahr
-//        for (int i = 1930; i < 2010; i++) {
-//            neuJahrCB.addItem(i);
-//            sucheJahrCB.addItem(i);
-//            detailsJahrCB.addItem(i);
-//        }
         // StrNr
         kuver.tweaks.TextLengthDocFilter filterStrNr = new kuver.tweaks.TextLengthDocFilter(5, 0);
         PlainDocument doc = (PlainDocument) neuStrNrTf.getDocument();
@@ -108,6 +105,12 @@ public class View extends javax.swing.JFrame {
 //        doc17.setDocumentFilter(filterKlasse);
         PlainDocument doc18 = (PlainDocument) detailsKlasseTf.getDocument();
         doc18.setDocumentFilter(filterKlasse);
+
+        // context menu on right click for all textfields
+        initContextMenuRightClick();
+
+        // Enter listener
+        initEnterBinding();
 
         // TabPanel
         tabPanel.setEnabledAt(1, false);
@@ -429,7 +432,7 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jLabel29)
                     .addGroup(startPanelLayout.createSequentialGroup()
                         .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 838, Short.MAX_VALUE)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -731,12 +734,6 @@ public class View extends javax.swing.JFrame {
 
         jLabel9.setText("Vorname");
 
-        sucheVornameTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sucheVornameTfActionPerformed(evt);
-            }
-        });
-
         jLabel10.setText("Geburtsdatum");
 
         jLabel11.setText("PLZ/Ort");
@@ -746,12 +743,6 @@ public class View extends javax.swing.JFrame {
         jLabel24.setText("/");
 
         jLabel17.setText("ID");
-
-        sucheIdTf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sucheIdTfActionPerformed(evt);
-            }
-        });
 
         jLabel28.setText("/");
 
@@ -888,9 +879,19 @@ public class View extends javax.swing.JFrame {
 
         detailsGebDP.setDateFormatString("dd.MM.yyyy");
         detailsGebDP.setEnabled(false);
+        detailsGebDP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         detailsVerlaengerbarDP.setDateFormatString("dd.MM.yyyy");
         detailsVerlaengerbarDP.setEnabled(false);
+        detailsVerlaengerbarDP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         jLabel14.setText("Vorname");
 
@@ -1032,6 +1033,11 @@ public class View extends javax.swing.JFrame {
 
         detailsAktiviertDP.setDateFormatString("dd.MM.yyyy");
         detailsAktiviertDP.setEnabled(false);
+        detailsAktiviertDP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                focusGainedSelectAll(evt);
+            }
+        });
 
         detailsDeleteBtn.setText("Löschen");
         detailsDeleteBtn.setEnabled(false);
@@ -1789,14 +1795,6 @@ public class View extends javax.swing.JFrame {
         register.setVisible(true);
     }//GEN-LAST:event_registerBtnActionPerformed
 
-    private void sucheIdTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sucheIdTfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sucheIdTfActionPerformed
-
-    private void sucheVornameTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sucheVornameTfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_sucheVornameTfActionPerformed
-
     private void sucheSuchenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sucheSuchenBtnActionPerformed
         // suchen
         controller.sucheKunde(tabelle, getSucheKunde());
@@ -1939,6 +1937,9 @@ public class View extends javax.swing.JFrame {
     private void sucheResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sucheResetBtnActionPerformed
         // reset formular
         resetSuche();
+        
+        // switch focus
+       sucheIdTf.requestFocus();
     }//GEN-LAST:event_sucheResetBtnActionPerformed
 
     private void menuAboutItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAboutItemActionPerformed
@@ -1951,8 +1952,10 @@ public class View extends javax.swing.JFrame {
 
     private void focusGainedSelectAll(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_focusGainedSelectAll
         // TODO add your handling code here:
-        JTextField comp = (JTextField) evt.getComponent();
-        comp.selectAll();
+        if (evt.getComponent() instanceof JTextField) {
+            JTextField comp = (JTextField) evt.getComponent();
+            comp.selectAll();
+        }
     }//GEN-LAST:event_focusGainedSelectAll
 
     private void tabPanelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabPanelKeyPressed
@@ -2408,9 +2411,9 @@ public class View extends javax.swing.JFrame {
         kunde.setHandyMarke(detailsHandyMarkeTf.getText());
         kunde.setHandyModell(detailsHandyModellTf.getText());
         kunde.setNetz(detailsNetzTf.getText());
-        String verArt =detailsVerArtCB.getSelectedItem().toString();
-        if(!detailsVerArtTf.getText().isEmpty()){
-            verArt+=" : "+detailsVerArtTf.getText();
+        String verArt = detailsVerArtCB.getSelectedItem().toString();
+        if (!detailsVerArtTf.getText().isEmpty()) {
+            verArt += " : " + detailsVerArtTf.getText();
         }
         kunde.setVertragsArt(verArt);
         kunde.setVertragsNr(detailsVerNrTf.getText());
@@ -3024,5 +3027,50 @@ public class View extends javax.swing.JFrame {
 
     private String extractVerArt(String vertragsArt) {
         throw new UnsupportedOperationException("Not yet implemented");//
+    }
+
+    private void initContextMenuRightClick() {
+        ContextMenuMouse menu = new ContextMenuMouse();
+        Component[] panels = tabPanel.getComponents();
+        System.out.println("panels size: " + panels.length);
+        for (Component comp : panels) {
+            Component[] comps = ((JPanel) comp).getComponents();
+            System.out.println("comps size: " + panels.length);
+            for (Component fields : comps) {
+                if (fields instanceof JTextField) {
+                    ((JTextField) fields).addMouseListener(menu);
+                }
+            }
+        }
+    }
+
+    private void initEnterBinding() {
+        String keyStrokeAndKey = "ENTER";
+        KeyStroke keyStroke = KeyStroke.getKeyStroke(keyStrokeAndKey);
+
+        // StartPanel
+        Action actionLogin = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                loginBtnActionPerformed(null);
+            }
+        };
+        loginUserTf.getInputMap(JComponent.WHEN_FOCUSED).put(keyStroke, keyStrokeAndKey);
+        loginUserTf.getActionMap().put(keyStrokeAndKey, actionLogin);
+        loginPassPf.getInputMap(JComponent.WHEN_FOCUSED).put(keyStroke, keyStrokeAndKey);
+        loginPassPf.getActionMap().put(keyStrokeAndKey, actionLogin);
+
+        // SuchePanel
+        Action actionSuche = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (tabPanel.getSelectedIndex() == 2) {
+                    controller.sucheKunde(tabelle, getSucheKunde());
+                }
+            }
+        };
+        suchePanel.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(keyStroke, keyStrokeAndKey);
+        suchePanel.getRootPane().getActionMap().put(keyStrokeAndKey, actionSuche);
+
     }
 }

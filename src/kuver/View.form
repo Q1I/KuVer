@@ -325,7 +325,7 @@
                           <Component id="jLabel29" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="838" max="32767" attributes="0"/>
                               <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
@@ -978,9 +978,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="sucheVornameTf">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sucheVornameTfActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
@@ -1014,9 +1011,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="sucheIdTf">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sucheIdTfActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel28">
               <Properties>
@@ -1322,12 +1316,18 @@
                 <Property name="dateFormatString" type="java.lang.String" value="dd.MM.yyyy"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="detailsVerlaengerbarDP">
               <Properties>
                 <Property name="dateFormatString" type="java.lang.String" value="dd.MM.yyyy"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel14">
               <Properties>
@@ -1535,6 +1535,9 @@
                 <Property name="dateFormatString" type="java.lang.String" value="dd.MM.yyyy"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="detailsDeleteBtn">
               <Properties>
