@@ -212,6 +212,8 @@ public class View extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         sucheVerNrTf = new javax.swing.JTextField();
         sucheResetBtn = new javax.swing.JButton();
+        jLabel63 = new javax.swing.JLabel();
+        sucheRufNrTf = new javax.swing.JTextField();
         detailsPanel = new javax.swing.JPanel();
         detailsSaveBtn = new javax.swing.JButton();
         detailsEditBtn = new javax.swing.JButton();
@@ -562,7 +564,7 @@ public class View extends javax.swing.JFrame {
 
         jLabel48.setText("Klasse");
 
-        neuVerArtCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "DSL", "EWP", "Haussteuerung", "Mobilfunk", "Prepaid", "Strom" }));
+        neuVerArtCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "DSL", "EWP", "Haussteuerung", "Mobilfunk", "Prepaid", "Strom", "Sonstiges" }));
 
         jLabel52.setText(":");
 
@@ -761,6 +763,8 @@ public class View extends javax.swing.JFrame {
             }
         });
 
+        jLabel63.setText("Rufnummer");
+
         javax.swing.GroupLayout suchePanelLayout = new javax.swing.GroupLayout(suchePanel);
         suchePanel.setLayout(suchePanelLayout);
         suchePanelLayout.setHorizontalGroup(
@@ -768,46 +772,50 @@ public class View extends javax.swing.JFrame {
             .addGroup(suchePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel23)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel50))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sucheIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sucheGebDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(suchePanelLayout.createSequentialGroup()
-                        .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, suchePanelLayout.createSequentialGroup()
-                                .addComponent(sucheStrasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel24)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sucheStrNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(sucheNameTf)
-                            .addComponent(sucheVerlaengerbarDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sucheVerNrTf))
-                        .addGap(60, 60, 60)
-                        .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, suchePanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(sucheResetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(sucheSuchenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(suchePanelLayout.createSequentialGroup()
+                        .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel23)
+                            .addComponent(jLabel17)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel50)
+                            .addComponent(jLabel63))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sucheIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sucheGebDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(suchePanelLayout.createSequentialGroup()
-                                .addComponent(suchePlzTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(sucheRufNrTf, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(suchePanelLayout.createSequentialGroup()
+                                        .addComponent(sucheStrasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel24)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(sucheStrNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(sucheNameTf, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sucheVerlaengerbarDP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sucheVerNrTf, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(60, 60, 60)
+                                .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jLabel11))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel28)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sucheOrtTf))
-                            .addComponent(sucheVornameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(297, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, suchePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(sucheResetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sucheSuchenBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(suchePanelLayout.createSequentialGroup()
+                                        .addComponent(suchePlzTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel28)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(sucheOrtTf))
+                                    .addComponent(sucheVornameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 285, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         suchePanelLayout.setVerticalGroup(
@@ -839,13 +847,17 @@ public class View extends javax.swing.JFrame {
                     .addComponent(sucheOrtTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel63)
+                    .addComponent(sucheRufNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(sucheVerNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel50, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(sucheVerlaengerbarDP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sucheSuchenBtn)
                     .addComponent(sucheResetBtn))
@@ -1072,7 +1084,7 @@ public class View extends javax.swing.JFrame {
 
         jLabel45.setText("ID");
 
-        detailsVerArtCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "DSL", "EWP", "Haussteuerung", "Mobilfunk", "Prepaid", "Strom" }));
+        detailsVerArtCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "DSL", "EWP", "Haussteuerung", "Mobilfunk", "Prepaid", "Strom", "Sonstiges" }));
         detailsVerArtCB.setEnabled(false);
 
         jLabel51.setText(":");
@@ -1937,9 +1949,9 @@ public class View extends javax.swing.JFrame {
     private void sucheResetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sucheResetBtnActionPerformed
         // reset formular
         resetSuche();
-        
+
         // switch focus
-       sucheIdTf.requestFocus();
+        sucheIdTf.requestFocus();
     }//GEN-LAST:event_sucheResetBtnActionPerformed
 
     private void menuAboutItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAboutItemActionPerformed
@@ -2118,6 +2130,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -2167,6 +2180,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JPanel suchePanel;
     private javax.swing.JTextField suchePlzTf;
     private javax.swing.JButton sucheResetBtn;
+    private javax.swing.JTextField sucheRufNrTf;
     private javax.swing.JTextField sucheStrNrTf;
     private javax.swing.JTextField sucheStrasseTf;
     private javax.swing.JButton sucheSuchenBtn;
@@ -2278,11 +2292,15 @@ public class View extends javax.swing.JFrame {
 //            error = "'Geburtstagsdatum' ist leer! ";
 //            return error;
 //        }
-//        // Strasse
-//        if (neuStrasseTf.getText().isEmpty()) {
-//            error = "'Strasse' ist leer! ";
-//            return error;
-//        }
+        // Strasse + StrNr
+        if (!neuStrasseTf.getText().isEmpty() && neuStrNrTf.getText().isEmpty()) {
+            error = "Bitte geben Sie die Nummer der Strasse ein!";
+            return error;
+        }
+        if (neuStrasseTf.getText().isEmpty() && !neuStrNrTf.getText().isEmpty()) {
+            error = "'Strasse' ist leer!";
+            return error;
+        }
 //        // StrasseNr
 //        if (neuStrNrTf.getText().isEmpty()) {
 //            error = "'Strassen Nummer' ist leer! ";
@@ -2308,11 +2326,11 @@ public class View extends javax.swing.JFrame {
 //            error = "'Netz' ist leer! ";
 //            return error;
 //        }
-//        // Vertragsart
-//        if (neuVerArtTf.getText().isEmpty()) {
-//            error = "'Vertragsart' ist leer! ";
-//            return error;
-//        }
+        // Vertragsart
+        if (neuVerArtCB.getSelectedIndex()==0 && !neuVerArtTf.getText().isEmpty()) {
+            error = "'Vertragsart' ist leer! ";
+            return error;
+        }
 //        // VertragsNr
 //        if (neuVerNrTf.getText().isEmpty()) {
 //            error = "'Vertragsnummer' ist leer! ";
@@ -2411,9 +2429,13 @@ public class View extends javax.swing.JFrame {
         kunde.setHandyMarke(detailsHandyMarkeTf.getText());
         kunde.setHandyModell(detailsHandyModellTf.getText());
         kunde.setNetz(detailsNetzTf.getText());
-        String verArt = detailsVerArtCB.getSelectedItem().toString();
-        if (!detailsVerArtTf.getText().isEmpty()) {
-            verArt += " : " + detailsVerArtTf.getText();
+        // verArt
+        String verArt = null;
+        if (detailsVerArtCB.getSelectedItem() != null) {
+            verArt = detailsVerArtCB.getSelectedItem().toString();
+            if (!detailsVerArtTf.getText().isEmpty()) {
+                verArt += " : " + detailsVerArtTf.getText();
+            }
         }
         kunde.setVertragsArt(verArt);
         kunde.setVertragsNr(detailsVerNrTf.getText());
@@ -2439,6 +2461,7 @@ public class View extends javax.swing.JFrame {
         kunde.setPlz(suchePlzTf.getText());
         kunde.setOrt(sucheOrtTf.getText());
         kunde.setVertragsNr(sucheVerNrTf.getText());
+        kunde.setRufNr(sucheRufNrTf.getText());
         // Verl
         kunde.setVerlaengerung(sucheVerlaengerbarDP.getCalendar());
 
@@ -2561,7 +2584,15 @@ public class View extends javax.swing.JFrame {
 
     private void detailsSave() {
         // Check input
-
+         String error = checkDetailsInput();
+        if (error != null) {
+            JOptionPane.showMessageDialog(tabPanel,
+                    "Fehler bei der Eingabe: " + error,
+                    "Falsche Eingabe",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         // Dialog
         final JOptionPane optionPane = new JOptionPane(
                 "Wollen sie die Änderungen uebernehmen?\n",
@@ -3072,5 +3103,48 @@ public class View extends javax.swing.JFrame {
         suchePanel.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(keyStroke, keyStrokeAndKey);
         suchePanel.getRootPane().getActionMap().put(keyStrokeAndKey, actionSuche);
 
+    }
+
+    private String checkDetailsInput() {
+         String error = null;
+        // Anrede
+        if (detailsAnredeCB.getSelectedIndex() == 0) {
+            error = "'Anrede' ist leer! ";
+            return error;
+        }
+        // Name
+        if (detailsNameTf.getText().isEmpty()) {
+            error = "'Name' ist leer! ";
+            return error;
+        }
+        if (!(detailsNameTf.getText()).matches("[a-zA-Z-]+")) {
+            error = "'Name' darf keine Sonderzeichen oder Zahlen enthalten! ";
+            return error;
+        }
+        // Vorname
+        if (detailsVornameTf.getText().isEmpty()) {
+            error = "'Vorname' ist leer! ";
+            return error;
+        }
+        System.out.println("vorname: " + detailsVornameTf.getText());
+        if (!(detailsVornameTf.getText()).matches("[a-zA-Z-]+")) {
+            error = "'Vorname' darf keine Sonderzeichen oder Zahlen enthalten! ";
+            return error;
+        }
+        // Strasse + StrNr
+        if (!detailsStrasseTf.getText().isEmpty() && detailsStrNrTf.getText().isEmpty()) {
+            error = "Bitte geben Sie die Nummer der Strasse ein!";
+            return error;
+        }
+        if (detailsStrasseTf.getText().isEmpty() && !detailsStrNrTf.getText().isEmpty()) {
+            error = "'Strasse' ist leer!";
+            return error;
+        }
+        // Vertragsart
+        if (( detailsVerArtCB.getSelectedItem() == null || detailsVerArtCB.getSelectedIndex() == 0 ) && !detailsVerArtTf.getText().isEmpty()) {
+            error = "'Vertragsart' ist leer! ";
+            return error;
+        }
+        return error;
     }
 }

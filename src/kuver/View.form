@@ -804,7 +804,7 @@
             <Component class="javax.swing.JComboBox" name="neuVerArtCB">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="7">
+                  <StringArray count="8">
                     <StringItem index="0" value=""/>
                     <StringItem index="1" value="DSL"/>
                     <StringItem index="2" value="EWP"/>
@@ -812,6 +812,7 @@
                     <StringItem index="4" value="Mobilfunk"/>
                     <StringItem index="5" value="Prepaid"/>
                     <StringItem index="6" value="Strom"/>
+                    <StringItem index="7" value="Sonstiges"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -852,55 +853,61 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel23" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel50" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="sucheIdTf" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
-                          <Component id="sucheGebDP" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="sucheStrasseTf" min="-2" pref="253" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="sucheStrNrTf" min="-2" pref="39" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="sucheNameTf" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="sucheVerlaengerbarDP" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Component id="sucheVerNrTf" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="sucheResetBtn" min="-2" pref="130" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="sucheSuchenBtn" min="-2" pref="130" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel23" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel50" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel63" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="suchePlzTf" min="-2" pref="94" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="sucheIdTf" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <Component id="sucheGebDP" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="sucheRufNrTf" alignment="0" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="sucheStrasseTf" min="-2" pref="253" max="-2" attributes="0"/>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="sucheStrNrTf" min="-2" pref="39" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="sucheNameTf" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="sucheVerlaengerbarDP" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="sucheVerNrTf" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="sucheOrtTf" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="suchePlzTf" min="-2" pref="94" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="sucheOrtTf" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="sucheVornameTf" min="-2" pref="316" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <Component id="sucheVornameTf" min="-2" pref="316" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace min="0" pref="285" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="297" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="sucheResetBtn" min="-2" pref="130" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="sucheSuchenBtn" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -938,6 +945,11 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel63" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="sucheRufNrTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="sucheVerNrTf" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -946,7 +958,7 @@
                           <Component id="jLabel50" max="32767" attributes="0"/>
                           <Component id="sucheVerlaengerbarDP" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="146" max="32767" attributes="0"/>
+                      <EmptySpace pref="112" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="sucheSuchenBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="sucheResetBtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1048,6 +1060,13 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sucheResetBtnActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel63">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Rufnummer"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="sucheRufNrTf">
             </Component>
           </SubComponents>
         </Container>
@@ -1585,7 +1604,7 @@
             <Component class="javax.swing.JComboBox" name="detailsVerArtCB">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="7">
+                  <StringArray count="8">
                     <StringItem index="0" value=""/>
                     <StringItem index="1" value="DSL"/>
                     <StringItem index="2" value="EWP"/>
@@ -1593,6 +1612,7 @@
                     <StringItem index="4" value="Mobilfunk"/>
                     <StringItem index="5" value="Prepaid"/>
                     <StringItem index="6" value="Strom"/>
+                    <StringItem index="7" value="Sonstiges"/>
                   </StringArray>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>

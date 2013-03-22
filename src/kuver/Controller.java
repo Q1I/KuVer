@@ -81,13 +81,15 @@ public class Controller {
                 + "Strasse, PLZ, Ort, Netz, "
                 + "Vertragsart, Vertragsnummer, IMEI, MSISDN, "
                 + "Aktivierungsdatum, Verlaengerbar, Klasse, "
-                + "Handy, Handymarke,Handymodell"
+                + "Handy, Handymarke,Handymodell, "
+                + "last_modified_by, last_modified"
                 + ") VALUES ("
                 + "?,?,?,?,"
                 + "?,?,?,?,"
                 + "?,?,?,?,"
                 + "?,?,?,"
-                + "?,?,?)";
+                + "?,?,?,"
+                + "?,now())";
         Connection con = getConnection(user.getName(), user.getPass());
         try {
             PreparedStatement pStmt = (PreparedStatement) con.prepareStatement(sql);
@@ -122,6 +124,9 @@ public class Controller {
             pStmt.setString(16, kunde.getRufNr());//
             pStmt.setString(17, kunde.getHandyMarke());
             pStmt.setString(18, kunde.getHandyModell());
+            
+            pStmt.setString(19, user.getName());
+            
             System.out.println("SQL: " + sql);
             int msg = pStmt.executeUpdate();
             System.out.println("Rows affected: " + msg);
@@ -219,14 +224,19 @@ public class Controller {
         System.out.println("Update Kunde");
         // Update
         boolean ok = false;
+        String geb ="";
+        String verl ="";
+        String akti="";
+        
         // Datum Formatieren
         SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
         String sql = "Update Kunden set "
                 + "Anrede = ?, Name =?, Vorname=?, Geburtsdatum=?, "
                 + "Strasse = ?, PLZ=?, Ort=?, Netz=?, "
                 + "Vertragsart= ?, Handy= ?, IMEI = ?, MSISDN = ?, "
-                + "Aktivierungsdatum = ?, Verlaengerbar = ?, Vertragsnummer = ?, Klasse = ?,"
-                + "Handymarke = ?,Handymodell =?"
+                + "Aktivierungsdatum = ?, Verlaengerbar = ?, Vertragsnummer = ?, Klasse = ?, "
+                + "Handymarke = ?,Handymodell =?, "
+                + "last_modified_by=?, last_modified=now() "
                 + " where ID =" + kunde.getId();
         Connection con = null;
         try {
@@ -236,7 +246,10 @@ public class Controller {
             pStmt.setString(1, kunde.getAnrede());
             pStmt.setString(2, kunde.getName());
             pStmt.setString(3, kunde.getVorname());
-            pStmt.setString(4, f.format(kunde.getGebDat().getTime()));
+            if (kunde.getGebDat() != null) {
+                geb = f.format(kunde.getGebDat().getTime());
+            }
+            pStmt.setString(4, geb);
             
             pStmt.setString(5, kunde.getStrasse());
             pStmt.setString(6, kunde.getPlz());
@@ -248,13 +261,22 @@ public class Controller {
             pStmt.setString(11, kunde.getImei());
             pStmt.setString(12, kunde.getMsisdn());
 
-            pStmt.setString(13, f.format(kunde.getAktivierung().getTime()));
-            pStmt.setString(14, f.format(kunde.getVerlaengerung().getTime()));
+            if (kunde.getAktivierung() != null) {
+                akti = f.format(kunde.getAktivierung().getTime());
+            }
+            pStmt.setString(13, akti);
+            if (kunde.getVerlaengerung() != null) {
+                verl = f.format(kunde.getVerlaengerung().getTime());
+            }
+            pStmt.setString(14, verl);
             pStmt.setString(15, kunde.getVertragsNr());
-            pStmt.setString(16, "" + kunde.getKlasse());
+            pStmt.setString(16, kunde.getKlasse());
 
-            pStmt.setString(17, "" + kunde.getHandyMarke());
-            pStmt.setString(18, "" + kunde.getHandyModell());
+            pStmt.setString(17,kunde.getHandyMarke());
+            pStmt.setString(18, kunde.getHandyModell());
+            
+            pStmt.setString(19, user.getName());
+            
             System.out.println("SQL: " + sql);
 
             int rows = pStmt.executeUpdate();
@@ -272,7 +294,7 @@ public class Controller {
                         kunde.getAnrede(),//
                         kunde.getName(),
                         kunde.getVorname(),
-                        f.format(kunde.getGebDat().getTime()),
+                        geb,
                         kunde.getStrasse(),//
 //                        kunde.getStrNr(),
                         kunde.getPlz(),
@@ -285,12 +307,12 @@ public class Controller {
                         kunde.getImei(),
                         kunde.getMsisdn(),
                         kunde.getNetz(),//
-                        f.format(kunde.getAktivierung().getTime()),//
-                        f.format(kunde.getVerlaengerung().getTime()),
+                        akti,//
+                        verl,
                         kunde.getKommentare(),
                         kunde.getKlasse()
                     });
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         } finally {
@@ -510,6 +532,13 @@ public class Controller {
                 sql += "AND ";
             }
             sql += "Vertragsnummer like '" + kunde.getVertragsNr() + "%' ";
+            andSetzen = true;
+        }
+        if (!kunde.getRufNr().isEmpty()) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "Handy like '" + kunde.getRufNr() + "%' ";
             andSetzen = true;
         }
         if (!andSetzen) // keine eingerenzung
@@ -840,9 +869,9 @@ public class Controller {
         boolean ok = false;
         // Add into db
         String sql = "INSERT into Kunden_comment("
-                + "ID, Datum, Comment"
+                + "ID, Datum, Comment, last_modified_by, last_modified"
                 + ") VALUES ("
-                + "?,?,?)";
+                + "?,?,?,?, now())";
         Connection con = getConnection(user.getName(), user.getPass());
         System.out.println("try addComment");
         try {
@@ -850,6 +879,7 @@ public class Controller {
             pStmt.setInt(1, cmt.getId());
             pStmt.setString(2, f.format(cmt.getDate().getTime()));
             pStmt.setString(3, cmt.getComment());
+            pStmt.setString(4, this.user.getName());
 
             int msg = pStmt.executeUpdate();
             System.out.println("SQL: " + sql + "\nRows affected: " + msg);
@@ -878,8 +908,8 @@ public class Controller {
         // Datum Formatieren
         SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
         String sql = "Update Kunden_comment set "
-                + "Datum =?, Comment=?"
-                + " where ID = ? and Datum = ? and Comment=?";
+                + "Datum =?, Comment=?, last_modified_by = ?, last_modified = now()"
+                + " where ID = ? and Datum = ? and Comment=? ";
         Connection con = null;
         System.out.println("try updateComment");
         try {
@@ -888,10 +918,12 @@ public class Controller {
             PreparedStatement pStmt = (PreparedStatement) con.prepareStatement(sql);
             pStmt.setString(1, f.format(cmt.getDate().getTime()));
             pStmt.setString(2, cmt.getComment());
-
-            pStmt.setInt(3, cmt.getId());
-            pStmt.setString(4, f.format(oldCmt.getDate().getTime()));
-            pStmt.setString(5, oldCmt.getComment());
+            pStmt.setString(3, user.getName());
+            
+            pStmt.setInt(4, cmt.getId());
+            pStmt.setString(5, f.format(oldCmt.getDate().getTime()));
+            pStmt.setString(6, oldCmt.getComment());
+            
             System.out.println("SQL: " + sql);
 
             int rows = pStmt.executeUpdate();
