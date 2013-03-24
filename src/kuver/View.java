@@ -214,6 +214,8 @@ public class View extends javax.swing.JFrame {
         sucheResetBtn = new javax.swing.JButton();
         jLabel63 = new javax.swing.JLabel();
         sucheRufNrTf = new javax.swing.JTextField();
+        jLabel64 = new javax.swing.JLabel();
+        sucheVerArtCB = new javax.swing.JComboBox();
         detailsPanel = new javax.swing.JPanel();
         detailsSaveBtn = new javax.swing.JButton();
         detailsEditBtn = new javax.swing.JButton();
@@ -434,7 +436,7 @@ public class View extends javax.swing.JFrame {
                     .addComponent(jLabel29)
                     .addGroup(startPanelLayout.createSequentialGroup()
                         .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 838, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 832, Short.MAX_VALUE)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(startPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -480,11 +482,11 @@ public class View extends javax.swing.JFrame {
 
         tabPanel.addTab("Start", startPanel);
 
-        jLabel1.setText("Name");
+        jLabel1.setText("Name*");
 
-        jLabel2.setText("Vorname");
+        jLabel2.setText("Vorname*");
 
-        jLabel3.setText("Anrede");
+        jLabel3.setText("Anrede*");
 
         neuNameTf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -593,7 +595,7 @@ public class View extends javax.swing.JFrame {
                 .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(neuPanelLayout.createSequentialGroup()
                         .addComponent(neuVerlaengerbarDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 717, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 708, Short.MAX_VALUE)
                         .addComponent(neuAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(neuPanelLayout.createSequentialGroup()
                         .addGroup(neuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -648,7 +650,7 @@ public class View extends javax.swing.JFrame {
                                                     .addComponent(jLabel52)
                                                     .addGap(4, 4, 4)
                                                     .addComponent(neuVerArtTf, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
-                        .addGap(0, 177, Short.MAX_VALUE)))
+                        .addGap(0, 168, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         neuPanelLayout.setVerticalGroup(
@@ -765,6 +767,10 @@ public class View extends javax.swing.JFrame {
 
         jLabel63.setText("Rufnummer");
 
+        jLabel64.setText("Vertragsart");
+
+        sucheVerArtCB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "DSL", "EWP", "Haussteuerung", "Mobilfunk", "Prepaid", "Strom", "Sonstiges" }));
+
         javax.swing.GroupLayout suchePanelLayout = new javax.swing.GroupLayout(suchePanel);
         suchePanel.setLayout(suchePanelLayout);
         suchePanelLayout.setHorizontalGroup(
@@ -805,7 +811,8 @@ public class View extends javax.swing.JFrame {
                                 .addGap(60, 60, 60)
                                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
-                                    .addComponent(jLabel11))
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel64))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(suchePanelLayout.createSequentialGroup()
@@ -814,8 +821,9 @@ public class View extends javax.swing.JFrame {
                                         .addComponent(jLabel28)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(sucheOrtTf))
-                                    .addComponent(sucheVornameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 285, Short.MAX_VALUE)))
+                                    .addComponent(sucheVornameTf, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(sucheVerArtCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 259, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         suchePanelLayout.setVerticalGroup(
@@ -852,7 +860,9 @@ public class View extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(sucheVerNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sucheVerNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel64)
+                    .addComponent(sucheVerArtCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(suchePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel50, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -905,7 +915,7 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        jLabel14.setText("Vorname");
+        jLabel14.setText("Vorname*");
 
         detailsStrNrTf.setEditable(false);
         detailsStrNrTf.addActionListener(new java.awt.event.ActionListener() {
@@ -921,7 +931,7 @@ public class View extends javax.swing.JFrame {
 
         jLabel25.setText("/");
 
-        jLabel15.setText("Name");
+        jLabel15.setText("Name*");
 
         detailsNameTf.setEditable(false);
         detailsNameTf.addActionListener(new java.awt.event.ActionListener() {
@@ -935,7 +945,7 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        jLabel16.setText("Anrede");
+        jLabel16.setText("Anrede*");
 
         jLabel53.setText("Aktivierungsdatum");
 
@@ -1197,7 +1207,7 @@ public class View extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(detailsCommentBtn))
                                     .addComponent(detailsNetzTf))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(detailsCancelBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(detailsDeleteBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -1306,7 +1316,7 @@ public class View extends javax.swing.JFrame {
             }
         });
 
-        jLabel44.setText("Kommentar");
+        jLabel44.setText("Kommentar*");
 
         commentCommentTA.setEditable(false);
         commentCommentTA.setColumns(20);
@@ -1318,7 +1328,7 @@ public class View extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(commentCommentTA);
 
-        jLabel46.setText("Datum");
+        jLabel46.setText("Datum*");
 
         commentDatumDP.setDateFormatString("dd.MM.yyyy");
         commentDatumDP.setEnabled(false);
@@ -1392,7 +1402,7 @@ public class View extends javax.swing.JFrame {
                                 .addComponent(jLabel42)
                                 .addGap(18, 18, 18)
                                 .addComponent(commentCommentCB, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                                 .addComponent(commentEditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(commentPanelLayout.createSequentialGroup()
                         .addGroup(commentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1990,7 +2000,7 @@ public class View extends javax.swing.JFrame {
 
     private void menuBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBackupActionPerformed
         // TODO add your handling code here:
-        Backup backup = new Backup(this, true);
+        Backup backup = new Backup(this.controller,this, true);
         backup.pack();
         backup.setLocationRelativeTo(detailsPanel);
         backup.setVisible(true);
@@ -2131,6 +2141,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel63;
+    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -2184,6 +2195,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JTextField sucheStrNrTf;
     private javax.swing.JTextField sucheStrasseTf;
     private javax.swing.JButton sucheSuchenBtn;
+    private javax.swing.JComboBox sucheVerArtCB;
     private javax.swing.JTextField sucheVerNrTf;
     private com.toedter.calendar.JDateChooser sucheVerlaengerbarDP;
     private javax.swing.JTextField sucheVornameTf;
@@ -2327,7 +2339,7 @@ public class View extends javax.swing.JFrame {
 //            return error;
 //        }
         // Vertragsart
-        if (neuVerArtCB.getSelectedIndex()==0 && !neuVerArtTf.getText().isEmpty()) {
+        if (neuVerArtCB.getSelectedIndex() == 0 && !neuVerArtTf.getText().isEmpty()) {
             error = "'Vertragsart' ist leer! ";
             return error;
         }
@@ -2461,6 +2473,10 @@ public class View extends javax.swing.JFrame {
         kunde.setPlz(suchePlzTf.getText());
         kunde.setOrt(sucheOrtTf.getText());
         kunde.setVertragsNr(sucheVerNrTf.getText());
+        if (sucheVerArtCB.getSelectedItem() != null) {
+            kunde.setVertragsArt(sucheVerArtCB.getSelectedItem().toString());
+        }
+
         kunde.setRufNr(sucheRufNrTf.getText());
         // Verl
         kunde.setVerlaengerung(sucheVerlaengerbarDP.getCalendar());
@@ -2584,7 +2600,7 @@ public class View extends javax.swing.JFrame {
 
     private void detailsSave() {
         // Check input
-         String error = checkDetailsInput();
+        String error = checkDetailsInput();
         if (error != null) {
             JOptionPane.showMessageDialog(tabPanel,
                     "Fehler bei der Eingabe: " + error,
@@ -2592,7 +2608,7 @@ public class View extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         // Dialog
         final JOptionPane optionPane = new JOptionPane(
                 "Wollen sie die Änderungen uebernehmen?\n",
@@ -3040,6 +3056,7 @@ public class View extends javax.swing.JFrame {
         suchePlzTf.setText("");
         sucheOrtTf.setText("");
         sucheVerNrTf.setText("");
+        sucheVerArtCB.setSelectedIndex(0);
 //            sucheImeiTf.setText("");
 //            sucheMsisdnTf.setText("");
 //            sucheAktiviertDP.setCalendar(null);
@@ -3106,7 +3123,7 @@ public class View extends javax.swing.JFrame {
     }
 
     private String checkDetailsInput() {
-         String error = null;
+        String error = null;
         // Anrede
         if (detailsAnredeCB.getSelectedIndex() == 0) {
             error = "'Anrede' ist leer! ";
@@ -3141,7 +3158,7 @@ public class View extends javax.swing.JFrame {
             return error;
         }
         // Vertragsart
-        if (( detailsVerArtCB.getSelectedItem() == null || detailsVerArtCB.getSelectedIndex() == 0 ) && !detailsVerArtTf.getText().isEmpty()) {
+        if ((detailsVerArtCB.getSelectedItem() == null || detailsVerArtCB.getSelectedIndex() == 0) && !detailsVerArtTf.getText().isEmpty()) {
             error = "'Vertragsart' ist leer! ";
             return error;
         }

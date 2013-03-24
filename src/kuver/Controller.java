@@ -5,6 +5,8 @@
 package kuver;
 
 import com.mysql.jdbc.Connection;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -73,8 +75,8 @@ public class Controller {
         SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
         String akti = "";
         String verl = "";
-        String geb = ""; 
-        String str="";
+        String geb = "";
+        String str = "";
         // Add into db
         String sql = "INSERT into Kunden("
                 + "Anrede, Name, Vorname, Geburtsdatum, "
@@ -100,8 +102,8 @@ public class Controller {
                 geb = f.format(kunde.getGebDat().getTime());
             }
             pStmt.setString(4, geb);
-            
-            pStmt.setString(5,kunde.getStrasse());
+
+            pStmt.setString(5, kunde.getStrasse());
             pStmt.setString(6, kunde.getPlz());
             pStmt.setString(7, kunde.getOrt());
             pStmt.setString(8, kunde.getNetz());
@@ -110,7 +112,7 @@ public class Controller {
             pStmt.setString(10, kunde.getVertragsNr());
             pStmt.setString(11, kunde.getImei());
             pStmt.setString(12, kunde.getMsisdn());
-            
+
             if (kunde.getAktivierung() != null) {//
                 akti = f.format(kunde.getAktivierung().getTime());
             }
@@ -124,9 +126,9 @@ public class Controller {
             pStmt.setString(16, kunde.getRufNr());//
             pStmt.setString(17, kunde.getHandyMarke());
             pStmt.setString(18, kunde.getHandyModell());
-            
+
             pStmt.setString(19, user.getName());
-            
+
             System.out.println("SQL: " + sql);
             int msg = pStmt.executeUpdate();
             System.out.println("Rows affected: " + msg);
@@ -156,7 +158,7 @@ public class Controller {
                     kunde.getVorname(),
                     geb,
                     kunde.getStrasse(),//
-//                    kunde.getStrNr(), // here
+                    //                    kunde.getStrNr(), // here
                     kunde.getPlz(),
                     kunde.getOrt(),
                     kunde.getRufNr(),//
@@ -224,10 +226,10 @@ public class Controller {
         System.out.println("Update Kunde");
         // Update
         boolean ok = false;
-        String geb ="";
-        String verl ="";
-        String akti="";
-        
+        String geb = "";
+        String verl = "";
+        String akti = "";
+
         // Datum Formatieren
         SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
         String sql = "Update Kunden set "
@@ -250,7 +252,7 @@ public class Controller {
                 geb = f.format(kunde.getGebDat().getTime());
             }
             pStmt.setString(4, geb);
-            
+
             pStmt.setString(5, kunde.getStrasse());
             pStmt.setString(6, kunde.getPlz());
             pStmt.setString(7, kunde.getOrt());
@@ -272,11 +274,11 @@ public class Controller {
             pStmt.setString(15, kunde.getVertragsNr());
             pStmt.setString(16, kunde.getKlasse());
 
-            pStmt.setString(17,kunde.getHandyMarke());
+            pStmt.setString(17, kunde.getHandyMarke());
             pStmt.setString(18, kunde.getHandyModell());
-            
+
             pStmt.setString(19, user.getName());
-            
+
             System.out.println("SQL: " + sql);
 
             int rows = pStmt.executeUpdate();
@@ -296,7 +298,7 @@ public class Controller {
                         kunde.getVorname(),
                         geb,
                         kunde.getStrasse(),//
-//                        kunde.getStrNr(),
+                        //                        kunde.getStrNr(),
                         kunde.getPlz(),
                         kunde.getOrt(),
                         kunde.getRufNr(),
@@ -381,7 +383,7 @@ public class Controller {
             int msg = stmt.executeUpdate(sql);
             System.out.println("Create User => " + msg + " Rows affected.");
 
-            sql = "GRANT SELECT,INSERT,DELETE,UPDATE ON KuVer.* TO '" + user.getName() + "'@'localhost';";
+            sql = "GRANT SELECT,INSERT,DELETE,UPDATE, LOCK TABLES ON KuVer.* TO '" + user.getName() + "'@'localhost';";
             msg = stmt.executeUpdate(sql);
             System.out.println("Grant Privileges => " + msg + " Rows affected.");
 
@@ -534,6 +536,13 @@ public class Controller {
             sql += "Vertragsnummer like '" + kunde.getVertragsNr() + "%' ";
             andSetzen = true;
         }
+        if (!kunde.getVertragsArt().isEmpty()) {
+            if (andSetzen) {
+                sql += "AND ";
+            }
+            sql += "Vertragsart like '" + kunde.getVertragsArt() + "%' ";
+            andSetzen = true;
+        }
         if (!kunde.getRufNr().isEmpty()) {
             if (andSetzen) {
                 sql += "AND ";
@@ -568,7 +577,7 @@ public class Controller {
                 Calendar cal = null;
                 if (!rs.getString("Geburtsdatum").isEmpty()) {
                     try {
-                        cal=Calendar.getInstance();
+                        cal = Calendar.getInstance();
                         cal.setTime(f.parse(rs.getString("Geburtsdatum")));
                         geb = rs.getString("Geburtsdatum");
                     } catch (ParseException ex) {
@@ -585,9 +594,6 @@ public class Controller {
                 tmp.setRufNr(rs.getString("Handy"));
                 tmp.setHandyMarke(rs.getString("Handymarke"));
                 tmp.setHandyModell(rs.getString("Handymodell"));
-                                System.out.println("#marke: "+rs.getString("Handymarke"));
-                             System.out.println("#modell: "+rs.getString("Handymodell"));
-                                   
 
                 tmp.setNetz(rs.getString("Netz"));
                 tmp.setVertragsArt(rs.getString("Vertragsart"));
@@ -919,11 +925,11 @@ public class Controller {
             pStmt.setString(1, f.format(cmt.getDate().getTime()));
             pStmt.setString(2, cmt.getComment());
             pStmt.setString(3, user.getName());
-            
+
             pStmt.setInt(4, cmt.getId());
             pStmt.setString(5, f.format(oldCmt.getDate().getTime()));
             pStmt.setString(6, oldCmt.getComment());
-            
+
             System.out.println("SQL: " + sql);
 
             int rows = pStmt.executeUpdate();
@@ -949,5 +955,33 @@ public class Controller {
         for (int i = model.getRowCount() - 1; i >= 0; i--) {
             model.removeRow(i);
         }
+    }
+
+    public User getUser() {
+        return this.user;
+    }
+
+    /**
+     * Execute shellCmd
+     * @param cmd
+     * @return 0 = success, 1 = fail
+     */
+    public int executeShellCmd(String cmd) {
+        System.out.println("Exectute Shell Command: "+cmd);
+        int exitValue = 1;
+        try {
+            Runtime runtime = Runtime.getRuntime();
+            Process process = runtime.exec(new String[]{"/bin/bash", "-c", cmd});
+            exitValue = process.waitFor();
+            System.out.println("exit value: " + exitValue);
+            BufferedReader buf = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = "";
+            while ((line = buf.readLine()) != null) {
+                System.out.println("exec response: " + line);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return exitValue;
     }
 }

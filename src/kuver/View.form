@@ -325,7 +325,7 @@
                           <Component id="jLabel29" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="838" max="32767" attributes="0"/>
+                              <EmptySpace pref="832" max="32767" attributes="0"/>
                               <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
@@ -473,7 +473,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="neuVerlaengerbarDP" min="-2" pref="200" max="-2" attributes="0"/>
-                              <EmptySpace pref="717" max="32767" attributes="0"/>
+                              <EmptySpace pref="708" max="32767" attributes="0"/>
                               <Component id="neuAddBtn" min="-2" pref="130" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -543,7 +543,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="177" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="168" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -640,17 +640,17 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Name"/>
+                <Property name="text" type="java.lang.String" value="Name*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Vorname"/>
+                <Property name="text" type="java.lang.String" value="Vorname*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Anrede"/>
+                <Property name="text" type="java.lang.String" value="Anrede*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="neuNameTf">
@@ -891,6 +891,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel64" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -902,10 +903,11 @@
                                               <Component id="sucheOrtTf" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="sucheVornameTf" min="-2" pref="316" max="-2" attributes="0"/>
+                                          <Component id="sucheVerArtCB" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="285" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="259" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -952,6 +954,8 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="sucheVerNrTf" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel64" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="sucheVerArtCB" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -1067,6 +1071,27 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="sucheRufNrTf">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel64">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Vertragsart"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="sucheVerArtCB">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="8">
+                    <StringItem index="0" value=""/>
+                    <StringItem index="1" value="DSL"/>
+                    <StringItem index="2" value="EWP"/>
+                    <StringItem index="3" value="Haussteuerung"/>
+                    <StringItem index="4" value="Mobilfunk"/>
+                    <StringItem index="5" value="Prepaid"/>
+                    <StringItem index="6" value="Strom"/>
+                    <StringItem index="7" value="Sonstiges"/>
+                  </StringArray>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -1189,7 +1214,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="47" max="32767" attributes="0"/>
+                              <EmptySpace pref="38" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="detailsCancelBtn" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
                                   <Component id="detailsDeleteBtn" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
@@ -1350,7 +1375,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel14">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Vorname"/>
+                <Property name="text" type="java.lang.String" value="Vorname*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="detailsStrNrTf">
@@ -1369,7 +1394,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel15">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Name"/>
+                <Property name="text" type="java.lang.String" value="Name*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="detailsNameTf">
@@ -1383,7 +1408,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Anrede"/>
+                <Property name="text" type="java.lang.String" value="Anrede*"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel53">
@@ -1690,7 +1715,7 @@
                                       <Component id="jLabel42" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="commentCommentCB" min="-2" pref="337" max="-2" attributes="0"/>
-                                      <EmptySpace pref="111" max="32767" attributes="0"/>
+                                      <EmptySpace pref="102" max="32767" attributes="0"/>
                                       <Component id="commentEditBtn" min="-2" pref="130" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1806,7 +1831,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel44">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Kommentar"/>
+                <Property name="text" type="java.lang.String" value="Kommentar*"/>
               </Properties>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -1830,7 +1855,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="jLabel46">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Datum"/>
+                <Property name="text" type="java.lang.String" value="Datum*"/>
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="commentDatumDP">
