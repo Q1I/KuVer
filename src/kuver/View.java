@@ -1886,7 +1886,15 @@ public class View extends javax.swing.JFrame {
 
     private void commentCommentSelected(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_commentCommentSelected
         // fill Comments
+        if(controller.getCurComments()== null || commentCommentCB.getSelectedIndex()==-1){
+            System.out.println("null");
+             // set blank
+            commentDatumDP.setCalendar(null);
+            commentCommentTA.setText("");
+            return;
+        }
         if (commentCommentCB.getItemCount() != 0 && !commentCommentCB.getItemAt(0).equals("<Neuer Kommentar>")) {
+            System.out.println("not null index : "+commentCommentCB.getSelectedIndex());
             Comment cmt = controller.getCurComments().get(commentCommentCB.getSelectedIndex());
             commentCommentTA.setText(cmt.getComment());
             commentDatumDP.setCalendar(cmt.getDate());

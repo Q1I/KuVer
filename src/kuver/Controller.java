@@ -526,7 +526,8 @@ public class Controller {
             if (andSetzen) {
                 sql += "AND ";
             }
-            sql += "Verlaengerbar like '" + f.format(kunde.getVerlaengerung().getTime()) + "%' ";
+//            sql += "Verlaengerbar like '" + f.format(kunde.getVerlaengerung().getTime()) + "%' ";
+            sql+=" STR_TO_DATE( `Verlaengerbar`, '%d.%m.%Y' ) <= STR_TO_DATE( '"+f.format(kunde.getVerlaengerung().getTime())+"', '%d.%m.%Y' ) ";
             andSetzen = true;
         }
         if (!kunde.getVertragsNr().isEmpty()) {
@@ -967,7 +968,7 @@ public class Controller {
      * @return 0 = success, 1 = fail
      */
     public int executeShellCmd(String cmd) {
-        System.out.println("Exectute Shell Command: "+cmd);
+        System.out.println("Execute Shell Command: "+cmd);
         int exitValue = 1;
         try {
             Runtime runtime = Runtime.getRuntime();
