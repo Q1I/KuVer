@@ -40,7 +40,7 @@ public class BackupTest {
         return exitValue;
     }
 
-    public static void main(String args[]) {
-        executeShellCmd("mysqldump -udave -p1234qwer KuVer > backup/chickenwingssss.sql");
-    }
+//    public static void main(String args[]) {
+//        executeShellCmd("mysqldump -udave -p1234qwer KuVer > backup/chickenwingssss.sql");
+//    }
 }

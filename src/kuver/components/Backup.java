@@ -6,16 +6,11 @@ package kuver.components;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.lang.Runtime;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import kuver.Controller;
-import kuver.tweaks.ContextMenuMouse;
 
 /**
  *
@@ -276,8 +271,8 @@ public class Backup extends javax.swing.JDialog {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
         String name = controller.getUser().getName();
         String pass = controller.getUser().getPass();
-        String fileName = new SimpleDateFormat("yyyy-MM-dd_hh:mm'.sql'").format(new Date());
-        String dir = "backup/";
+        String fileName = new SimpleDateFormat("yyyy-MM-dd_hh-mm'.sql'").format(new Date());
+        String dir = "backup\\";
         String sql = "mysqldump -u" + name + " -p" + pass + " KuVer >  " + dir + fileName;
         System.out.println(sql);
         if (controller.executeShellCmd(sql) == 0) {
@@ -287,7 +282,7 @@ public class Backup extends javax.swing.JDialog {
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this,
-                    "Sicherheitskopie kontte nicht erstellt werden!",
+                    "Sicherheitskopie konnte nicht erstellt werden!",
                     "Backup fehlgeschlagen",
                     JOptionPane.WARNING_MESSAGE);
         }
@@ -296,10 +291,10 @@ public class Backup extends javax.swing.JDialog {
     private int restoreBackup() {
         System.out.println("Restore DB");
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        String name = controller.getUser().getName();
-        String pass = controller.getUser().getPass();
+        String name = controller.getRootName();
+        String pass = controller.getRootPass();
         String file = fileChooser.getSelectedFile().toString();
-        String sql = "mysqldump -u" + name + " -p" + pass + " KuVer <  " + file;
+        String sql = "mysql -u" + name + " -p" + pass + " KuVer <  " + file;
         int msg = controller.executeShellCmd(sql);
         return msg;
     }

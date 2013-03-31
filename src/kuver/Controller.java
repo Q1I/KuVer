@@ -31,14 +31,6 @@ import kuver.definitions.User;
  * @author q1
  */
 public class Controller {
-
-    // todo: 
-//        daten anpassen +++
-//        kommentare -> datum/alles anzeigen +--
-//    kunde loeschen  +++
-//    menu weg +++
-    //bearbeiten kunden --> tabelle aktualisieren +++
-    // details felder anpassen +++
     private boolean editMode;
     private Kunde curKunde;
     private List<Comment> curComments;
@@ -181,24 +173,6 @@ public class Controller {
         return this.editMode;
     }
 
-//    public Connection getConnection() {
-//        Connection con = null;
-//        try {
-//            Class.forName("com.mysql.jdbc.Driver"); //JDBC Driver
-//        } catch (java.lang.ClassNotFoundException e) {
-//            System.err.print("ClassNotFoundException: ");
-//            System.err.println(e.getMessage());
-//        }
-//        try {
-//            con = (Connection) DriverManager.getConnection(this.url, this.username, this.password);
-//            //con = DriverManager.getConnection(this.url);
-//            System.out.println("Connected to database");
-//        } catch (SQLException ex) {
-//            System.err.println("SQLException: " + ex.getMessage());
-//        }
-//
-//        return con;
-//    }
     public Connection getConnection(String user, String pass) {
         Connection con = null;
         try {
@@ -976,7 +950,8 @@ public class Controller {
         int exitValue = 1;
         try {
             Runtime runtime = Runtime.getRuntime();
-            Process process = runtime.exec(new String[]{"/bin/bash", "-c", cmd});
+            Process process = runtime.exec(new String[]{"cmd", "/c", cmd});
+//            Process process = runtime.exec(new String[]{"bin/bash", "-c", cmd});
             exitValue = process.waitFor();
             System.out.println("exit value: " + exitValue);
             BufferedReader buf = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -988,5 +963,13 @@ public class Controller {
             System.out.println(e);
         }
         return exitValue;
+    }
+    
+    public String getRootName(){
+        return this.username;
+    }
+    
+    public String getRootPass(){
+        return this.password;
     }
 }

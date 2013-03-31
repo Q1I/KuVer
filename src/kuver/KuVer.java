@@ -4,14 +4,6 @@
  */
 package kuver;
 
-import javax.swing.UIManager;
-import java.awt.Color;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-import javax.swing.border.Border;
-
 /**
  *
  * @author q1
