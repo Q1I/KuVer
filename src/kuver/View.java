@@ -1675,7 +1675,6 @@ public class View extends javax.swing.JFrame {
             tabPanel.setSelectedIndex(3);
         }
 
-
         // Datum Formatieren
         SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
         String akti = null;
@@ -1885,16 +1884,23 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_detailsCommentBtnActionPerformed
 
     private void commentCommentSelected(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_commentCommentSelected
+        System.out.println("ccSelected");
+
+        System.out.println("DEBUG: curComm " + controller.getCurComments());
+        System.out.println("DEBUG: commentCommentCB selectedIndex" + commentCommentCB.getSelectedIndex());
+        System.out.println("DEBUG: commentCommentCB itemcount " + commentCommentCB.getItemCount());
+
+
         // fill Comments
-        if(controller.getCurComments()== null || commentCommentCB.getSelectedIndex()==-1){
-            System.out.println("null");
-             // set blank
+        if (controller.getCurComments() == null || commentCommentCB.getSelectedIndex() == -1) {
+            System.out.println("DEBUG: null");
+            // set blank
             commentDatumDP.setCalendar(null);
             commentCommentTA.setText("");
             return;
         }
         if (commentCommentCB.getItemCount() != 0 && !commentCommentCB.getItemAt(0).equals("<Neuer Kommentar>")) {
-            System.out.println("not null index : "+commentCommentCB.getSelectedIndex());
+            System.out.println("DEBUG: not null index : " + commentCommentCB.getSelectedIndex());
             Comment cmt = controller.getCurComments().get(commentCommentCB.getSelectedIndex());
             commentCommentTA.setText(cmt.getComment());
             commentDatumDP.setCalendar(cmt.getDate());
@@ -1951,6 +1957,15 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_commentSaveBtnActionPerformed
 
     private void tabPanelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabPanelStateChanged
+        System.out.println("Tabpanel state changed");
+        System.out.println("curKUnde: " + controller.getCurKunde());
+        if (controller.getCurKunde() != null) //            System.out.println("comments: "+controller.getComments(controller.getCurKunde().getId()));
+        {
+            if (controller.getComments(controller.getCurKunde().getId()) != null) {
+                System.out.println("comments Size: " + (controller.getComments(controller.getCurKunde().getId()).size()));
+            }
+        }
+
         // if comments selected, fillComents with selected user
         if (tabPanel.getSelectedIndex() == 4) {
             if (controller.getCurKunde() == null) {
@@ -1958,6 +1973,7 @@ public class View extends javax.swing.JFrame {
                 fillComments(null, null);
                 return;
             }
+
             // refill
             Kunde curKunde = controller.getCurKunde();
             fillComments(curKunde, controller.getComments(curKunde.getId()));
@@ -2008,7 +2024,7 @@ public class View extends javax.swing.JFrame {
 
     private void menuBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBackupActionPerformed
         // TODO add your handling code here:
-        Backup backup = new Backup(this.controller,this, true);
+        Backup backup = new Backup(this.controller, this, true);
         backup.pack();
         backup.setLocationRelativeTo(detailsPanel);
         backup.setVisible(true);
@@ -2757,6 +2773,8 @@ public class View extends javax.swing.JFrame {
             return;
         }
         System.out.println("fillComments");
+        System.out.println("comments = " + comments);
+
         commentIdTf.setText("" + kunde.getId());
         commentNameTf.setText(kunde.getName());
         commentVornameTf.setText(kunde.getVorname());
@@ -2836,6 +2854,8 @@ public class View extends javax.swing.JFrame {
         tabPanel.setEnabledAt(4, true);
         optNeuBtn.setEnabled(true);
         optSuchenBtn.setEnabled(true);
+
+        tabPanelStateChanged(null);
     }
 
     private void enableCommentNewMode() {
@@ -2929,8 +2949,14 @@ public class View extends javax.swing.JFrame {
 
         int value = ((Integer) optionPane.getValue()).intValue();
         if (value == JOptionPane.YES_OPTION) {
+            // Get cur comment
+            Comment cmt = new Comment();
+            cmt.setComment(commentCommentTA.getText());
+            cmt.setDate(commentDatumDP.getCalendar());
+            cmt.setId(Integer.parseInt(commentIdTf.getText()));
+
             // comment loeshcen
-            if (controller.deleteComment(commentCommentCB, controller.getCurCommentIndex(), controller.getCurComment())) {
+            if (controller.deleteComment(commentCommentCB, cmt)) {
                 JOptionPane.showMessageDialog(tabPanel,
                         "Kommentar wurde erfolgreich entfernt.",
                         "Löschung erfolgreich",

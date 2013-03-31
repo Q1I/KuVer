@@ -527,7 +527,7 @@ public class Controller {
                 sql += "AND ";
             }
 //            sql += "Verlaengerbar like '" + f.format(kunde.getVerlaengerung().getTime()) + "%' ";
-            sql+=" STR_TO_DATE( `Verlaengerbar`, '%d.%m.%Y' ) <= STR_TO_DATE( '"+f.format(kunde.getVerlaengerung().getTime())+"', '%d.%m.%Y' ) ";
+            sql += " STR_TO_DATE( `Verlaengerbar`, '%d.%m.%Y' ) <= STR_TO_DATE( '" + f.format(kunde.getVerlaengerung().getTime()) + "', '%d.%m.%Y' ) ";
             andSetzen = true;
         }
         if (!kunde.getVertragsNr().isEmpty()) {
@@ -791,7 +791,7 @@ public class Controller {
         this.setCurCommentIndex(index);
     }
 
-    public boolean deleteComment(JComboBox box, int index, Comment cmt) {
+    public boolean deleteComment(JComboBox box, Comment cmt) {
         System.out.println("Delete Comment");
         boolean ok = false;
         Connection con = null;
@@ -807,10 +807,13 @@ public class Controller {
             System.out.println("Delete: " + msg + " rows affected.");
             if (msg > 0) {
                 ok = true;
+
+                // reset cb
+                System.out.println("#right: " + box.getSelectedIndex());
+//                System.out.println("#wrong: " + index);
+                DefaultComboBoxModel model = (DefaultComboBoxModel) box.getModel();
+                model.removeElementAt(box.getSelectedIndex());
             }
-            // reset cb
-            DefaultComboBoxModel model = (DefaultComboBoxModel) box.getModel();
-            model.removeElementAt(index);
 
         } catch (Exception ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -964,11 +967,12 @@ public class Controller {
 
     /**
      * Execute shellCmd
+     *
      * @param cmd
      * @return 0 = success, 1 = fail
      */
     public int executeShellCmd(String cmd) {
-        System.out.println("Execute Shell Command: "+cmd);
+        System.out.println("Execute Shell Command: " + cmd);
         int exitValue = 1;
         try {
             Runtime runtime = Runtime.getRuntime();

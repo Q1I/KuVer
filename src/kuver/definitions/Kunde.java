@@ -153,7 +153,7 @@ public class Kunde {
         if (strasse == null) {
             return null;
         }else{
-            return strasse.substring(strasse.indexOf('.')+1,strasse.length());
+            return strasse.substring(strasse.lastIndexOf('.')+1,strasse.length());
         }
     }
 
@@ -369,7 +369,7 @@ public class Kunde {
             return null;
         }
         if (strasse.contains(".")) {
-            return strasse.substring(0, strasse.indexOf('.'));
+            return strasse.substring(0, strasse.lastIndexOf('.'));
         } else {
             return strasse;
         }
