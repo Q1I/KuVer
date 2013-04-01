@@ -6,6 +6,7 @@ package kuver.components;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JDialog;
@@ -272,7 +273,16 @@ public class Backup extends javax.swing.JDialog {
         String name = controller.getUser().getName();
         String pass = controller.getUser().getPass();
         String fileName = new SimpleDateFormat("yyyy-MM-dd_hh-mm'.sql'").format(new Date());
-        String dir = "backup\\";
+        String dir = "backup/";
+        // Check if dir exitst
+        File file = new File(dir);
+	if (!file.exists()) {
+		if (file.mkdir()) {
+			System.out.println("Directory is created!");
+		} else {
+			System.out.println("Directory exists!");
+		}
+	}
         String sql = "mysqldump -u" + name + " -p" + pass + " KuVer >  " + dir + fileName;
         System.out.println(sql);
         if (controller.executeShellCmd(sql) == 0) {

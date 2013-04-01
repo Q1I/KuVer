@@ -1880,23 +1880,14 @@ public class View extends javax.swing.JFrame {
     }//GEN-LAST:event_detailsCommentBtnActionPerformed
 
     private void commentCommentSelected(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_commentCommentSelected
-        System.out.println("ccSelected");
-
-        System.out.println("DEBUG: curComm " + controller.getCurComments());
-        System.out.println("DEBUG: commentCommentCB selectedIndex" + commentCommentCB.getSelectedIndex());
-        System.out.println("DEBUG: commentCommentCB itemcount " + commentCommentCB.getItemCount());
-
-
         // fill Comments
         if (controller.getCurComments() == null || commentCommentCB.getSelectedIndex() == -1) {
-            System.out.println("DEBUG: null");
             // set blank
             commentDatumDP.setCalendar(null);
             commentCommentTA.setText("");
             return;
         }
         if (commentCommentCB.getItemCount() != 0 && !commentCommentCB.getItemAt(0).equals("<Neuer Kommentar>")) {
-            System.out.println("DEBUG: not null index : " + commentCommentCB.getSelectedIndex());
             Comment cmt = controller.getCurComments().get(commentCommentCB.getSelectedIndex());
             commentCommentTA.setText(cmt.getComment());
             commentDatumDP.setCalendar(cmt.getDate());
@@ -3113,7 +3104,7 @@ public class View extends javax.swing.JFrame {
         System.out.println("panels size: " + panels.length);
         for (Component comp : panels) {
             Component[] comps = ((JPanel) comp).getComponents();
-            System.out.println("comps size: " + panels.length);
+//            System.out.println("comps size: " + panels.length);
             for (Component fields : comps) {
                 if (fields instanceof JTextField) {
                     ((JTextField) fields).addMouseListener(menu);

@@ -950,8 +950,8 @@ public class Controller {
         int exitValue = 1;
         try {
             Runtime runtime = Runtime.getRuntime();
-            Process process = runtime.exec(new String[]{"cmd", "/c", cmd});
-//            Process process = runtime.exec(new String[]{"bin/bash", "-c", cmd});
+//            Process process = runtime.exec(new String[]{"cmd", "/c", cmd});
+            Process process = runtime.exec(new String[]{"/bin/bash", "-c", cmd});
             exitValue = process.waitFor();
             System.out.println("exit value: " + exitValue);
             BufferedReader buf = new BufferedReader(new InputStreamReader(process.getInputStream()));
