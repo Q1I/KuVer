@@ -32,7 +32,9 @@ public class Kunde {
     private Calendar aktivierung = null;
     private Calendar verlaengerung = null;
     private int kommentare = 0;
-
+    private String modifiedBy = null;
+    private Calendar modifiedOn = null;
+    
     /**
      * @return the name
      */
@@ -372,5 +374,33 @@ public class Kunde {
         } else {
             return strasse;
         }
+    }
+
+    /**
+     * @return the modifiedBy
+     */
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    /**
+     * @param modifiedBy the modifiedBy to set
+     */
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    /**
+     * @return the modifiedOn
+     */
+    public Calendar getModifiedOn() {
+        return modifiedOn;
+    }
+
+    /**
+     * @param modifiedOn the modifiedOn to set
+     */
+    public void setModifiedOn(Calendar modifiedOn) {
+        this.modifiedOn = modifiedOn;
     }
 }

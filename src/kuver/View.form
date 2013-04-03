@@ -118,7 +118,7 @@
         <Component class="javax.swing.JTable" name="tabelle">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="20" rowCount="0">
+              <Table columnCount="22" rowCount="0">
                 <Column editable="false" title="ID" type="java.lang.Integer"/>
                 <Column editable="false" title="Anrede" type="java.lang.String"/>
                 <Column editable="false" title="Name" type="java.lang.String"/>
@@ -139,6 +139,8 @@
                 <Column editable="false" title="Verl&#xe4;ngerbar" type="java.lang.Object"/>
                 <Column editable="false" title="Kommentare" type="java.lang.Integer"/>
                 <Column editable="false" title="Klasse" type="java.lang.Integer"/>
+                <Column editable="false" title="mod-by" type="java.lang.String"/>
+                <Column editable="false" title="mod-on" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -243,8 +245,19 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
               </TableColumnModel>
             </Property>
+            <Property name="columnSelectionAllowed" type="boolean" value="true"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
             </Property>
@@ -1128,12 +1141,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="detailsEditBtn" min="-2" pref="130" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="detailsVerlaengerbarDP" min="-2" pref="200" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="detailsSaveBtn" min="-2" pref="130" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="detailsAktiviertDP" min="-2" pref="200" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
@@ -1173,43 +1181,47 @@
                                               </Group>
                                           </Group>
                                           <Component id="detailsGebDP" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                          <Component id="detailsVerlaengerbarDP" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="detailsVornameTf" alignment="0" max="32767" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="detailsPlzTf" min="-2" pref="94" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="detailsOrtTf" pref="206" max="32767" attributes="0"/>
-                                          </Group>
-                                          <Component id="detailsKlasseTf" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="detailsVerArtCB" max="32767" attributes="0"/>
-                                                  <Component id="detailsHandyMarkeTf" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="detailsModifiedLb" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="detailsVornameTf" alignment="0" max="32767" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="detailsPlzTf" min="-2" pref="94" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="detailsOrtTf" pref="206" max="32767" attributes="0"/>
                                               </Group>
-                                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <Component id="jLabel51" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                                      <Component id="detailsVerArtTf" max="32767" attributes="0"/>
+                                              <Component id="detailsKlasseTf" alignment="0" min="-2" pref="89" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="detailsVerArtCB" max="32767" attributes="0"/>
+                                                      <Component id="detailsHandyMarkeTf" max="32767" attributes="0"/>
                                                   </Group>
-                                                  <Group type="102" attributes="0">
-                                                      <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                                                      <Component id="detailsHandyModellTf" max="32767" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Group type="102" attributes="0">
+                                                          <Component id="jLabel51" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                          <Component id="detailsVerArtTf" max="32767" attributes="0"/>
+                                                      </Group>
+                                                      <Group type="102" attributes="0">
+                                                          <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                                                          <Component id="detailsHandyModellTf" max="32767" attributes="0"/>
+                                                      </Group>
                                                   </Group>
                                               </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="detailsCommentNrTf" min="-2" pref="94" max="-2" attributes="0"/>
+                                                  <EmptySpace max="-2" attributes="0"/>
+                                                  <Component id="detailsCommentBtn" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Component id="detailsNetzTf" alignment="0" max="32767" attributes="0"/>
                                           </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="detailsCommentNrTf" min="-2" pref="94" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="detailsCommentBtn" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="detailsNetzTf" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -1217,6 +1229,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="detailsCancelBtn" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
                                   <Component id="detailsDeleteBtn" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <Component id="detailsSaveBtn" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1317,11 +1330,14 @@
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="detailsCancelBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="detailsSaveBtn" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="detailsSaveBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="detailsModifiedLb" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1672,6 +1688,14 @@
               <Events>
                 <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="focusGainedSelectAll"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="detailsModifiedLb">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Ubuntu" size="10" style="2"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Ge&#xe4;ndert"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

@@ -263,6 +263,7 @@ public class View extends javax.swing.JFrame {
         detailsHandyModellTf = new javax.swing.JTextField();
         jLabel60 = new javax.swing.JLabel();
         detailsHandyMarkeTf = new javax.swing.JTextField();
+        detailsModifiedLb = new javax.swing.JLabel();
         commentPanel = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
         commentIdTf = new javax.swing.JTextField();
@@ -305,14 +306,14 @@ public class View extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Anrede", "Name", "Vorname", "Geburtsdatum", "Strasse", "PLZ", "Ort", "RufNr", "H-Marke", "H-Modell", "V-Art", "V-Nr", "IMEI", "MSISDN", "Netz", "Aktivierung", "Verlängerbar", "Kommentare", "Klasse"
+                "ID", "Anrede", "Name", "Vorname", "Geburtsdatum", "Strasse", "PLZ", "Ort", "RufNr", "H-Marke", "H-Modell", "V-Art", "V-Nr", "IMEI", "MSISDN", "Netz", "Aktivierung", "Verlängerbar", "Kommentare", "Klasse", "mod-by", "mod-on"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -323,6 +324,7 @@ public class View extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelle.setColumnSelectionAllowed(true);
         tabelle.getTableHeader().setReorderingAllowed(false);
         tabelle.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1113,6 +1115,9 @@ public class View extends javax.swing.JFrame {
             }
         });
 
+        detailsModifiedLb.setFont(new java.awt.Font("Ubuntu", 2, 10)); // NOI18N
+        detailsModifiedLb.setText("Geändert");
+
         javax.swing.GroupLayout detailsPanelLayout = new javax.swing.GroupLayout(detailsPanel);
         detailsPanel.setLayout(detailsPanelLayout);
         detailsPanelLayout.setHorizontalGroup(
@@ -1137,10 +1142,6 @@ public class View extends javax.swing.JFrame {
                         .addComponent(detailsIdTf, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(detailsEditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(detailsPanelLayout.createSequentialGroup()
-                        .addComponent(detailsVerlaengerbarDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(detailsSaveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(detailsPanelLayout.createSequentialGroup()
                         .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(detailsAktiviertDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1173,40 +1174,44 @@ public class View extends javax.swing.JFrame {
                                             .addComponent(jLabel38)
                                             .addComponent(jLabel49)
                                             .addComponent(jLabel60)))
-                                    .addComponent(detailsGebDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(detailsGebDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(detailsVerlaengerbarDP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(detailsVornameTf)
-                                    .addGroup(detailsPanelLayout.createSequentialGroup()
-                                        .addComponent(detailsPlzTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel27)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(detailsOrtTf, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
-                                    .addComponent(detailsKlasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(detailsPanelLayout.createSequentialGroup()
-                                        .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(detailsVerArtCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(detailsHandyMarkeTf))
-                                        .addGap(4, 4, 4)
-                                        .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(detailsPanelLayout.createSequentialGroup()
-                                                .addComponent(jLabel51)
-                                                .addGap(4, 4, 4)
-                                                .addComponent(detailsVerArtTf))
-                                            .addGroup(detailsPanelLayout.createSequentialGroup()
-                                                .addComponent(jLabel59)
-                                                .addGap(4, 4, 4)
-                                                .addComponent(detailsHandyModellTf))))
-                                    .addGroup(detailsPanelLayout.createSequentialGroup()
-                                        .addComponent(detailsCommentNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(detailsCommentBtn))
-                                    .addComponent(detailsNetzTf))))
+                                .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(detailsModifiedLb)
+                                    .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(detailsVornameTf)
+                                        .addGroup(detailsPanelLayout.createSequentialGroup()
+                                            .addComponent(detailsPlzTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jLabel27)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(detailsOrtTf, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+                                        .addComponent(detailsKlasseTf, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(detailsPanelLayout.createSequentialGroup()
+                                            .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(detailsVerArtCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(detailsHandyMarkeTf))
+                                            .addGap(4, 4, 4)
+                                            .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(detailsPanelLayout.createSequentialGroup()
+                                                    .addComponent(jLabel51)
+                                                    .addGap(4, 4, 4)
+                                                    .addComponent(detailsVerArtTf))
+                                                .addGroup(detailsPanelLayout.createSequentialGroup()
+                                                    .addComponent(jLabel59)
+                                                    .addGap(4, 4, 4)
+                                                    .addComponent(detailsHandyModellTf))))
+                                        .addGroup(detailsPanelLayout.createSequentialGroup()
+                                            .addComponent(detailsCommentNrTf, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(detailsCommentBtn))
+                                        .addComponent(detailsNetzTf)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                         .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(detailsCancelBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(detailsDeleteBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(detailsDeleteBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(detailsSaveBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         detailsPanelLayout.setVerticalGroup(
@@ -1286,11 +1291,13 @@ public class View extends javax.swing.JFrame {
                         .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(detailsVerlaengerbarDP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(detailsPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, detailsPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(detailsCancelBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(detailsSaveBtn)
+                .addGroup(detailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(detailsSaveBtn)
+                    .addComponent(detailsModifiedLb))
                 .addContainerGap())
         );
 
@@ -1676,6 +1683,8 @@ public class View extends javax.swing.JFrame {
         String akti = null;
         String verl = null;
         String bday = null;
+        String modOn = null;
+
         // Get clicked Kunde
         int row = tabelle.rowAtPoint(evt.getPoint());
         int col = tabelle.columnAtPoint(evt.getPoint());
@@ -1736,6 +1745,21 @@ public class View extends javax.swing.JFrame {
         // Kommentaranzahl
         kunde.setKommentare((Integer) tabelle.getModel().getValueAt(row, 18));
         kunde.setKlasse((String) tabelle.getModel().getValueAt(row, 19));
+
+        kunde.setModifiedBy((String) tabelle.getModel().getValueAt(row, 20));
+        // Modified on
+        Calendar calModOn = null;
+        modOn = (String) tabelle.getModel().getValueAt(row, 21);
+        if (!modOn.isEmpty()) {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                calModOn = Calendar.getInstance();
+                calModOn.setTime(format.parse((String) tabelle.getModel().getValueAt(row, 21)));
+            } catch (ParseException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        kunde.setModifiedOn(calModOn);
 
         controller.setCurKunde(kunde);
 
@@ -2077,6 +2101,7 @@ public class View extends javax.swing.JFrame {
     private javax.swing.JTextField detailsIdTf;
     private javax.swing.JTextField detailsImeiTf;
     private javax.swing.JTextField detailsKlasseTf;
+    private javax.swing.JLabel detailsModifiedLb;
     private javax.swing.JTextField detailsMsisdnTf;
     private javax.swing.JTextField detailsNameTf;
     private javax.swing.JTextField detailsNetzTf;
@@ -2239,6 +2264,8 @@ public class View extends javax.swing.JFrame {
             detailsAktiviertDP.setCalendar(null);
             detailsVerlaengerbarDP.setCalendar(null);
             detailsCommentNrTf.setText("");
+            detailsModifiedLb.setText("");
+
             // set all null
             controller.setCurKunde(null);
             controller.setCurComment(null, 0);
@@ -2270,6 +2297,14 @@ public class View extends javax.swing.JFrame {
         detailsAktiviertDP.setCalendar(kunde.getAktivierung());
         detailsVerlaengerbarDP.setCalendar(kunde.getVerlaengerung());
         detailsCommentNrTf.setText("" + kunde.getKommentare());
+        if (kunde.getModifiedOn() != null) {
+            System.out.println("kunde.getModifiedOn()!=null");
+            SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy-HH:mm");
+            detailsModifiedLb.setText("Geändert '" + f.format(kunde.getModifiedOn().getTime()) + "' von '" + kunde.getModifiedBy() + "'");
+        } else {
+            System.out.println("kunde.getModifiedOn()==null");
+            detailsModifiedLb.setText("");
+        }
     }
 
     /**

@@ -439,6 +439,7 @@ public class Controller {
         String akti = "";
         String verl = "";
         String geb = "";
+        String modOn="";
 
         // Create SQL query
         boolean andSetzen = false;
@@ -604,6 +605,22 @@ public class Controller {
                     verl = "";
                 }
                 tmp.setVerlaengerung(calVerl);
+                
+                tmp.setModifiedBy(rs.getString("last_modified_by"));
+                 // Modified on
+                Calendar calModOn = null;
+                if (rs.getTimestamp("last_modified")!=null) {
+                    try {
+                        calModOn = Calendar.getInstance();
+                        calModOn.setTime(rs.getTimestamp("last_modified"));
+                        modOn = rs.getString("last_modified");
+                    } catch (Exception ex) {
+                        Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    modOn = "";
+                }
+                tmp.setModifiedOn(calModOn);
 
                 // Query Kommentare
                 String sqlCmnt = "SELECT count(*) as anzahl FROM Kunden_comment WHERE id = " + tmp.getId();
@@ -635,7 +652,9 @@ public class Controller {
                             akti,//
                             verl,
                             tmp.getKommentare(),
-                            tmp.getKlasse()
+                            tmp.getKlasse(),
+                            tmp.getModifiedBy(),
+                            modOn
                         });
             }
             System.out.println("Code retrieved.");
@@ -788,6 +807,20 @@ public class Controller {
                 DefaultComboBoxModel model = (DefaultComboBoxModel) box.getModel();
                 model.removeElementAt(box.getSelectedIndex());
             }
+            
+            // last modified in Kunde
+            sql = "Update Kunden set last_modified_by = ?, last_modified = now() where ID = ?";
+            PreparedStatement pStmt2 = (PreparedStatement) con.prepareStatement(sql);
+            pStmt2.setString(1, user.getName());
+            pStmt2.setInt(2, cmt.getId());
+
+            System.out.println("2.SQL: " + sql);
+
+            int rows = pStmt2.executeUpdate();
+            System.out.println("Update: " + rows + " affected");
+            if (rows > 0) {
+                ok = true;
+            }
 
         } catch (Exception ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -869,7 +902,23 @@ public class Controller {
             System.out.println("SQL: " + sql + "\nRows affected: " + msg);
             if (msg > 0) {
                 ok = true;
+            }else
+                return false;
+            
+            // last modified in Kunde
+            sql = "Update Kunden set last_modified_by = ?, last_modified = now() where ID = ?";
+            PreparedStatement pStmt2 = (PreparedStatement) con.prepareStatement(sql);
+            pStmt2.setString(1, user.getName());
+            pStmt2.setInt(2, cmt.getId());
+
+            System.out.println("2.SQL: " + sql);
+
+            int rows = pStmt2.executeUpdate();
+            System.out.println("Update: " + rows + " affected");
+            if (rows > 0) {
+                ok = true;
             }
+            
         } catch (Exception ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -893,7 +942,7 @@ public class Controller {
         SimpleDateFormat f = new SimpleDateFormat("dd.MM.yyyy");
         String sql = "Update Kunden_comment set "
                 + "Datum =?, Comment=?, last_modified_by = ?, last_modified = now()"
-                + " where ID = ? and Datum = ? and Comment=? ";
+                + " where ID = ? and Datum = ? and Comment=?";
         Connection con = null;
         System.out.println("try updateComment");
         try {
@@ -914,7 +963,23 @@ public class Controller {
             System.out.println("Update: " + rows + " affected");
             if (rows > 0) {
                 ok = true;
+            }else
+                ok =false;
+            
+            // last modified in Kunde
+            sql = "Update Kunden set last_modified_by = ?, last_modified = now() where ID = ?";
+            PreparedStatement pStmt2 = (PreparedStatement) con.prepareStatement(sql);
+            pStmt2.setString(1, user.getName());
+            pStmt2.setInt(2, cmt.getId());
+
+            System.out.println("2.SQL: " + sql);
+
+            rows = pStmt2.executeUpdate();
+            System.out.println("Update: " + rows + " affected");
+            if (rows > 0) {
+                ok = true;
             }
+
         } catch (Exception ex) {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -950,8 +1015,23 @@ public class Controller {
         int exitValue = 1;
         try {
             Runtime runtime = Runtime.getRuntime();
+            // Check OS
+            String shellOs=null;
+            String shellC=null;
+            String os = System.getProperty("os.name").toLowerCase();
+            //Windows
+            if(os.indexOf("win")>=0){ 
+                shellOs = "cmd";
+                shellC="/c";
+            }
+            // Linux
+            else if(os.indexOf("nix") >= 0 || os.indexOf("nux") >= 0 || os.indexOf("aix") > 0 ){
+                shellOs = "/bin/bash";
+                shellC="-c";
+            }
+            Process process = runtime.exec(new String[]{shellOs, shellC, cmd});
 //            Process process = runtime.exec(new String[]{"cmd", "/c", cmd});
-            Process process = runtime.exec(new String[]{"/bin/bash", "-c", cmd});
+//            Process process = runtime.exec(new String[]{"/bin/bash", "-c", cmd});
             exitValue = process.waitFor();
             System.out.println("exit value: " + exitValue);
             BufferedReader buf = new BufferedReader(new InputStreamReader(process.getInputStream()));
